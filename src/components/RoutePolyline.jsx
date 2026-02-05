@@ -6,6 +6,7 @@ const ROUTE_STYLES = {
   drive: { color: "#34D399", weight: 3, dashArray: "10, 8", opacity: 0.85 },
   hike: { color: "#6EE7B7", weight: 2.5, dashArray: "4, 6", opacity: 0.85 },
   ferry: { color: "#14B8A6", weight: 2.5, dashArray: null, opacity: 0.8 },
+  bike: { color: "#f97316", weight: 2.5, dashArray: "6, 4", opacity: 0.85 },
 };
 
 function RoutePolyline({ route, trailProgress }) {

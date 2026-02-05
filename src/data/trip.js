@@ -32,13 +32,21 @@ export const stops = [
     type: "destination",
     day: 1,
   },
-  // Day 2 — Waiheke Island (ferry day trip)
+  // Day 2 — Waiheke Island (ferry + bike trip)
   {
     id: "waiheke",
     name: "Waiheke Island",
     description: "Beautiful island with wineries and beaches.",
     coords: [-36.8011, 175.0878],
     type: "destination",
+    day: 2,
+  },
+  {
+    id: "waiheke-bike",
+    name: "Waiheke Bike Tour",
+    description: "Cycling around the island — vineyards, olive groves, and stunning coastal views.",
+    coords: [-36.7880, 175.0650],
+    type: "bike",
     day: 2,
   },
   // Day 3 — Fly Auckland → Queenstown, drive to Wanaka, hike Roys Peak
@@ -122,7 +130,7 @@ export const stops = [
     id: "earnslaw-burn-parking",
     name: "Earnslaw Burn Track Parking",
     description: "Trailhead parking for the Earnslaw Burn Track.",
-    coords: [-44.8156, 168.3897],
+    coords: [-44.7928, 168.3687],
     type: "destination",
     day: 7,
   },
@@ -130,7 +138,7 @@ export const stops = [
     id: "earnslaw-burn",
     name: "Earnslaw Burn",
     description: "Dramatic glacier waterfall and alpine valley track.",
-    coords: [-44.770, 168.366],
+    coords: [-44.7543, 168.3478],
     type: "hike",
     day: 7,
   },
@@ -157,7 +165,7 @@ export const stops = [
     id: "lake-tekapo",
     name: "Mackenzie Waitaki RV Camping",
     description: "Turquoise glacier-fed lake — hot pools, spa day, and stargazing reserve.",
-    coords: [-44.0047, 170.4772],
+    coords: [-44.0019, 170.4747],
     type: "camp",
     day: 10,
   },
@@ -174,7 +182,7 @@ export const stops = [
     id: "lake-pukaki",
     name: "Lake Pukaki Overnight Campervan Parking",
     description: "Brilliant blue lake with views of Aoraki/Mt Cook.",
-    coords: [-44.0942, 170.1703],
+    coords: [-44.1700, 170.1250],
     type: "camp",
     day: 11,
   },
@@ -183,7 +191,7 @@ export const stops = [
     id: "sealy-tarns",
     name: "Sealy Tarns",
     description: "Alpine tarns with glacier views — 2,200 steps up from Mt Cook village.",
-    coords: [-43.720, 170.098],
+    coords: [-43.7315, 170.0940],
     type: "hike",
     day: 12,
   },
@@ -266,8 +274,8 @@ export const stops = [
   {
     id: "brewster",
     name: "Brewster Trailhead",
-    description: "Parking and campsite at the Brewster Hut trailhead.",
-    coords: [-44.0833, 169.4500],
+    description: "Parking and campsite at the Brewster Hut trailhead near Fantail Falls.",
+    coords: [-44.0894, 169.3508],
     type: "camp",
     day: 16,
   },
@@ -276,7 +284,7 @@ export const stops = [
     id: "brewster-hut",
     name: "Brewster Hut",
     description: "Alpine hut above the bushline with panoramic glacier views.",
-    coords: [-44.097, 169.418],
+    coords: [-44.1067, 169.3175],
     type: "hike",
     day: 17,
   },
@@ -453,7 +461,7 @@ export const stops = [
 ];
 
 export const routes = [
-  // ── Day 2: Waiheke Island ferry ──
+  // ── Day 2: Waiheke Island ferry + bike trip ──
   {
     id: "auckland-waiheke",
     from: "auckland",
@@ -461,13 +469,44 @@ export const routes = [
     day: 2,
     mode: "ferry",
     waypoints: [
-      [-36.844, 174.767],
+      [-36.844, 174.767],   // Auckland Ferry Terminal
       [-36.838, 174.810],
       [-36.830, 174.860],
       [-36.822, 174.915],
       [-36.814, 174.970],
       [-36.808, 175.030],
-      [-36.801, 175.088],
+      [-36.801, 175.088],   // Matiatia Wharf, Waiheke
+    ],
+  },
+  {
+    id: "waiheke-bike-tour",
+    from: "waiheke",
+    to: "waiheke-bike",
+    day: 2,
+    mode: "bike",
+    waypoints: [
+      [-36.801, 175.088],   // Matiatia Wharf
+      [-36.792, 175.075],   // Oneroa
+      [-36.785, 175.060],   // Little Oneroa
+      [-36.778, 175.045],   // Blackpool
+      [-36.770, 175.030],   // Surfdale
+      [-36.765, 175.015],   // Ostend
+      [-36.775, 175.000],   // Te Whau Point
+      [-36.788, 175.020],   // Through vineyards
+      [-36.795, 175.040],   // Mudbrick area
+      [-36.788, 175.065],   // Back towards Oneroa
+    ],
+  },
+  {
+    id: "waiheke-bike-return",
+    from: "waiheke-bike",
+    to: "waiheke",
+    day: 2,
+    mode: "bike",
+    waypoints: [
+      [-36.788, 175.065],   // Oneroa area
+      [-36.795, 175.075],
+      [-36.801, 175.088],   // Back to Matiatia Wharf
     ],
   },
   {
@@ -477,13 +516,13 @@ export const routes = [
     day: 2,
     mode: "ferry",
     waypoints: [
-      [-36.801, 175.088],
+      [-36.801, 175.088],   // Matiatia Wharf
       [-36.808, 175.030],
       [-36.814, 174.970],
       [-36.822, 174.915],
       [-36.830, 174.860],
       [-36.838, 174.810],
-      [-36.844, 174.767],
+      [-36.844, 174.767],   // Auckland Ferry Terminal
     ],
   },
 
@@ -858,8 +897,8 @@ export const routes = [
     mode: "drive",
     waypoints: [
       [-44.8485, 168.3822],  // Glenorchy
-      [-44.835, 168.385],
-      [-44.8156, 168.3897],  // Earnslaw Burn Track Parking
+      [-44.82, 168.38],      // Rees Valley Road
+      [-44.7928, 168.3687],  // Earnslaw Burn Track Parking
     ],
   },
   {
@@ -869,12 +908,11 @@ export const routes = [
     day: 7,
     mode: "hike",
     waypoints: [
-      [-44.8156, 168.3897],  // Parking
-      [-44.810, 168.385],
-      [-44.800, 168.380],
-      [-44.790, 168.375],
-      [-44.780, 168.370],
-      [-44.770, 168.366],    // Earnslaw Burn waterfall
+      [-44.7928, 168.3687],  // Parking
+      [-44.785, 168.365],
+      [-44.775, 168.358],
+      [-44.765, 168.352],
+      [-44.7543, 168.3478],  // Earnslaw Burn waterfall
     ],
   },
 
@@ -886,12 +924,11 @@ export const routes = [
     day: 8,
     mode: "hike",
     waypoints: [
-      [-44.770, 168.366],    // Earnslaw Burn waterfall
-      [-44.780, 168.370],
-      [-44.790, 168.375],
-      [-44.800, 168.380],
-      [-44.810, 168.385],
-      [-44.8156, 168.3897],  // Back to parking
+      [-44.7543, 168.3478],  // Earnslaw Burn waterfall
+      [-44.765, 168.352],
+      [-44.775, 168.358],
+      [-44.785, 168.365],
+      [-44.7928, 168.3687],  // Back to parking
     ],
   },
   {
@@ -901,8 +938,8 @@ export const routes = [
     day: 8,
     mode: "drive",
     waypoints: [
-      [-44.8156, 168.3897],  // Parking
-      [-44.835, 168.385],
+      [-44.7928, 168.3687],  // Parking
+      [-44.82, 168.38],
       [-44.8485, 168.3822],  // Glenorchy
     ],
   },
@@ -1018,18 +1055,14 @@ export const routes = [
     day: 11,
     mode: "drive",
     waypoints: [
-      [-44.0033, 170.4820],
-      [-44.0047, 170.4772],
-      [-44.015, 170.445],
-      [-44.025, 170.415],
-      [-44.038, 170.385],
-      [-44.050, 170.355],
-      [-44.060, 170.325],
-      [-44.070, 170.295],
-      [-44.078, 170.260],
-      [-44.085, 170.225],
-      [-44.090, 170.195],
-      [-44.0942, 170.1703],
+      [-44.0033, 170.4820],  // Tekapo Springs
+      [-44.0019, 170.4747],  // Through Tekapo
+      [-44.02, 170.40],      // SH8 west
+      [-44.05, 170.32],
+      [-44.08, 170.25],
+      [-44.11, 170.20],
+      [-44.14, 170.15],
+      [-44.1700, 170.1250],  // Lake Pukaki Overnight Parking
     ],
   },
 
@@ -1041,15 +1074,12 @@ export const routes = [
     day: 12,
     mode: "drive",
     waypoints: [
-      [-44.0942, 170.1703],
-      [-44.050, 170.150],
-      [-44.000, 170.130],
-      [-43.950, 170.120],
-      [-43.900, 170.110],
-      [-43.850, 170.105],
-      [-43.800, 170.100],
-      [-43.760, 170.098],
-      [-43.734, 170.096],
+      [-44.1700, 170.1250],  // Lake Pukaki Overnight Parking
+      [-44.10, 170.12],      // SH80 north along lake
+      [-44.00, 170.11],
+      [-43.90, 170.10],
+      [-43.80, 170.098],
+      [-43.7340, 170.0964],  // Mt Cook Village
     ],
   },
   {
@@ -1059,12 +1089,10 @@ export const routes = [
     day: 12,
     mode: "hike",
     waypoints: [
-      [-43.734, 170.096],
-      [-43.731, 170.097],
-      [-43.728, 170.097],
-      [-43.725, 170.097],
-      [-43.722, 170.098],
-      [-43.720, 170.098],
+      [-43.7340, 170.0964],  // Mt Cook Village
+      [-43.733, 170.095],    // Kea Point track
+      [-43.732, 170.094],
+      [-43.7315, 170.0940],  // Sealy Tarns
     ],
   },
   {
@@ -1074,12 +1102,10 @@ export const routes = [
     day: 12,
     mode: "hike",
     waypoints: [
-      [-43.720, 170.098],
-      [-43.722, 170.098],
-      [-43.725, 170.097],
-      [-43.728, 170.097],
-      [-43.731, 170.097],
-      [-43.734, 170.096],
+      [-43.7315, 170.0940],  // Sealy Tarns
+      [-43.732, 170.094],
+      [-43.733, 170.095],
+      [-43.7340, 170.0964],  // Mt Cook Village
     ],
   },
   {
@@ -1342,26 +1368,19 @@ export const routes = [
     day: 16,
     mode: "drive",
     waypoints: [
-      [-43.3862, 170.1833],
-      [-43.410, 170.148],
-      [-43.440, 170.110],
-      [-43.475, 170.072],
-      [-43.512, 170.032],
-      [-43.550, 169.990],
-      [-43.590, 169.948],
-      [-43.632, 169.905],
-      [-43.672, 169.860],
-      [-43.710, 169.812],
-      [-43.748, 169.765],
-      [-43.785, 169.718],
-      [-43.822, 169.670],
-      [-43.860, 169.622],
-      [-43.898, 169.575],
-      [-43.935, 169.530],
-      [-43.970, 169.495],
-      [-44.010, 169.468],
-      [-44.048, 169.458],
-      [-44.0833, 169.450],
+      [-43.3862, 170.1833],  // Franz Josef
+      [-43.4640, 170.0178],  // Fox Glacier
+      [-43.52, 169.88],      // SH6 south along coast
+      [-43.58, 169.75],
+      [-43.65, 169.55],      // Bruce Bay area
+      [-43.72, 169.35],
+      [-43.80, 169.15],
+      [-43.8810, 169.0420],  // Haast township
+      [-43.92, 169.10],      // SH6 heading inland
+      [-43.96, 169.18],      // Haast River valley
+      [-44.00, 169.25],
+      [-44.04, 169.30],      // Approaching Haast Pass
+      [-44.0894, 169.3508],  // Brewster Trailhead near Fantail Falls
     ],
   },
 
@@ -1373,13 +1392,12 @@ export const routes = [
     day: 17,
     mode: "hike",
     waypoints: [
-      [-44.083, 169.450],
-      [-44.086, 169.445],
-      [-44.088, 169.438],
-      [-44.091, 169.432],
-      [-44.093, 169.426],
-      [-44.095, 169.422],
-      [-44.097, 169.418],
+      [-44.0894, 169.3508],  // Trailhead
+      [-44.093, 169.345],
+      [-44.097, 169.338],
+      [-44.100, 169.330],
+      [-44.103, 169.325],
+      [-44.1067, 169.3175],  // Brewster Hut
     ],
   },
   {
@@ -1389,13 +1407,12 @@ export const routes = [
     day: 17,
     mode: "hike",
     waypoints: [
-      [-44.097, 169.418],
-      [-44.095, 169.422],
-      [-44.093, 169.426],
-      [-44.091, 169.432],
-      [-44.088, 169.438],
-      [-44.086, 169.445],
-      [-44.083, 169.450],
+      [-44.1067, 169.3175],  // Brewster Hut
+      [-44.103, 169.325],
+      [-44.100, 169.330],
+      [-44.097, 169.338],
+      [-44.093, 169.345],
+      [-44.0894, 169.3508],  // Trailhead
     ],
   },
   {
@@ -1405,23 +1422,16 @@ export const routes = [
     day: 17,
     mode: "drive",
     waypoints: [
-      [-44.0833, 169.450],
-      [-44.120, 169.438],
-      [-44.160, 169.425],
-      [-44.200, 169.408],
-      [-44.242, 169.388],
-      [-44.285, 169.365],
-      [-44.328, 169.340],
-      [-44.370, 169.312],
-      [-44.412, 169.282],
-      [-44.452, 169.252],
-      [-44.490, 169.225],
-      [-44.528, 169.200],
-      [-44.565, 169.178],
-      [-44.602, 169.160],
-      [-44.638, 169.148],
-      [-44.668, 169.140],
-      [-44.695, 169.132],
+      [-44.0894, 169.3508],  // Brewster Trailhead
+      [-44.12, 169.35],      // SH6 over Haast Pass
+      [-44.18, 169.32],      // Makarora area
+      [-44.25, 169.28],
+      [-44.32, 169.25],
+      [-44.40, 169.22],      // Lake Wanaka north shore
+      [-44.50, 169.18],
+      [-44.58, 169.15],
+      [-44.65, 169.14],
+      [-44.695, 169.132],    // Wanaka
     ],
   },
 
