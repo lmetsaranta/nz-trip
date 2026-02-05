@@ -1,0 +1,320 @@
+/* ══════════════════════════════════════════════════════════
+   Destination Page
+   ══════════════════════════════════════════════════════════ */
+
+.destination {
+  min-height: 100vh;
+  background: #fff;
+}
+
+.destination--not-found {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Hero ── */
+.destination__hero {
+  position: relative;
+  height: 60vh;
+  min-height: 400px;
+  max-height: 600px;
+  overflow: hidden;
+}
+
+.destination__hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.destination__hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.2) 0%,
+    rgba(0, 0, 0, 0.1) 40%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+}
+
+/* Back button */
+.destination__back-btn {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.destination__back-btn:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: translateX(-4px);
+}
+
+.destination__back-icon {
+  font-size: 18px;
+}
+
+/* Hero content */
+.destination__hero-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 40px 32px;
+  color: #fff;
+}
+
+.destination__type {
+  display: inline-block;
+  padding: 6px 14px;
+  margin-bottom: 16px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: 100px;
+}
+
+.destination__type--destination {
+  background: #10B981;
+}
+
+.destination__type--camp {
+  background: #22c55e;
+}
+
+.destination__type--hostel {
+  background: #f59e0b;
+}
+
+.destination__type--hike {
+  background: #10b981;
+}
+
+.destination__type--plane {
+  background: #0D9488;
+}
+
+.destination__type--rafting {
+  background: #14B8A6;
+}
+
+.destination__type--surfing {
+  background: #0D9488;
+}
+
+.destination__type--canoeing {
+  background: #059669;
+}
+
+.destination__type--spa {
+  background: #6EE7B7;
+  color: #064E3B;
+}
+
+.destination__title {
+  margin: 0 0 8px;
+  font-size: clamp(32px, 6vw, 56px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.destination__day {
+  margin: 0;
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+/* ── Container ── */
+.destination__container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+/* ── Content ── */
+.destination__content {
+  margin-bottom: 48px;
+}
+
+.destination__section {
+  margin-bottom: 40px;
+}
+
+.destination__section:last-child {
+  margin-bottom: 0;
+}
+
+.destination__section-title {
+  margin: 0 0 20px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #111;
+}
+
+.destination__section-image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.destination__text {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #444;
+}
+
+/* ── Meta ── */
+.destination__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px;
+  background: #f8f8f8;
+  border-radius: 16px;
+}
+
+.destination__coords {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.destination__coords-label {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #888;
+}
+
+.destination__coords-value {
+  font-size: 14px;
+  font-weight: 500;
+  font-family: ui-monospace, "SF Mono", monospace;
+  color: #333;
+}
+
+.destination__maps-link {
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  background: #10B981;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.destination__maps-link:hover {
+  background: #059669;
+  transform: translateY(-1px);
+}
+
+/* Back link for not found */
+.destination__back {
+  display: inline-block;
+  margin-top: 24px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  background: #10B981;
+  border-radius: 100px;
+  text-decoration: none;
+}
+
+/* ══════════════════════════════════════════════════════════
+   Dark mode
+   ══════════════════════════════════════════════════════════ */
+
+@media (prefers-color-scheme: dark) {
+  .destination {
+    background: #040d08;
+  }
+
+  .destination__section-title {
+    color: #fff;
+  }
+
+  .destination__text {
+    color: #9CA3AF;
+  }
+
+  .destination__meta {
+    background: #0a1410;
+  }
+
+  .destination__coords-label {
+    color: #6B7280;
+  }
+
+  .destination__coords-value {
+    color: #D1D5DB;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   Responsive
+   ══════════════════════════════════════════════════════════ */
+
+@media (max-width: 640px) {
+  .destination__hero {
+    height: 50vh;
+    min-height: 320px;
+  }
+
+  .destination__back-btn {
+    top: 16px;
+    left: 16px;
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  .destination__back-text {
+    display: none;
+  }
+
+  .destination__hero-content {
+    padding: 32px 20px;
+  }
+
+  .destination__container {
+    padding: 32px 16px 60px;
+  }
+
+  .destination__meta {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .destination__coords {
+    align-items: center;
+  }
+
+  .destination__maps-link {
+    text-align: center;
+  }
+}

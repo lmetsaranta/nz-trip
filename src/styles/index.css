@@ -13,6 +13,13 @@ body {
   background: #fafafa;
 }
 
+@media (prefers-color-scheme: dark) {
+  body {
+    color: #e5e7eb;
+    background: #040d08;
+  }
+}
+
 .header nav {
   display: flex;
   gap: 1rem;
@@ -21,13 +28,27 @@ body {
   border-bottom: 1px solid #e5e5e5;
 }
 
+@media (prefers-color-scheme: dark) {
+  .header nav {
+    background: #0a1410;
+    border-bottom-color: rgba(16, 185, 129, 0.15);
+  }
+}
+
 .header nav a {
   color: #1a1a1a;
   text-decoration: none;
 }
 
+@media (prefers-color-scheme: dark) {
+  .header nav a {
+    color: #e5e7eb;
+  }
+}
+
 .header nav a:hover {
   text-decoration: underline;
+  color: #10B981;
 }
 
 .main {

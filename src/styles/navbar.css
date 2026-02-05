@@ -1,0 +1,223 @@
+/* ── Floating glassmorphism pill navigation ── */
+.trip-nav {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  height: 44px;
+
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.06),
+    0 1px 2px rgba(0, 0, 0, 0.04);
+
+  max-width: calc(100% - 32px);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.trip-nav--dark {
+  background: rgba(10, 20, 15, 0.8);
+  border-color: rgba(16, 185, 129, 0.15);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.3),
+    0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* ── Section groups ── */
+.trip-nav__left {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.trip-nav__center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 6px;
+  min-width: 0;
+}
+
+.trip-nav__right {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+/* ── Dividers between sections ── */
+.trip-nav__divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.trip-nav--dark .trip-nav__divider {
+  background: rgba(16, 185, 129, 0.2);
+}
+
+/* ── Day label ── */
+.trip-nav__day-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.6);
+  white-space: nowrap;
+  min-width: 42px;
+  letter-spacing: -0.01em;
+}
+
+.trip-nav--dark .trip-nav__day-label {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ── Range slider ── */
+.trip-nav__slider {
+  flex: 1;
+  min-width: 100px;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to right,
+    #10B981 0%,
+    #10B981 var(--progress, 0%),
+    rgba(0, 0, 0, 0.1) var(--progress, 0%),
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  outline: none;
+  cursor: pointer;
+}
+
+.trip-nav__slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #10B981;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.trip-nav__slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.trip-nav__slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #10B981;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.trip-nav__slider::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: transparent;
+}
+
+/* Dark slider */
+.trip-nav--dark .trip-nav__slider {
+  background: linear-gradient(
+    to right,
+    #34D399 0%,
+    #34D399 var(--progress, 0%),
+    rgba(255, 255, 255, 0.12) var(--progress, 0%),
+    rgba(255, 255, 255, 0.12) 100%
+  );
+}
+
+.trip-nav--dark .trip-nav__slider::-webkit-slider-thumb {
+  background: #34D399;
+  border-color: rgba(10, 20, 15, 0.9);
+}
+
+.trip-nav--dark .trip-nav__slider::-moz-range-thumb {
+  background: #34D399;
+  border-color: rgba(10, 20, 15, 0.9);
+}
+
+/* ── Buttons ── */
+.trip-nav__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.65);
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease,
+    color 0.2s ease;
+}
+
+.trip-nav__btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.trip-nav__btn:active {
+  transform: scale(0.92);
+}
+
+.trip-nav--dark .trip-nav__btn {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.trip-nav--dark .trip-nav__btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* ── Play button ── */
+.trip-nav__play {
+  width: 34px;
+  height: 34px;
+  font-size: 15px;
+}
+
+.trip-nav__play--playing {
+  background: #10B981;
+  color: #fff;
+}
+
+.trip-nav__play--playing:hover {
+  background: #059669;
+  color: #fff;
+}
+
+.trip-nav--dark .trip-nav__play--playing {
+  background: #10B981;
+  color: #fff;
+}
+
+.trip-nav--dark .trip-nav__play--playing:hover {
+  background: #34D399;
+  color: #fff;
+}
