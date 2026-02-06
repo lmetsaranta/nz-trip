@@ -1,0 +1,80 @@
+/* ── Stop Tooltip ── */
+.stop-tooltip {
+  position: absolute;
+  z-index: 1001;
+  pointer-events: none;
+  transform: translate(-50%, -100%);
+  margin-top: -20px;
+  animation: tooltip-fade-in 0.3s ease;
+}
+
+@keyframes tooltip-fade-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -90%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -100%);
+  }
+}
+
+.stop-tooltip__content {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 12px;
+  padding: 10px 14px;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.15),
+    0 1px 3px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  max-width: 220px;
+  text-align: center;
+}
+
+.stop-tooltip--dark .stop-tooltip__content {
+  background: rgba(10, 20, 15, 0.92);
+  border-color: rgba(16, 185, 129, 0.2);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.4),
+    0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.stop-tooltip__name {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.85);
+  margin: 0 0 4px 0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.stop-tooltip--dark .stop-tooltip__name {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.stop-tooltip__description {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6);
+  margin: 0;
+  line-height: 1.4;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.stop-tooltip--dark .stop-tooltip__description {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.stop-tooltip__arrow {
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid rgba(255, 255, 255, 0.95);
+  margin: 0 auto;
+  margin-top: -1px;
+}
+
+.stop-tooltip--dark .stop-tooltip__arrow {
+  border-top-color: rgba(10, 20, 15, 0.92);
+}

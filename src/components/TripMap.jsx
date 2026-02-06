@@ -1,14 +1,47 @@
 import "leaflet/dist/leaflet.css";
 import "../styles/map.css";
 
-import { useMemo } from "react";
-import { MapContainer, TileLayer } from "react-leaflet";
+import { useMemo, useState, useEffect, useRef } from "react";
+import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import { MAP_CONFIG, TILE_LAYERS, stops, routes } from "../data/trip";
 import StopMarker from "./StopMarker";
 import RoutePolyline from "./RoutePolyline";
 import MapController from "./MapController";
 import AnimatedVehicle from "./AnimatedVehicle";
 import ArrivalMarker from "./ArrivalMarker";
+import StopTooltip from "./StopTooltip";
+
+// Helper component to convert lat/lng to screen position
+function TooltipPositioner({ stop, vehiclePosition, theme }) {
+  const map = useMap();
+  const [screenPos, setScreenPos] = useState(null);
+  const rafRef = useRef(null);
+
+  useEffect(() => {
+    if (!stop || !vehiclePosition) {
+      setScreenPos(null);
+      return;
+    }
+
+    const updatePosition = () => {
+      const point = map.latLngToContainerPoint(vehiclePosition);
+      setScreenPos({ x: point.x, y: point.y });
+      rafRef.current = requestAnimationFrame(updatePosition);
+    };
+
+    rafRef.current = requestAnimationFrame(updatePosition);
+
+    return () => {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+    };
+  }, [map, stop, vehiclePosition]);
+
+  if (!stop || !screenPos) return null;
+
+  return <StopTooltip stop={stop} position={screenPos} theme={theme} />;
+}
 
 function TripMap({
   theme,
@@ -18,11 +51,13 @@ function TripMap({
   vehicleMode,
   routeIndex,
   routeProgress,
+  routeDistance,
   arrivalType,
   arrivalPosition,
   zoomCommand,
   onZoomHandled,
   onStopClick,
+  arrivingStop,
 }) {
   const tile = TILE_LAYERS[theme];
 
@@ -55,6 +90,7 @@ function TripMap({
         zoom={MAP_CONFIG.zoom}
         minZoom={MAP_CONFIG.minZoom}
         scrollWheelZoom={true}
+        zoomControl={false}
       >
         <TileLayer key={theme} attribution={tile.attribution} url={tile.url} />
         <MapController
@@ -63,6 +99,9 @@ function TripMap({
           currentDay={currentDay}
           isPlaying={isPlaying}
           vehiclePosition={vehiclePosition}
+          vehicleMode={vehicleMode}
+          routeProgress={routeProgress}
+          routeDistance={routeDistance}
         />
 
         {/* Past routes — fully drawn */}
@@ -98,6 +137,13 @@ function TripMap({
         {isPlaying && vehiclePosition && (
           <AnimatedVehicle position={vehiclePosition} mode={vehicleMode} />
         )}
+
+        {/* Stop tooltip on arrival */}
+        <TooltipPositioner
+          stop={arrivingStop}
+          vehiclePosition={vehiclePosition}
+          theme={theme}
+        />
       </MapContainer>
     </div>
   );
