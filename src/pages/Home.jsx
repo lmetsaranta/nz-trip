@@ -8,6 +8,8 @@ import StopModal from "../components/StopModal";
 import OnboardingModal from "../components/OnboardingModal";
 import TripEndModal from "../components/TripEndModal";
 import TripStats from "../components/TripStats";
+import WeatherPanel from "../components/WeatherPanel";
+import { useWeatherData } from "../hooks/useWeatherData";
 
 // Auckland coordinates for initial zoom
 const AUCKLAND_COORDS = [-36.8485, 174.7633];
@@ -84,7 +86,11 @@ function Home() {
   const [showTripEnd, setShowTripEnd] = useState(false);
   const [initialZoomDone, setInitialZoomDone] = useState(false);
   const [showStats, setShowStats] = useState(false);
+  const [showWeather, setShowWeather] = useState(false);
   const shownTooltipsRef = useRef(new Set());
+
+  // Weather data hook
+  const { weatherData, loading: weatherLoading } = useWeatherData();
 
   // Initial zoom to Auckland on mount, then show onboarding
   useEffect(() => {
@@ -346,6 +352,10 @@ function Home() {
     setShowStats((s) => !s);
   }, []);
 
+  const handleWeatherToggle = useCallback(() => {
+    setShowWeather((w) => !w);
+  }, []);
+
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -382,6 +392,10 @@ function Home() {
             setShowTripEnd(false);
           }
           break;
+        case "w": // 'w' = toggle weather panel
+        case "W":
+          setShowWeather((w) => !w);
+          break;
       }
     };
 
@@ -413,6 +427,8 @@ function Home() {
         highlightStep={navHighlight}
         showStats={showStats}
         onStatsToggle={handleStatsToggle}
+        showWeather={showWeather}
+        onWeatherToggle={handleWeatherToggle}
       />
       <TripMap
         theme={theme}
@@ -435,6 +451,14 @@ function Home() {
         theme={theme}
         isVisible={showStats}
         onClose={handleStatsToggle}
+      />
+      <WeatherPanel
+        theme={theme}
+        currentDay={currentDay}
+        weatherData={weatherData}
+        isVisible={showWeather}
+        onClose={handleWeatherToggle}
+        loading={weatherLoading}
       />
       {selectedStop && (
         <StopModal stop={selectedStop} onClose={handleCloseModal} />

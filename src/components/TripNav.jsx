@@ -16,6 +16,8 @@ function TripNav({
   highlightStep,
   showStats,
   onStatsToggle,
+  showWeather,
+  onWeatherToggle,
 }) {
   const dayProgress = ((currentDay - 1) / (TIMELINE_CONFIG.totalDays - 1)) * 100;
 
@@ -46,6 +48,13 @@ function TripNav({
           title="Trip statistics"
         >
           📊
+        </button>
+        <button
+          className={`trip-nav__btn${showWeather ? " trip-nav__btn--active" : ""}`}
+          onClick={onWeatherToggle}
+          title="Weather"
+        >
+          🌤️
         </button>
       </div>
 
