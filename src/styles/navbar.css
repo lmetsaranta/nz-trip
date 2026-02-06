@@ -226,6 +226,27 @@
   color: rgba(255, 255, 255, 0.95);
 }
 
+/* Active button state */
+.trip-nav__btn--active {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10B981;
+}
+
+.trip-nav__btn--active:hover {
+  background: rgba(16, 185, 129, 0.25);
+  color: #10B981;
+}
+
+.trip-nav--dark .trip-nav__btn--active {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34D399;
+}
+
+.trip-nav--dark .trip-nav__btn--active:hover {
+  background: rgba(16, 185, 129, 0.3);
+  color: #34D399;
+}
+
 /* ── Speed button ── */
 .trip-nav__speed {
   font-size: 11px;
@@ -258,4 +279,119 @@
 .trip-nav--dark .trip-nav__play--playing:hover {
   background: #34D399;
   color: #fff;
+}
+
+/* ── Highlight for onboarding ── */
+.trip-nav__highlight {
+  position: relative;
+  z-index: 10;
+  animation: highlight-pulse 1.5s ease-in-out infinite;
+}
+
+.trip-nav__highlight::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 16px;
+  border: 2px solid #10B981;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.4);
+  animation: highlight-border 1.5s ease-in-out infinite;
+}
+
+@keyframes highlight-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+@keyframes highlight-border {
+  0%, 100% {
+    opacity: 0.6;
+    box-shadow: 0 0 16px rgba(16, 185, 129, 0.4);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 24px rgba(16, 185, 129, 0.6);
+  }
+}
+
+/* ── Mobile responsive ── */
+@media (max-width: 640px) {
+  .trip-nav {
+    padding: 4px 8px;
+    height: auto;
+    min-height: 48px;
+    gap: 4px;
+  }
+
+  .trip-nav__left,
+  .trip-nav__right {
+    gap: 2px;
+  }
+
+  .trip-nav__btn {
+    width: 44px;
+    height: 44px;
+    font-size: 16px;
+  }
+
+  .trip-nav__play {
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+  }
+
+  .trip-nav__speed {
+    font-size: 12px;
+  }
+
+  .trip-nav__center {
+    padding: 0 4px;
+    gap: 6px;
+  }
+
+  .trip-nav__day-info {
+    min-width: 40px;
+  }
+
+  .trip-nav__day-label {
+    font-size: 11px;
+  }
+
+  .trip-nav__slider {
+    min-width: 60px;
+  }
+
+  .trip-nav__slider::-webkit-slider-thumb {
+    width: 24px;
+    height: 24px;
+    border-width: 3px;
+  }
+
+  .trip-nav__slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-width: 3px;
+  }
+
+  .trip-nav__divider {
+    height: 16px;
+  }
+}
+
+@media (max-width: 420px) {
+  .trip-nav__left .trip-nav__btn:nth-child(3) {
+    display: none; /* Hide theme toggle on very small screens */
+  }
+
+  .trip-nav__day-label {
+    font-size: 10px;
+  }
+
+  .trip-nav__slider {
+    min-width: 40px;
+  }
 }

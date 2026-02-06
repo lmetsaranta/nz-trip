@@ -13,13 +13,24 @@ function TripNav({
   speedMultiplier,
   onSpeedChange,
   progress,
+  highlightStep,
+  showStats,
+  onStatsToggle,
 }) {
   const dayProgress = ((currentDay - 1) / (TIMELINE_CONFIG.totalDays - 1)) * 100;
 
+  // Highlight mapping:
+  // Step 1: Navigation controls (left - zoom, theme)
+  // Step 2: Playback controls (right - speed, play)
+  // Step 3: Timeline (center - slider)
+  const highlightLeft = highlightStep === 1;
+  const highlightRight = highlightStep === 2;
+  const highlightCenter = highlightStep === 3;
+
   return (
     <div className={`trip-nav${theme === "dark" ? " trip-nav--dark" : ""}`}>
-      {/* Left: zoom + theme */}
-      <div className="trip-nav__left">
+      {/* Left: zoom + theme + stats */}
+      <div className={`trip-nav__left${highlightLeft ? " trip-nav__highlight" : ""}`}>
         <button className="trip-nav__btn" onClick={onZoomIn} title="Zoom in">
           +
         </button>
@@ -29,12 +40,19 @@ function TripNav({
         <button className="trip-nav__btn" onClick={onThemeToggle} title="Toggle theme">
           {theme === "light" ? "☾" : "☀"}
         </button>
+        <button
+          className={`trip-nav__btn${showStats ? " trip-nav__btn--active" : ""}`}
+          onClick={onStatsToggle}
+          title="Trip statistics"
+        >
+          📊
+        </button>
       </div>
 
       <div className="trip-nav__divider" />
 
       {/* Center: timeline slider */}
-      <div className="trip-nav__center">
+      <div className={`trip-nav__center${highlightCenter ? " trip-nav__highlight" : ""}`}>
         <div className="trip-nav__day-info">
           <span className="trip-nav__day-label">Day {currentDay}</span>
           <div className="trip-nav__day-progress">
@@ -58,7 +76,7 @@ function TripNav({
       <div className="trip-nav__divider" />
 
       {/* Right: speed + play/pause */}
-      <div className="trip-nav__right">
+      <div className={`trip-nav__right${highlightRight ? " trip-nav__highlight" : ""}`}>
         <button
           className="trip-nav__btn trip-nav__speed"
           onClick={onSpeedChange}

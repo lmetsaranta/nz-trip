@@ -5,6 +5,12 @@ import { interpolatePosition } from "../utils/interpolate";
 import TripNav from "../components/TripNav";
 import TripMap from "../components/TripMap";
 import StopModal from "../components/StopModal";
+import OnboardingModal from "../components/OnboardingModal";
+import TripEndModal from "../components/TripEndModal";
+import TripStats from "../components/TripStats";
+
+// Auckland coordinates for initial zoom
+const AUCKLAND_COORDS = [-36.8485, 174.7633];
 
 // Time per unit distance in ms (lower = faster) - constant speed per mode
 // These define how many milliseconds it takes to travel 1 degree of lat/lng
@@ -19,6 +25,9 @@ const MODE_MS_PER_UNIT = {
   canoeing: 3000,
   spa: 8000,     // Very slow and relaxing - 8s per degree
 };
+
+// Faster speed for final departure flight
+const FINAL_FLIGHT_MS_PER_UNIT = 150;
 
 // Minimum duration for any day (so very short days aren't instant)
 const MIN_DAY_DURATION_MS = 3000;
@@ -40,14 +49,16 @@ function calculateRouteDistance(waypoints) {
 
 // Calculate total duration for a day's routes based on distance and mode speeds
 // Includes pause time between routes (for stops within a day)
-function calculateDayDuration(dayRoutes) {
+function calculateDayDuration(dayRoutes, isFinalDay = false) {
   if (!dayRoutes.length) return MIN_DAY_DURATION_MS;
 
   let totalMs = 0;
   for (let i = 0; i < dayRoutes.length; i++) {
     const route = dayRoutes[i];
     const distance = calculateRouteDistance(route.waypoints);
-    const msPerUnit = MODE_MS_PER_UNIT[route.mode] || MODE_MS_PER_UNIT.drive;
+    // Use faster speed for final departure flight
+    const isFinalFlight = isFinalDay && route.mode === "fly";
+    const msPerUnit = isFinalFlight ? FINAL_FLIGHT_MS_PER_UNIT : (MODE_MS_PER_UNIT[route.mode] || MODE_MS_PER_UNIT.drive);
     totalMs += distance * msPerUnit;
 
     // Add pause time after each route except the last one
@@ -68,11 +79,55 @@ function Home() {
   const [zoomCommand, setZoomCommand] = useState(null);
   const [selectedStop, setSelectedStop] = useState(null);
   const [speedMultiplier, setSpeedMultiplier] = useState(1);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [onboardingStep, setOnboardingStep] = useState(0);
+  const [showTripEnd, setShowTripEnd] = useState(false);
+  const [initialZoomDone, setInitialZoomDone] = useState(false);
+  const [showStats, setShowStats] = useState(false);
+  const shownTooltipsRef = useRef(new Set());
+
+  // Initial zoom to Auckland on mount, then show onboarding
+  useEffect(() => {
+    // Trigger zoom to Auckland immediately
+    setZoomCommand({ type: "flyTo", coords: AUCKLAND_COORDS, zoom: 11 });
+
+    // Show onboarding after zoom starts (1 second delay)
+    const timer = setTimeout(() => {
+      setShowOnboarding(true);
+      setInitialZoomDone(true);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Preload images for current and next day stops
+  useEffect(() => {
+    const preloadImages = () => {
+      const daysToPreload = [currentDay, currentDay + 1].filter(
+        (d) => d <= TIMELINE_CONFIG.totalDays
+      );
+
+      daysToPreload.forEach((day) => {
+        const dayStops = stops.filter((s) => s.day === day);
+        dayStops.forEach((stop) => {
+          const imageUrl =
+            stop.image ||
+            `https://source.unsplash.com/800x600/?${encodeURIComponent(stop.name + " new zealand")}`;
+          const img = new Image();
+          img.src = imageUrl;
+        });
+      });
+    };
+
+    preloadImages();
+  }, [currentDay]);
 
   const handleDayComplete = useCallback(() => {
     setCurrentDay((d) => {
       if (d >= TIMELINE_CONFIG.totalDays) {
         setIsPlaying(false);
+        // Show trip end modal after a brief delay
+        setTimeout(() => setShowTripEnd(true), 500);
         return d;
       }
       return d + 1;
@@ -86,9 +141,10 @@ function Home() {
   );
 
   // Calculate duration for current day based on route distances and mode speeds
+  const isFinalDay = currentDay === TIMELINE_CONFIG.totalDays;
   const dayDuration = useMemo(
-    () => calculateDayDuration(currentRoutes),
-    [currentRoutes]
+    () => calculateDayDuration(currentRoutes, isFinalDay),
+    [currentRoutes, isFinalDay]
   );
 
   // Animation progress (0 to 1) over the calculated day duration
@@ -103,7 +159,9 @@ function Home() {
     // Calculate time for each segment based on distance * msPerUnit
     const segmentTimes = currentRoutes.map((r) => {
       const distance = calculateRouteDistance(r.waypoints);
-      const msPerUnit = MODE_MS_PER_UNIT[r.mode] || MODE_MS_PER_UNIT.drive;
+      // Use faster speed for final departure flight
+      const isFinalFlight = isFinalDay && r.mode === "fly";
+      const msPerUnit = isFinalFlight ? FINAL_FLIGHT_MS_PER_UNIT : (MODE_MS_PER_UNIT[r.mode] || MODE_MS_PER_UNIT.drive);
       return distance * msPerUnit;
     });
 
@@ -156,9 +214,9 @@ function Home() {
     const position = interpolatePosition(route.waypoints, routeProgress);
     const routeDistance = calculateRouteDistance(route.waypoints);
     return { position, mode: route.mode, routeProgress, routeIndex, isPaused, routeDistance };
-  }, [currentRoutes, progress]);
+  }, [currentRoutes, progress, isFinalDay]);
 
-  // Compute arriving stop when routeProgress > 0.85
+  // Compute arriving stop when routeProgress > 0.85 (only show once per stop)
   const arrivingStop = useMemo(() => {
     if (!isPlaying || !currentRoutes.length) return null;
     if (vehicleData.routeProgress < 0.85) return null;
@@ -166,8 +224,31 @@ function Home() {
     const route = currentRoutes[vehicleData.routeIndex];
     if (!route?.to) return null;
 
+    // Don't show tooltip if already shown for this stop
+    if (shownTooltipsRef.current.has(route.to)) return null;
+
     return stops.find((s) => s.id === route.to) || null;
   }, [isPlaying, currentRoutes, vehicleData.routeIndex, vehicleData.routeProgress]);
+
+  // Track the previous route index to know when we've moved to a new route
+  const prevRouteRef = useRef({ day: currentDay, index: vehicleData.routeIndex });
+
+  // Mark tooltip as shown when we leave a route (move to next route or new day)
+  useEffect(() => {
+    const prevDay = prevRouteRef.current.day;
+    const prevIndex = prevRouteRef.current.index;
+
+    // If we've moved to a different route or day, mark the previous route's destination as shown
+    if (currentDay !== prevDay || vehicleData.routeIndex !== prevIndex) {
+      const prevRoutes = routes.filter((r) => r.day === prevDay);
+      const prevRoute = prevRoutes[prevIndex];
+      if (prevRoute?.to) {
+        shownTooltipsRef.current.add(prevRoute.to);
+      }
+    }
+
+    prevRouteRef.current = { day: currentDay, index: vehicleData.routeIndex };
+  }, [currentDay, vehicleData.routeIndex]);
 
   // Arrival animation (landing / parking / camping)
   const arrivalData = useMemo(() => {
@@ -206,6 +287,7 @@ function Home() {
   const handleDayClick = useCallback((day) => {
     setIsPlaying(false);
     setCurrentDay(day);
+    shownTooltipsRef.current = new Set(); // Reset tooltips when changing day
   }, []);
 
   const handlePlayPause = useCallback(() => {
@@ -228,6 +310,92 @@ function Home() {
     setSelectedStop(null);
   }, []);
 
+  // Onboarding handlers
+  const handleOnboardingComplete = useCallback(() => {
+    setShowOnboarding(false);
+  }, []);
+
+  const handleOnboardingStepChange = useCallback((step) => {
+    setOnboardingStep(step);
+  }, []);
+
+  const handleStartAnimation = useCallback(() => {
+    setShowOnboarding(false);
+    shownTooltipsRef.current = new Set(); // Reset tooltips when starting
+    // Start playing immediately since zoom is already done
+    setIsPlaying(true);
+  }, []);
+
+  // Trip end handlers
+  const handleTripEndClose = useCallback(() => {
+    setShowTripEnd(false);
+    // Zoom out to show full map
+    setZoomCommand({ type: "flyTo", coords: [-41.5, 173.0], zoom: 6 });
+  }, []);
+
+  const handleReplayTrip = useCallback(() => {
+    setShowTripEnd(false);
+    setCurrentDay(1);
+    shownTooltipsRef.current = new Set(); // Reset tooltips when replaying
+    // Zoom to Auckland and start playing
+    setZoomCommand({ type: "flyTo", coords: AUCKLAND_COORDS, zoom: 11 });
+    setTimeout(() => setIsPlaying(true), 2000);
+  }, []);
+
+  const handleStatsToggle = useCallback(() => {
+    setShowStats((s) => !s);
+  }, []);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Ignore if focused on an input element
+      if (
+        document.activeElement?.tagName === "INPUT" ||
+        document.activeElement?.tagName === "TEXTAREA" ||
+        document.activeElement?.isContentEditable
+      ) {
+        return;
+      }
+
+      switch (e.key) {
+        case " ": // Space = toggle play/pause
+          e.preventDefault();
+          setIsPlaying((p) => !p);
+          break;
+        case "ArrowLeft": // Left arrow = previous day
+          e.preventDefault();
+          setCurrentDay((d) => Math.max(1, d - 1));
+          shownTooltipsRef.current = new Set();
+          break;
+        case "ArrowRight": // Right arrow = next day
+          e.preventDefault();
+          setCurrentDay((d) => Math.min(TIMELINE_CONFIG.totalDays, d + 1));
+          shownTooltipsRef.current = new Set();
+          break;
+        case "Escape": // Escape = close modals
+          if (selectedStop) {
+            setSelectedStop(null);
+          } else if (showOnboarding) {
+            setShowOnboarding(false);
+          } else if (showTripEnd) {
+            setShowTripEnd(false);
+          }
+          break;
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedStop, showOnboarding, showTripEnd]);
+
+  // Map onboarding step to navbar highlight
+  // Step 0: Welcome (no highlight)
+  // Step 1: Navigation (highlight controls)
+  // Step 2: Watch (highlight play button and speed)
+  // Step 3: Explore (highlight timeline)
+  const navHighlight = showOnboarding ? onboardingStep : null;
+
   return (
     <div className="page-home">
       <TripNav
@@ -242,6 +410,9 @@ function Home() {
         speedMultiplier={speedMultiplier}
         onSpeedChange={handleSpeedChange}
         progress={progress}
+        highlightStep={navHighlight}
+        showStats={showStats}
+        onStatsToggle={handleStatsToggle}
       />
       <TripMap
         theme={theme}
@@ -258,9 +429,28 @@ function Home() {
         onZoomHandled={handleZoomHandled}
         onStopClick={handleStopClick}
         arrivingStop={arrivingStop}
+        isFinalDay={isFinalDay}
+      />
+      <TripStats
+        theme={theme}
+        isVisible={showStats}
+        onClose={handleStatsToggle}
       />
       {selectedStop && (
         <StopModal stop={selectedStop} onClose={handleCloseModal} />
+      )}
+      {showOnboarding && (
+        <OnboardingModal
+          onComplete={handleOnboardingComplete}
+          onStartAnimation={handleStartAnimation}
+          onStepChange={handleOnboardingStepChange}
+        />
+      )}
+      {showTripEnd && (
+        <TripEndModal
+          onClose={handleTripEndClose}
+          onReplay={handleReplayTrip}
+        />
       )}
     </div>
   );

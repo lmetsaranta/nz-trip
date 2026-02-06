@@ -1,0 +1,218 @@
+/* ── Trip Statistics Panel ── */
+.trip-stats {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+  width: 280px;
+  max-height: calc(100vh - 100px);
+  overflow: hidden;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.06),
+    0 1px 2px rgba(0, 0, 0, 0.04);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.trip-stats--hidden {
+  transform: translateY(20px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.trip-stats--dark {
+  background: rgba(10, 20, 15, 0.8);
+  border-color: rgba(16, 185, 129, 0.15);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.3),
+    0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Header */
+.trip-stats__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.trip-stats--dark .trip-stats__header {
+  border-bottom-color: rgba(16, 185, 129, 0.15);
+}
+
+.trip-stats__title {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.75);
+  margin: 0;
+}
+
+.trip-stats--dark .trip-stats__title {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.trip-stats__close {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.4);
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.trip-stats__close:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.trip-stats--dark .trip-stats__close {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.trip-stats--dark .trip-stats__close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Content */
+.trip-stats__content {
+  padding: 16px;
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+/* Summary grid */
+.trip-stats__summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.trip-stats__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.trip-stats__stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #10B981;
+}
+
+.trip-stats--dark .trip-stats__stat-value {
+  color: #34D399;
+}
+
+.trip-stats__stat-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.trip-stats--dark .trip-stats__stat-label {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Mode breakdown */
+.trip-stats__section-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 10px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.trip-stats--dark .trip-stats__section-title {
+  color: rgba(255, 255, 255, 0.45);
+  border-top-color: rgba(16, 185, 129, 0.15);
+}
+
+.trip-stats__modes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.trip-stats__mode {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.trip-stats__mode-icon {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.trip-stats__mode-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.trip-stats__mode-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.trip-stats--dark .trip-stats__mode-name {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.trip-stats__mode-count {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.trip-stats--dark .trip-stats__mode-count {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* Mode colors */
+.trip-stats__mode-icon--fly { background: rgba(16, 185, 129, 0.15); color: #10B981; }
+.trip-stats__mode-icon--drive { background: rgba(52, 211, 153, 0.15); color: #34D399; }
+.trip-stats__mode-icon--hike { background: rgba(110, 231, 183, 0.15); color: #059669; }
+.trip-stats__mode-icon--ferry { background: rgba(14, 165, 233, 0.15); color: #0ea5e9; }
+.trip-stats__mode-icon--bike { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+.trip-stats__mode-icon--canoeing { background: rgba(20, 184, 166, 0.15); color: #14b8a6; }
+.trip-stats__mode-icon--rafting { background: rgba(139, 92, 246, 0.15); color: #8b5cf6; }
+.trip-stats__mode-icon--surfing { background: rgba(236, 72, 153, 0.15); color: #ec4899; }
+.trip-stats__mode-icon--spa { background: rgba(244, 114, 182, 0.15); color: #f472b6; }
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+  .trip-stats {
+    bottom: 80px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-width: none;
+  }
+}

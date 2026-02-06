@@ -90,6 +90,53 @@
   transform: scale(1.03);
 }
 
+.stop-modal__image--loading {
+  opacity: 0;
+}
+
+.stop-modal__image--loaded {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Image placeholder gradient */
+.stop-modal__image-placeholder {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #0f2419 0%, #1a3d2e 50%, #0f2419 100%);
+  background-size: 200% 200%;
+  animation: placeholder-shimmer 1.5s ease infinite;
+}
+
+@keyframes placeholder-shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Image error fallback */
+.stop-modal__image-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #0f2419 0%, #1a3d2e 100%);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.stop-modal__image-fallback svg {
+  width: 48px;
+  height: 48px;
+}
+
+.stop-modal__image-fallback span {
+  font-size: 13px;
+  font-weight: 500;
+}
+
 /* Day badge */
 .stop-modal__day {
   position: absolute;
