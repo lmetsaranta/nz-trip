@@ -3,6 +3,25 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "../styles/landing.css";
 
+function LandingLanguageSwitcher() {
+  const { i18n } = useTranslation();
+
+  const toggleLanguage = () => {
+    const newLang = i18n.language === "fi" ? "en" : "fi";
+    i18n.changeLanguage(newLang);
+  };
+
+  return (
+    <button
+      className="landing__lang"
+      onClick={toggleLanguage}
+      title={i18n.language === "fi" ? "Switch to English" : "Vaihda suomeksi"}
+    >
+      {i18n.language === "fi" ? "EN" : "FI"}
+    </button>
+  );
+}
+
 function Landing() {
   const [isAnimating, setIsAnimating] = useState(false);
   const [showContent, setShowContent] = useState(false);
@@ -25,6 +44,9 @@ function Landing() {
 
   return (
     <div className="landing">
+      {/* Language switcher */}
+      <LandingLanguageSwitcher />
+
       {/* Animated background gradient */}
       <div className="landing__gradient" />
 

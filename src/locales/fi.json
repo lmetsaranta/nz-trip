@@ -142,5 +142,12 @@
     "rafting": "Koskimelonta",
     "surfing": "Surffaus",
     "plane": "Lento"
+  },
+  "destination": {
+    "backToMap": "Takaisin kartalle",
+    "notFound": "Kohdetta ei löytynyt",
+    "notFoundDescription": "Etsimääsi kohdetta ei ole olemassa.",
+    "coordinates": "Koordinaatit",
+    "openInGoogleMaps": "Avaa Google Mapsissa"
   }
 }

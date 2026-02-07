@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { stops } from "../data/trip";
 import { getStopImageUrl, getUnsplashFallbackUrl } from "../utils/images";
 import "../styles/destination.css";
@@ -27,23 +28,29 @@ function FallbackImage({ src, fallbackSrc, alt, className }) {
 function Destination() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const stop = stops.find((s) => s.id === id);
 
   if (!stop) {
     return (
       <div className="destination destination--not-found">
         <div className="destination__container">
-          <h1 className="destination__title">Destination not found</h1>
+          <h1 className="destination__title">{t("destination.notFound")}</h1>
           <p className="destination__text">
-            The destination you're looking for doesn't exist.
+            {t("destination.notFoundDescription")}
           </p>
           <Link to="/map" className="destination__back">
-            Back to Map
+            {t("destination.backToMap")}
           </Link>
         </div>
       </div>
     );
   }
+
+  // Get story content (longer description) for this stop
+  const storyContent = t(`${stop.id}`, { ns: "stories", defaultValue: "" });
+  // Fallback to short description if no story exists
+  const displayContent = storyContent || t(`${stop.id}`, { ns: "stops", defaultValue: stop.description });
 
   const handleBack = () => {
     // Use browser back to preserve map state
@@ -59,7 +66,7 @@ function Destination() {
       title: stop.name,
       image: getStopImageUrl(stop),
       fallbackImage: getUnsplashFallbackUrl(stop),
-      text: stop.content || stop.description,
+      text: displayContent,
     },
   ];
 
@@ -79,14 +86,14 @@ function Destination() {
           onClick={handleBack}
         >
           <span className="destination__back-icon">←</span>
-          <span className="destination__back-text">Back to Map</span>
+          <span className="destination__back-text">{t("destination.backToMap")}</span>
         </button>
         <div className="destination__hero-content">
           <span className={`destination__type destination__type--${stop.type}`}>
-            {stop.type}
+            {t(`stopTypes.${stop.type}`, { defaultValue: stop.type })}
           </span>
           <h1 className="destination__title">{stop.name}</h1>
-          <p className="destination__day">Day {stop.day}</p>
+          <p className="destination__day">{t("stopModal.day")} {stop.day}</p>
         </div>
       </div>
 
@@ -114,7 +121,7 @@ function Destination() {
         {/* Coordinates */}
         <div className="destination__meta">
           <div className="destination__coords">
-            <span className="destination__coords-label">Coordinates</span>
+            <span className="destination__coords-label">{t("destination.coordinates")}</span>
             <span className="destination__coords-value">
               {stop.coords[0].toFixed(4)}, {stop.coords[1].toFixed(4)}
             </span>
@@ -125,7 +132,7 @@ function Destination() {
             rel="noopener noreferrer"
             className="destination__maps-link"
           >
-            Open in Google Maps
+            {t("destination.openInGoogleMaps")}
           </a>
         </div>
       </div>

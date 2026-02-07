@@ -142,5 +142,12 @@
     "rafting": "Rafting",
     "surfing": "Surfing",
     "plane": "Flight"
+  },
+  "destination": {
+    "backToMap": "Back to Map",
+    "notFound": "Destination not found",
+    "notFoundDescription": "The destination you're looking for doesn't exist.",
+    "coordinates": "Coordinates",
+    "openInGoogleMaps": "Open in Google Maps"
   }
 }
