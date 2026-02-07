@@ -11,7 +11,7 @@ const ONBOARDING_STEPS = [
   {
     title: "How to Navigate",
     subtitle: "Your Controls",
-    content: "Use the timeline slider to jump to any day. The speed button (1x) lets you watch at 0.5x, 1x, or 2x speed. Zoom in/out and toggle light/dark themes.",
+    content: "Use the timeline to jump to any day and adjust playback speed (0.5x-2x). Toggle the weather panel for conditions, photo gallery for snapshots, and switch between light/dark themes.",
     icon: "🎛️",
   },
   {
@@ -23,7 +23,7 @@ const ONBOARDING_STEPS = [
   {
     title: "Explore at Your Pace",
     subtitle: "Dive Deeper",
-    content: "After watching, click any stop marker to learn more about that location. Each destination has photos and details about what we experienced.",
+    content: "Click any stop marker to learn more about that location. Browse the photo gallery, check weather conditions, and discover details about each destination.",
     icon: "📍",
   },
 ];

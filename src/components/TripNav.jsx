@@ -18,6 +18,8 @@ function TripNav({
   onStatsToggle,
   showWeather,
   onWeatherToggle,
+  showGallery,
+  onGalleryToggle,
 }) {
   const dayProgress = ((currentDay - 1) / (TIMELINE_CONFIG.totalDays - 1)) * 100;
 
@@ -55,6 +57,13 @@ function TripNav({
           title="Weather"
         >
           🌤️
+        </button>
+        <button
+          className={`trip-nav__btn${showGallery ? " trip-nav__btn--active" : ""}`}
+          onClick={onGalleryToggle}
+          title="Photo gallery"
+        >
+          📷
         </button>
       </div>
 

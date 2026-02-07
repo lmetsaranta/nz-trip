@@ -92,7 +92,7 @@ function Landing() {
 
           {/* Subtle connection lines */}
           <g stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" fill="none">
-            <path d="M508,55 Q600,20 750,80 Q870,150 940,440" strokeDasharray="2 6" />
+            <path d="M508,55 Q560,150 650,240 Q780,340 948,445" strokeDasharray="2 6" />
           </g>
 
           {/* Helsinki/Finland marker */}
@@ -220,10 +220,10 @@ function Landing() {
               <text x="948" y="472" fill="rgba(255,255,255,0.9)" fontSize="14" textAnchor="middle" fontWeight="600">Auckland</text>
             </g>
 
-            {/* Flight path - curved great circle route */}
+            {/* Flight path - curved route through India */}
             <path
               className="flight-path"
-              d="M508,55 Q650,20 780,120 Q880,220 948,445"
+              d="M508,55 Q560,150 650,240 Q780,340 948,445"
               fill="none"
               stroke="url(#flight-gradient)"
               strokeWidth="3"

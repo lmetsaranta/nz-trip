@@ -237,9 +237,9 @@
 
 /* Plane animation along path */
 .flight-plane {
-  offset-path: path("M508,55 Q650,20 780,120 Q880,220 948,445");
+  offset-path: path("M508,55 Q560,150 650,240 Q780,340 948,445");
   offset-distance: 0%;
-  offset-rotate: auto -90deg;
+  offset-rotate: auto 90deg;
   animation: fly-plane 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.6));
 }

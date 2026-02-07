@@ -9,6 +9,7 @@ const DEFAULT_STATE = {
   theme: "dark",
   showStats: false,
   showWeather: true,  // Weather panel open by default
+  showGallery: false,
   mapView: null, // { center: [lat, lng], zoom: number }
   initialZoomDone: false,
   showOnboarding: false,
