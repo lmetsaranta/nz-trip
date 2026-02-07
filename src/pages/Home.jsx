@@ -425,6 +425,13 @@ function Home() {
 
   const handleTreasureClick = useCallback(() => {
     setShowTreasure(true);
+    // Track easter egg discovery in Google Analytics
+    if (window.gtag) {
+      window.gtag('event', 'easter_egg_click', {
+        event_category: 'engagement',
+        event_label: 'treasure_island',
+      });
+    }
   }, []);
 
   // Keyboard navigation
@@ -569,7 +576,7 @@ function Home() {
         <TreasureModal
           isOpen={showTreasure}
           onClose={() => setShowTreasure(false)}
-          projectUrl="https://www.farmoi.com/?lang=fi&nz=1"
+          projectUrl="https://farmoi.com/?utm_source=lmetsaranta.github.io"
           projectName="Farmoi"
           projectDescription="You're curious too! I thought you'd click here. So click ahead and check out an important project called Farmoi. Let's support Finnish local food production."
         />
