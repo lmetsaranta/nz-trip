@@ -1,0 +1,300 @@
+/* ══════════════════════════════════════════════════════════
+   Treasure Modal - Easter Egg
+   ══════════════════════════════════════════════════════════ */
+
+.treasure-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(4, 13, 8, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.treasure-overlay.visible {
+  opacity: 1;
+}
+
+.treasure-modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  padding: 40px 30px;
+  background: linear-gradient(135deg, #0f1f18 0%, #0a1410 100%);
+  border-radius: 24px;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.4),
+    0 0 60px rgba(255, 215, 0, 0.1);
+  transform: scale(0.9) translateY(20px);
+  opacity: 0;
+  transition:
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.3s ease;
+}
+
+.treasure-modal.visible {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* Close button */
+.treasure-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 300;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.treasure-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  transform: scale(1.1);
+}
+
+/* ══════════════════════════════════════════════════════════
+   Treasure Chest
+   ══════════════════════════════════════════════════════════ */
+
+.treasure-chest {
+  position: relative;
+  width: 120px;
+  height: 100px;
+  margin-bottom: 20px;
+}
+
+.treasure-chest-svg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.treasure-lid {
+  position: absolute;
+  bottom: 50px;
+  left: 0;
+  transform-origin: bottom center;
+  transform: rotateX(0deg);
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition-delay: 0.3s;
+}
+
+.treasure-chest--open .treasure-lid {
+  transform: rotateX(-120deg) translateY(-5px);
+}
+
+/* ══════════════════════════════════════════════════════════
+   Gold Coins Animation
+   ══════════════════════════════════════════════════════════ */
+
+.treasure-coins {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 20px;
+  pointer-events: none;
+}
+
+.coin {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
+  background: linear-gradient(135deg, #ffd700 0%, #ffaa00 50%, #ffd700 100%);
+  border-radius: 50%;
+  box-shadow:
+    inset -2px -2px 4px rgba(0, 0, 0, 0.2),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+    0 2px 8px rgba(255, 215, 0, 0.4);
+  opacity: 0;
+  transform: translateY(0) scale(0);
+  animation: coin-burst 1.2s ease-out forwards;
+  animation-delay: var(--delay);
+}
+
+.coin::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+@keyframes coin-burst {
+  0% {
+    transform: translateY(0) translateX(0) scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    transform: translateY(-60px) translateX(var(--x-offset)) scale(1) rotate(180deg);
+    opacity: 1;
+  }
+  40% {
+    transform: translateY(-80px) translateX(var(--x-offset)) scale(1) rotate(360deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(120px) translateX(var(--x-offset)) scale(0.6) rotate(var(--rotation));
+    opacity: 0;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   Reveal Content
+   ══════════════════════════════════════════════════════════ */
+
+.treasure-reveal {
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.treasure-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.treasure-title {
+  margin: 0 0 12px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffd700;
+  text-shadow: 0 2px 20px rgba(255, 215, 0, 0.3);
+}
+
+.treasure-description {
+  margin: 0 0 24px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.treasure-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0a1410;
+  background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+  border: none;
+  border-radius: 100px;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.treasure-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(255, 215, 0, 0.4);
+}
+
+.treasure-btn:active {
+  transform: translateY(0);
+}
+
+/* ══════════════════════════════════════════════════════════
+   Treasure Island Marker - Glow effect
+   ══════════════════════════════════════════════════════════ */
+
+.map-icon-treasure {
+  animation: treasure-glow 2s ease-in-out infinite;
+  cursor: pointer;
+}
+
+@keyframes treasure-glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.7));
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   Light Theme Adjustments
+   ══════════════════════════════════════════════════════════ */
+
+@media (prefers-color-scheme: light) {
+  .treasure-modal {
+    background: linear-gradient(135deg, #fff 0%, #f5f5f5 100%);
+    border-color: rgba(139, 69, 19, 0.2);
+  }
+
+  .treasure-close {
+    color: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  .treasure-close:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: #000;
+  }
+
+  .treasure-title {
+    color: #B8860B;
+    text-shadow: none;
+  }
+
+  .treasure-description {
+    color: #555;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   Responsive
+   ══════════════════════════════════════════════════════════ */
+
+@media (max-width: 480px) {
+  .treasure-overlay {
+    padding: 16px;
+  }
+
+  .treasure-modal {
+    padding: 32px 24px;
+    border-radius: 20px;
+  }
+
+  .treasure-title {
+    font-size: 20px;
+  }
+
+  .treasure-description {
+    font-size: 14px;
+  }
+
+  .treasure-btn {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+}

@@ -11,6 +11,8 @@ import OnboardingModal from "../components/OnboardingModal";
 import TripEndModal from "../components/TripEndModal";
 import TripStats from "../components/TripStats";
 import WeatherPanel from "../components/WeatherPanel";
+import PhotoGalleryPanel from "../components/PhotoGalleryPanel";
+import TreasureModal from "../components/TreasureModal";
 import { useWeatherData } from "../hooks/useWeatherData";
 
 // Auckland coordinates for initial zoom
@@ -93,6 +95,8 @@ function Home() {
   const [initialZoomDone, setInitialZoomDone] = useState(mapState.initialZoomDone);
   const [showStats, setShowStats] = useState(mapState.showStats);
   const [showWeather, setShowWeather] = useState(mapState.showWeather);
+  const [showGallery, setShowGallery] = useState(mapState.showGallery);
+  const [showTreasure, setShowTreasure] = useState(false);
   const shownTooltipsRef = useRef(new Set());
 
   // Weather data hook
@@ -106,9 +110,10 @@ function Home() {
       speedMultiplier,
       showStats,
       showWeather,
+      showGallery,
       initialZoomDone,
     });
-  }, [currentDay, theme, speedMultiplier, showStats, showWeather, initialZoomDone, updateState]);
+  }, [currentDay, theme, speedMultiplier, showStats, showWeather, showGallery, initialZoomDone, updateState]);
 
   // Handle map view changes
   const handleMapViewChange = useCallback((center, zoom) => {
@@ -156,8 +161,7 @@ function Home() {
     setCurrentDay((d) => {
       if (d >= TIMELINE_CONFIG.totalDays) {
         setIsPlaying(false);
-        // Show trip end modal after a brief delay
-        setTimeout(() => setShowTripEnd(true), 500);
+        // Modal is already shown during final flight
         return d;
       }
       return d + 1;
@@ -320,6 +324,27 @@ function Home() {
     return null;
   }, [isPlaying, currentRoutes, vehicleData.routeIndex, vehicleData.routeProgress]);
 
+  // Show trip end modal during final flight (at 50% progress)
+  const tripEndShownRef = useRef(false);
+  useEffect(() => {
+    if (!isPlaying || !isFinalDay || tripEndShownRef.current) return;
+
+    const route = currentRoutes[vehicleData.routeIndex];
+    const isFinalFlight = route?.mode === "fly" && route?.to === "home";
+
+    if (isFinalFlight && vehicleData.routeProgress >= 0.5) {
+      tripEndShownRef.current = true;
+      setShowTripEnd(true);
+    }
+  }, [isPlaying, isFinalDay, currentRoutes, vehicleData.routeIndex, vehicleData.routeProgress]);
+
+  // Reset trip end shown flag when day changes or replay
+  useEffect(() => {
+    if (currentDay < TIMELINE_CONFIG.totalDays) {
+      tripEndShownRef.current = false;
+    }
+  }, [currentDay]);
+
   const handleThemeToggle = useCallback(() => {
     setTheme((t) => (t === "light" ? "dark" : "light"));
   }, []);
@@ -394,6 +419,14 @@ function Home() {
     setShowWeather((w) => !w);
   }, []);
 
+  const handleGalleryToggle = useCallback(() => {
+    setShowGallery((g) => !g);
+  }, []);
+
+  const handleTreasureClick = useCallback(() => {
+    setShowTreasure(true);
+  }, []);
+
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -421,25 +454,31 @@ function Home() {
           setCurrentDay((d) => Math.min(TIMELINE_CONFIG.totalDays, d + 1));
           shownTooltipsRef.current = new Set();
           break;
-        case "Escape": // Escape = close modals
+        case "Escape": // Escape = close modals/panels
           if (selectedStop) {
             setSelectedStop(null);
           } else if (showOnboarding) {
             setShowOnboarding(false);
           } else if (showTripEnd) {
             setShowTripEnd(false);
+          } else if (showGallery) {
+            setShowGallery(false);
           }
           break;
         case "w": // 'w' = toggle weather panel
         case "W":
           setShowWeather((w) => !w);
           break;
+        case "p": // 'p' = toggle photo gallery
+        case "P":
+          setShowGallery((g) => !g);
+          break;
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selectedStop, showOnboarding, showTripEnd]);
+  }, [selectedStop, showOnboarding, showTripEnd, showGallery]);
 
   // Map onboarding step to navbar highlight
   // Step 0: Welcome (no highlight)
@@ -467,6 +506,8 @@ function Home() {
         onStatsToggle={handleStatsToggle}
         showWeather={showWeather}
         onWeatherToggle={handleWeatherToggle}
+        showGallery={showGallery}
+        onGalleryToggle={handleGalleryToggle}
       />
       <TripMap
         theme={theme}
@@ -483,6 +524,7 @@ function Home() {
         zoomCommand={zoomCommand}
         onZoomHandled={handleZoomHandled}
         onStopClick={handleStopClick}
+        onTreasureClick={handleTreasureClick}
         arrivingStop={arrivingStop}
         isFinalDay={isFinalDay}
         onMapViewChange={handleMapViewChange}
@@ -501,6 +543,12 @@ function Home() {
         onClose={handleWeatherToggle}
         loading={weatherLoading}
       />
+      <PhotoGalleryPanel
+        theme={theme}
+        isVisible={showGallery}
+        onClose={handleGalleryToggle}
+        currentDay={currentDay}
+      />
       {selectedStop && (
         <StopModal stop={selectedStop} onClose={handleCloseModal} />
       )}
@@ -515,6 +563,15 @@ function Home() {
         <TripEndModal
           onClose={handleTripEndClose}
           onReplay={handleReplayTrip}
+        />
+      )}
+      {showTreasure && (
+        <TreasureModal
+          isOpen={showTreasure}
+          onClose={() => setShowTreasure(false)}
+          projectUrl="https://www.farmoi.com/?lang=fi"
+          projectName="Farmoi"
+          projectDescription="You're curious too! I thought you'd click here. So click ahead and check out an important project called Farmoi. Let's support Finnish local food production."
         />
       )}
     </div>

@@ -389,6 +389,45 @@ const ICONS = {
     <!-- Hat pom pom -->
     <circle cx="16" cy="6" r="2.5" fill="#fff"/>
   </svg>`,
+
+  // Treasure island with palm tree and chest
+  treasure: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+    <!-- Water/sand shadow -->
+    <ellipse cx="24" cy="44" rx="20" ry="4" fill="rgba(14,165,233,0.3)"/>
+    <!-- Island sand -->
+    <ellipse cx="24" cy="40" rx="18" ry="6" fill="#fbbf24"/>
+    <ellipse cx="24" cy="39" rx="16" ry="5" fill="#fcd34d"/>
+    <!-- Palm tree trunk -->
+    <path d="M16 40 Q14 28 16 16" stroke="#92400e" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <!-- Palm leaves -->
+    <path d="M16 16 Q8 12 4 18" stroke="#22c55e" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M16 16 Q12 8 6 8" stroke="#16a34a" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M16 16 Q20 8 26 10" stroke="#22c55e" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M16 16 Q24 14 28 18" stroke="#16a34a" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- Coconuts -->
+    <circle cx="15" cy="18" r="2" fill="#854d0e"/>
+    <circle cx="18" cy="17" r="1.5" fill="#713f12"/>
+    <!-- Treasure chest -->
+    <rect x="26" y="32" width="16" height="10" rx="1" fill="#a0522d"/>
+    <rect x="26" y="32" width="16" height="10" rx="1" fill="#8b4513"/>
+    <rect x="26" y="37" width="16" height="5" rx="1" fill="#6b3710"/>
+    <!-- Chest lid -->
+    <path d="M26 32 L26 28 Q34 24 42 28 L42 32 Z" fill="#a0522d"/>
+    <!-- Metal bands -->
+    <rect x="25" y="34" width="18" height="2" fill="#cd853f"/>
+    <rect x="25" y="38" width="18" height="2" fill="#cd853f"/>
+    <!-- Lock -->
+    <rect x="32" y="33" width="4" height="5" rx="1" fill="#ffd700"/>
+    <circle cx="34" cy="36" r="1" fill="#b8860b"/>
+    <!-- Gold coins spilling out -->
+    <circle cx="44" cy="38" r="3" fill="#ffd700"/>
+    <circle cx="46" cy="42" r="2.5" fill="#ffaa00"/>
+    <circle cx="42" cy="44" r="2" fill="#ffd700"/>
+    <!-- Sparkles -->
+    <circle cx="38" cy="28" r="1" fill="#fff" opacity="0.8"/>
+    <circle cx="30" cy="30" r="0.8" fill="#fff" opacity="0.6"/>
+    <circle cx="45" cy="35" r="0.8" fill="#fff" opacity="0.7"/>
+  </svg>`,
 };
 
 const SIZES = {
@@ -404,6 +443,7 @@ const SIZES = {
   bike: [40, 40],
   santa: [40, 44],
   christmas: [56, 48],
+  treasure: [48, 48],
 };
 
 const ANCHORS = {
@@ -419,6 +459,7 @@ const ANCHORS = {
   bike: [20, 32],
   santa: [20, 42],
   christmas: [28, 46],
+  treasure: [24, 44],
 };
 
 function createIcon(type, day) {
@@ -433,9 +474,13 @@ function createIcon(type, day) {
   const svg = ICONS[iconType] || ICONS.destination;
   const size = SIZES[iconType] || SIZES.destination;
   const anchor = ANCHORS[iconType] || ANCHORS.destination;
+
+  // Add special class for treasure marker glow effect
+  const className = iconType === "treasure" ? "map-icon map-icon-treasure" : "map-icon";
+
   return L.divIcon({
     html: svg,
-    className: "map-icon",
+    className: className,
     iconSize: size,
     iconAnchor: anchor,
     popupAnchor: [0, -anchor[1]],

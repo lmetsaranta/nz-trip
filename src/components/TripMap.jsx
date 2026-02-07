@@ -1,5 +1,6 @@
 import "leaflet/dist/leaflet.css";
 import "../styles/map.css";
+import "../styles/treasure.css";
 
 import { useMemo, useState, useEffect, useRef } from "react";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
@@ -10,6 +11,14 @@ import MapController from "./MapController";
 import AnimatedVehicle from "./AnimatedVehicle";
 import ArrivalMarker from "./ArrivalMarker";
 import StopTooltip from "./StopTooltip";
+
+// Hidden treasure island in the Tasman Sea
+const TREASURE_ISLAND = {
+  id: "treasure-island",
+  name: "Hidden Treasure",
+  coords: [-42.5, 166.0],
+  type: "treasure",
+};
 
 // Helper component to convert lat/lng to screen position
 function TooltipPositioner({ stop, vehiclePosition, theme }) {
@@ -58,6 +67,7 @@ function TripMap({
   zoomCommand,
   onZoomHandled,
   onStopClick,
+  onTreasureClick,
   arrivingStop,
   isFinalDay,
   onMapViewChange,
@@ -192,6 +202,14 @@ function TripMap({
             isOvernight={overnightStopIds.has(stop.id)}
           />
         ))}
+
+        {/* Treasure Island Easter Egg - always visible */}
+        <StopMarker
+          key="treasure-island"
+          stop={TREASURE_ISLAND}
+          onClick={onTreasureClick}
+          isOvernight={false}
+        />
 
         {/* Arrival animation at destination */}
         {isPlaying && arrivalType && (
