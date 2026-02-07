@@ -1,35 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { stops } from "../data/trip";
-import { getStopImageUrl, getUnsplashFallbackUrl } from "../utils/images";
+import { probeLocalImages, getUnsplashFallbackUrl } from "../utils/images";
 import "../styles/destination.css";
-
-// Image component with fallback handling
-function FallbackImage({ src, fallbackSrc, alt, className }) {
-  const [useFallback, setUseFallback] = useState(false);
-
-  const handleError = () => {
-    if (!useFallback && fallbackSrc) {
-      setUseFallback(true);
-    }
-  };
-
-  return (
-    <img
-      src={useFallback ? fallbackSrc : src}
-      alt={alt}
-      className={className}
-      onError={handleError}
-    />
-  );
-}
 
 function Destination() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
   const stop = stops.find((s) => s.id === id);
+
+  const [images, setImages] = useState([]);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+
+  // Probe for local images
+  useEffect(() => {
+    if (stop) {
+      probeLocalImages(stop.id).then((foundImages) => {
+        if (foundImages.length > 0) {
+          setImages(foundImages);
+        } else {
+          setImages([getUnsplashFallbackUrl(stop)]);
+        }
+        setImagesLoaded(true);
+      });
+    }
+  }, [stop]);
 
   if (!stop) {
     return (
@@ -61,26 +58,21 @@ function Destination() {
     }
   };
 
-  const pages = stop.pages || [
-    {
-      title: stop.name,
-      image: getStopImageUrl(stop),
-      fallbackImage: getUnsplashFallbackUrl(stop),
-      text: displayContent,
-    },
-  ];
+  const heroImage = images[0] || getUnsplashFallbackUrl(stop);
 
   return (
     <div className="destination">
       {/* Hero image */}
       <div className="destination__hero">
-        <FallbackImage
-          src={pages[0].image}
-          fallbackSrc={pages[0].fallbackImage}
-          alt={stop.name}
-          className="destination__hero-image"
-        />
+        {imagesLoaded && (
+          <img
+            src={heroImage}
+            alt={stop.name}
+            className="destination__hero-image"
+          />
+        )}
         <div className="destination__hero-overlay" />
+
         <button
           className="destination__back-btn"
           onClick={handleBack}
@@ -100,23 +92,25 @@ function Destination() {
       {/* Content */}
       <div className="destination__container">
         <div className="destination__content">
-          {pages.map((page, index) => (
-            <section key={index} className="destination__section">
-              {index > 0 && (
-                <>
-                  <h2 className="destination__section-title">{page.title}</h2>
-                  <FallbackImage
-                    src={page.image}
-                    fallbackSrc={page.fallbackImage}
-                    alt={page.title}
-                    className="destination__section-image"
-                  />
-                </>
-              )}
-              <p className="destination__text">{page.text}</p>
-            </section>
-          ))}
+          <p className="destination__text">{displayContent}</p>
         </div>
+
+        {/* Image carousel */}
+        {images.length > 0 && (
+          <div className="destination__gallery">
+            <div className="destination__gallery-scroll">
+              {images.map((img, index) => (
+                <div key={index} className="destination__gallery-item">
+                  <img
+                    src={img}
+                    alt={`${stop.name} ${index + 1}`}
+                    className="destination__gallery-image"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Coordinates */}
         <div className="destination__meta">
