@@ -1,25 +1,57 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { probeLocalImages, getUnsplashFallbackUrl } from "../utils/images";
 import "../styles/modal.css";
 
 function StopModal({ stop, onClose }) {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
+  const [localImages, setLocalImages] = useState([]);
+  const [imagesProbed, setImagesProbed] = useState(false);
 
   // Get pages - either from stop.pages or create single page from stop data
   const pages = stop.pages || [
     {
       title: stop.name,
-      image: stop.image || `https://source.unsplash.com/800x600/?${encodeURIComponent(stop.name + " new zealand")}`,
       text: stop.content || stop.description,
     },
   ];
 
   const totalPages = pages.length;
   const page = pages[currentPage];
+
+  // Probe for local images when modal opens
+  useEffect(() => {
+    if (!stop.image) {
+      probeLocalImages(stop.id).then((images) => {
+        setLocalImages(images);
+        setImagesProbed(true);
+        if (images.length === 0) {
+          // No local images, will use Unsplash fallback
+          setImageLoading(true);
+        }
+      });
+    } else {
+      // Stop has explicit image, use it
+      setLocalImages([stop.image]);
+      setImagesProbed(true);
+    }
+  }, [stop.id, stop.image]);
+
+  // Get current image URL
+  const getCurrentImageUrl = () => {
+    if (localImages.length > 0) {
+      return localImages[currentImageIndex];
+    }
+    // Fallback to Unsplash
+    return getUnsplashFallbackUrl(stop);
+  };
+
+  const totalImages = localImages.length || 1; // At least 1 for Unsplash fallback
 
   useEffect(() => {
     // Animate in
@@ -48,6 +80,7 @@ function StopModal({ stop, onClose }) {
 
   const goToPage = (index) => {
     setCurrentPage(index);
+    setCurrentImageIndex(0);
     setImageLoading(true);
     setImageError(false);
   };
@@ -63,10 +96,24 @@ function StopModal({ stop, onClose }) {
 
   const nextPage = () => {
     setCurrentPage((p) => (p + 1) % totalPages);
+    setCurrentImageIndex(0);
   };
 
   const prevPage = () => {
     setCurrentPage((p) => (p - 1 + totalPages) % totalPages);
+    setCurrentImageIndex(0);
+  };
+
+  const nextImage = () => {
+    setCurrentImageIndex((i) => (i + 1) % totalImages);
+    setImageLoading(true);
+    setImageError(false);
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((i) => (i - 1 + totalImages) % totalImages);
+    setImageLoading(true);
+    setImageError(false);
   };
 
   return (
@@ -82,7 +129,7 @@ function StopModal({ stop, onClose }) {
 
         {/* Image */}
         <div className="stop-modal__image-container">
-          {imageLoading && !imageError && (
+          {(imageLoading || !imagesProbed) && !imageError && (
             <div className="stop-modal__image-placeholder" />
           )}
           {imageError ? (
@@ -103,15 +150,41 @@ function StopModal({ stop, onClose }) {
               <span>Image unavailable</span>
             </div>
           ) : (
-            <img
-              src={page.image}
-              alt={page.title}
-              className={`stop-modal__image ${imageLoading ? "stop-modal__image--loading" : "stop-modal__image--loaded"}`}
-              loading="lazy"
-              onLoad={handleImageLoad}
-              onError={handleImageError}
-            />
+            imagesProbed && (
+              <img
+                src={getCurrentImageUrl()}
+                alt={page.title}
+                className={`stop-modal__image ${imageLoading ? "stop-modal__image--loading" : "stop-modal__image--loaded"}`}
+                loading="lazy"
+                onLoad={handleImageLoad}
+                onError={handleImageError}
+              />
+            )
           )}
+
+          {/* Image navigation arrows (only show if multiple images) */}
+          {totalImages > 1 && imagesProbed && (
+            <>
+              <button
+                className="stop-modal__image-nav stop-modal__image-nav--prev"
+                onClick={prevImage}
+                aria-label="Previous image"
+              >
+                ‹
+              </button>
+              <button
+                className="stop-modal__image-nav stop-modal__image-nav--next"
+                onClick={nextImage}
+                aria-label="Next image"
+              >
+                ›
+              </button>
+              <div className="stop-modal__image-counter">
+                {currentImageIndex + 1} / {totalImages}
+              </div>
+            </>
+          )}
+
           {/* Day badge */}
           <div className="stop-modal__day">Day {stop.day}</div>
           {/* Type badge */}

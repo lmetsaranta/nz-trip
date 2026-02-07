@@ -1,0 +1,332 @@
+/* ══════════════════════════════════════════════════════════
+   Onboarding Modal & Trip End Modal
+   ══════════════════════════════════════════════════════════ */
+
+.onboarding-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: transparent;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.onboarding-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.onboarding-modal {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  background: linear-gradient(180deg, rgba(15, 31, 24, 0.98) 0%, rgba(10, 20, 16, 0.98) 100%);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow:
+    0 32px 100px rgba(0, 0, 0, 0.6),
+    0 0 80px rgba(16, 185, 129, 0.15),
+    0 0 0 1px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transform: scale(0.9) translateY(20px);
+  opacity: 0;
+  transition:
+    transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.4s ease;
+  pointer-events: auto;
+}
+
+.onboarding-modal.visible {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* Progress dots */
+.onboarding-progress {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.onboarding-dot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.onboarding-dot:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.onboarding-dot.active {
+  background: #10B981;
+  transform: scale(1.3);
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
+}
+
+.onboarding-dot.completed {
+  background: #34D399;
+}
+
+/* Icon */
+.onboarding-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 24px;
+  font-size: 40px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 20px;
+  animation: icon-pulse 2s ease-in-out infinite;
+}
+
+@keyframes icon-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.2);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px 4px rgba(16, 185, 129, 0.15);
+  }
+}
+
+/* Content */
+.onboarding-content {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.onboarding-subtitle {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #10B981;
+}
+
+.onboarding-title {
+  margin: 0 0 16px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.onboarding-text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Navigation */
+.onboarding-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.onboarding-nav--center {
+  justify-content: center;
+}
+
+.onboarding-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.onboarding-btn {
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.onboarding-btn--primary {
+  background: #10B981;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+}
+
+.onboarding-btn--primary:hover {
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+.onboarding-btn--secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.onboarding-btn--secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+/* Skip link */
+.onboarding-skip {
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  padding: 8px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.onboarding-skip:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ══════════════════════════════════════════════════════════
+   Trip End Modal Specific Styles
+   ══════════════════════════════════════════════════════════ */
+
+.onboarding-modal--end {
+  max-width: 480px;
+}
+
+.onboarding-modal--end .onboarding-progress {
+  display: none;
+}
+
+/* Plane animation */
+.trip-end-plane {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+  animation: plane-fly-in 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes plane-fly-in {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.5) rotate(-20deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+}
+
+.trip-end-plane svg {
+  filter: drop-shadow(0 4px 12px rgba(16, 185, 129, 0.3));
+  animation: plane-hover 3s ease-in-out infinite;
+}
+
+@keyframes plane-hover {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(2deg);
+  }
+}
+
+/* Stats */
+.trip-end-stats {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-bottom: 28px;
+  padding: 20px;
+  background: rgba(16, 185, 129, 0.08);
+  border-radius: 16px;
+  border: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+.trip-end-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.trip-end-stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #10B981;
+}
+
+.trip-end-stat-label {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ══════════════════════════════════════════════════════════
+   Responsive
+   ══════════════════════════════════════════════════════════ */
+
+@media (max-width: 480px) {
+  .onboarding-overlay {
+    padding: 12px;
+  }
+
+  .onboarding-modal {
+    padding: 24px;
+    border-radius: 20px;
+  }
+
+  .onboarding-icon {
+    width: 64px;
+    height: 64px;
+    font-size: 32px;
+  }
+
+  .onboarding-title {
+    font-size: 24px;
+  }
+
+  .onboarding-text {
+    font-size: 14px;
+  }
+
+  .onboarding-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .onboarding-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .trip-end-stats {
+    gap: 20px;
+    padding: 16px;
+  }
+
+  .trip-end-stat-value {
+    font-size: 24px;
+  }
+}

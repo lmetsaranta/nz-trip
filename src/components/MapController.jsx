@@ -27,17 +27,53 @@ function MapController({
   vehicleMode,
   routeProgress,
   routeDistance,
+  isFinalDay,
+  onMapViewChange,
+  initialView,
 }) {
   const map = useMap();
   const prevDayRef = useRef(currentDay);
   const prevModeRef = useRef(null);
   const targetZoomRef = useRef(map.getZoom());
+  const hasRestoredView = useRef(false);
+
+  // Restore saved view on mount (only once)
+  useEffect(() => {
+    if (initialView && !hasRestoredView.current) {
+      hasRestoredView.current = true;
+      map.setView(initialView.center, initialView.zoom, { animate: false });
+    }
+  }, [initialView, map]);
+
+  // Report map view changes for state preservation
+  useEffect(() => {
+    if (!onMapViewChange) return;
+
+    const handleMoveEnd = () => {
+      const center = map.getCenter();
+      onMapViewChange([center.lat, center.lng], map.getZoom());
+    };
+
+    map.on("moveend", handleMoveEnd);
+    return () => map.off("moveend", handleMoveEnd);
+  }, [map, onMapViewChange]);
 
   // Handle manual zoom commands
   useEffect(() => {
     if (!zoomCommand) return;
-    if (zoomCommand === "in") map.zoomIn();
-    if (zoomCommand === "out") map.zoomOut();
+
+    if (zoomCommand === "in") {
+      map.zoomIn();
+    } else if (zoomCommand === "out") {
+      map.zoomOut();
+    } else if (zoomCommand.type === "flyTo" && zoomCommand.coords) {
+      // Custom flyTo command with coordinates and zoom level
+      map.flyTo(zoomCommand.coords, zoomCommand.zoom || 10, {
+        duration: 2.5,
+        easeLinearity: 0.25
+      });
+    }
+
     onZoomHandled();
   }, [zoomCommand, map, onZoomHandled]);
 
@@ -56,15 +92,23 @@ function MapController({
 
   // Auto-zoom based on vehicle mode during playback
   // For long routes: zoom out at start, zoom in for arrival
+  // For final day departure: continuously zoom out as plane flies away
   useEffect(() => {
     if (!isPlaying || !vehicleMode) return;
 
     const baseZoom = MODE_ZOOM_LEVELS[vehicleMode] || 10;
     const isLongRoute = routeDistance && routeDistance > LONG_ROUTE_THRESHOLD;
+    const isFinalFlight = isFinalDay && vehicleMode === "fly";
 
-    // Calculate target zoom based on progress for long routes
+    // Calculate target zoom based on progress
     let targetZoom = baseZoom;
-    if (isLongRoute) {
+
+    if (isFinalFlight) {
+      // Final departure: start zoomed in, progressively zoom out as plane flies away
+      const startZoom = 8;
+      const endZoom = 4;
+      targetZoom = startZoom - (startZoom - endZoom) * routeProgress;
+    } else if (isLongRoute) {
       // Zoom out at start (progress < 0.2), zoom in for arrival (progress > 0.7)
       if (routeProgress < 0.2) {
         // Start: zoomed out (2 levels below base)
@@ -79,10 +123,11 @@ function MapController({
       }
     }
 
-    // Only animate zoom when mode changes or when there's significant zoom difference on long routes
+    // Only animate zoom when mode changes or when there's significant zoom difference
     const currentZoom = map.getZoom();
     const shouldAnimate = prevModeRef.current !== vehicleMode ||
-      (isLongRoute && Math.abs(currentZoom - targetZoom) > 0.3);
+      (isLongRoute && Math.abs(currentZoom - targetZoom) > 0.3) ||
+      (isFinalFlight && Math.abs(currentZoom - targetZoom) > 0.2);
 
     if (prevModeRef.current !== vehicleMode) {
       prevModeRef.current = vehicleMode;
@@ -91,11 +136,11 @@ function MapController({
     if (shouldAnimate) {
       targetZoomRef.current = targetZoom;
       map.flyTo(vehiclePosition || map.getCenter(), targetZoom, {
-        duration: isLongRoute ? 2 : 1.5,
+        duration: isFinalFlight ? 1 : (isLongRoute ? 2 : 1.5),
         easeLinearity: 0.5
       });
     }
-  }, [isPlaying, vehicleMode, vehiclePosition, map, routeProgress, routeDistance]);
+  }, [isPlaying, vehicleMode, vehiclePosition, map, routeProgress, routeDistance, isFinalDay]);
 
   // Follow vehicle during playback (smooth panning)
   useEffect(() => {

@@ -19,20 +19,32 @@ export const TILE_LAYERS = {
 
 export const TIMELINE_CONFIG = {
   totalDays: 27,
-  msPerDay: 1500,
 };
 
 export const stops = [
+  // ═══════════════════════════════════════════════════════════════════════════
   // Day 1 — Auckland arrival
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "auckland",
     name: "Auckland",
-    description: "City of Sails — arrival and first night in NZ.",
+    description: "City of Sails — walking in the city center and good food.",
     coords: [-36.8485, 174.7633],
     type: "destination",
     day: 1,
   },
-  // Day 2 — Waiheke Island (ferry + bike trip)
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 2 — Waiheke Island (ferry + bike)
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: "auckland-harbour",
+    name: "Auckland Harbour",
+    description: "Ferry terminal for Waiheke Island.",
+    coords: [-36.8440, 174.7670],
+    type: "destination",
+    day: 2,
+  },
   {
     id: "waiheke",
     name: "Waiheke Island",
@@ -43,335 +55,495 @@ export const stops = [
   },
   {
     id: "waiheke-bike",
-    name: "Waiheke Bike Tour",
-    description: "Cycling around the island — vineyards, olive groves, and stunning coastal views.",
+    name: "Waiheke eBike Tour",
+    description: "Explore Waiheke Island wineries and beaches with eBikes.",
     coords: [-36.7880, 175.0650],
     type: "bike",
     day: 2,
   },
-  // Day 3 — Fly Auckland → Queenstown, drive to Wanaka, hike Roys Peak
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 3 — Fly to Queenstown, Roys Peak, Red Bridge campground
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "queenstown",
     name: "Queenstown",
-    description: "Adventure capital of NZ — bungee, jet boats, and stunning lake views.",
+    description: "Adventure capital of NZ — pick up campervan.",
     coords: [-45.0312, 168.6626],
+    type: "destination",
+    day: 3,
+  },
+  {
+    id: "crown-range",
+    name: "Crown Range",
+    description: "Scenic mountain road between Queenstown and Wanaka.",
+    coords: [-44.9500, 168.9300],
     type: "destination",
     day: 3,
   },
   {
     id: "wanaka",
     name: "Wanaka",
-    description: "Laid-back lakeside town with epic mountain scenery.",
-    coords: [-44.695, 169.132],
-    type: "camp",
+    description: "Laid-back lakeside town — campervan pickup.",
+    coords: [-44.6950, 169.1320],
+    type: "destination",
     day: 3,
   },
   {
     id: "roys-peak",
     name: "Roys Peak",
     description: "Iconic Wanaka viewpoint — stunning panorama over lake and mountains.",
-    coords: [-44.698, 169.044],
+    coords: [-44.6980, 169.0440],
     type: "hike",
     day: 3,
   },
-  // Day 4 — Wanaka → Te Anau
+  {
+    id: "red-bridge-camp",
+    name: "Red Bridge Campground",
+    description: "Scenic DOC campsite near Lake Hawea.",
+    coords: [-44.7287, 169.2826],
+    type: "camp",
+    day: 3,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 4 — Grocery shopping, drive to Te Anau
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: "queenstown-paknsave",
+    name: "Queenstown PackNSave",
+    description: "Grocery shopping for the road ahead.",
+    coords: [-45.0100, 168.7400],
+    type: "destination",
+    day: 4,
+  },
   {
     id: "te-anau",
-    name: "Te Anau",
+    name: "Te Anau Top 10 Camping",
     description: "Gateway to Fiordland — peaceful lakeside town.",
     coords: [-45.4147, 167.7181],
     type: "camp",
     day: 4,
   },
-  // Day 5 — Lake Marian hike & Cascade Creek camp
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 5 — Lake Marian, Lake Gunn, Cascade Creek
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "lake-marian",
     name: "Lake Marian",
-    description: "Stunning alpine lake surrounded by towering peaks.",
+    description: "Stunning alpine lake with mirror reflections.",
     coords: [-44.8055, 168.0828],
+    type: "hike",
+    day: 5,
+  },
+  {
+    id: "lake-gunn",
+    name: "Lake Gunn Nature Walk",
+    description: "Ancient beech forest walk.",
+    coords: [-44.9364, 168.0503],
     type: "hike",
     day: 5,
   },
   {
     id: "cascade-creek",
     name: "Cascade Creek Campsite",
-    description: "Beautiful DOC campsite in the heart of Fiordland, along the Milford Road.",
-    coords: [-44.8847, 168.0708],
+    description: "Beautiful DOC campsite in the heart of Fiordland.",
+    coords: [-44.8939, 168.0756],
     type: "camp",
     day: 5,
   },
-  // Day 6 — Gertrude Saddle hike, Milford Sound cruise, back to Te Anau
-  {
-    id: "gertrude-saddle",
-    name: "Gertrude Saddle",
-    description: "Steep alpine route with jaw-dropping Fiordland views.",
-    coords: [-44.775, 167.990],
-    type: "hike",
-    day: 6,
-  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 6 — Milford Sound cruise, Gertrude Saddle, back to Te Anau
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "milford-sound",
     name: "Milford Sound",
-    description: "Iconic fiord — towering cliffs, waterfalls, dolphins.",
+    description: "Iconic fiord — waterfalls and wildlife cruise.",
     coords: [-44.6714, 167.9269],
     type: "destination",
     day: 6,
   },
-  // Day 7 — Te Anau → Glenorchy, Earnslaw Burn hike
   {
-    id: "glenorchy",
-    name: "Glenorchy",
-    description: "Remote and beautiful — Lord of the Rings filming location.",
-    coords: [-44.8485, 168.3822],
-    type: "camp",
+    id: "gertrude-saddle",
+    name: "Gertrude Saddle",
+    description: "Challenging climb with breathtaking views.",
+    coords: [-44.7750, 167.9900],
+    type: "hike",
+    day: 6,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 7 — Rent camping gear, Earnslaw Burn (tent camping)
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: "queenstown-small-planet",
+    name: "Queenstown Small Planet",
+    description: "Camping gear rental.",
+    coords: [-45.0310, 168.6630],
+    type: "destination",
     day: 7,
   },
   {
     id: "earnslaw-burn-parking",
-    name: "Earnslaw Burn Track Parking",
+    name: "Earnslaw Burn Trailhead",
     description: "Trailhead parking for the Earnslaw Burn Track.",
-    coords: [-44.7928, 168.3687],
+    coords: [-44.7404, 168.4105],
     type: "destination",
     day: 7,
   },
   {
     id: "earnslaw-burn",
     name: "Earnslaw Burn",
-    description: "Dramatic glacier waterfall and alpine valley track.",
+    description: "Into the valley near hanging glacier — tent camping overnight.",
     coords: [-44.7543, 168.3478],
     type: "hike",
     day: 7,
   },
-  // Day 8 — Earnslaw Burn return, Glenorchy → Queenstown
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 8 — Return from Earnslaw Burn, Queenstown
+  // ═══════════════════════════════════════════════════════════════════════════
   {
-    id: "queenstown-return",
-    name: "Queenstown",
-    description: "Back in Queenstown for more adventure.",
+    id: "queenstown-camp",
+    name: "Queenstown Campsite",
+    description: "Back in Queenstown for the night.",
     coords: [-45.0312, 168.6626],
     type: "camp",
     day: 8,
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════
   // Day 9 — Christmas Eve in Arrowtown
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "arrowtown",
-    name: "Arrowtown",
-    description: "Christmas Eve in a magical historic gold-mining village. Twinkling lights on the Avenue of Trees, carol singers, a cozy campfire under the stars, and mulled wine to warm the soul. The perfect way to celebrate Christmas in summer!",
+    name: "Hampshire Holiday Parks - Arrowtown",
+    description: "Christmas Eve in a magical historic gold-mining village.",
     coords: [-44.9367, 168.8308],
     type: "camp",
     day: 9,
   },
-  // Day 10 — Arrowtown → Lake Tekapo
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 10 — Arrowtown → Lake Tekapo area
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "lake-tekapo",
+    name: "Lake Tekapo",
+    description: "Turquoise glacier-fed lake — walking in Tekapo.",
+    coords: [-44.0033, 170.4820],
+    type: "destination",
+    day: 10,
+  },
+  {
+    id: "mackenzie-rv-camp",
     name: "Mackenzie Waitaki RV Camping",
-    description: "Turquoise glacier-fed lake — hot pools, spa day, and stargazing reserve.",
-    coords: [-44.0019, 170.4747],
+    description: "Scenic camping with mountain views.",
+    coords: [-44.0619, 170.5031],
     type: "camp",
     day: 10,
   },
-  // Day 11 — Spa day in Lake Tekapo, short drive to Lake Pukaki
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 11 — Tekapo Hot Springs, Lake Pukaki
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "tekapo-spa",
-    name: "Tekapo Springs",
-    description: "Hot pools and day spa with stunning mountain and lake views.",
+    name: "Tekapo Hot Springs",
+    description: "Hot pools with stunning mountain and lake views.",
     coords: [-44.0033, 170.4820],
     type: "spa",
     day: 11,
   },
   {
     id: "lake-pukaki",
-    name: "Lake Pukaki Overnight Campervan Parking",
+    name: "Lake Pukaki Overnight Parking",
     description: "Brilliant blue lake with views of Aoraki/Mt Cook.",
-    coords: [-44.1700, 170.1250],
+    coords: [-44.1845, 170.1510],
     type: "camp",
     day: 11,
   },
-  // Day 12 — Sealy Tarns hike, Mt Cook → Christchurch
-  {
-    id: "sealy-tarns",
-    name: "Sealy Tarns",
-    description: "Alpine tarns with glacier views — 2,200 steps up from Mt Cook village.",
-    coords: [-43.7315, 170.0940],
-    type: "hike",
-    day: 12,
-  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 12 — Mt Cook hikes, Chamberlains Ford
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "mt-cook",
-    name: "Mt Cook",
+    name: "Mount Cook Village",
     description: "Aoraki/Mt Cook — NZ's highest peak.",
     coords: [-43.7340, 170.0964],
     type: "destination",
     day: 12,
   },
   {
-    id: "christchurch",
-    name: "Christchurch",
-    description: "Garden City — rebuilt and vibrant after the earthquakes.",
-    coords: [-43.5321, 172.6362],
+    id: "sealy-tarns",
+    name: "Sealy Tarns Track",
+    description: "Views of NZ's highest peak.",
+    coords: [-43.7315, 170.0940],
+    type: "hike",
+    day: 12,
+  },
+  {
+    id: "blue-lakes",
+    name: "Blue Lakes & Tasman Glacier View",
+    description: "Easy walk to turquoise lakes and glacier views.",
+    coords: [-43.7200, 170.1800],
+    type: "hike",
+    day: 12,
+  },
+  {
+    id: "chamberlains-ford",
+    name: "Chamberlains Ford",
+    description: "Peaceful freedom camping spot.",
+    coords: [-43.6897, 172.3649],
     type: "camp",
     day: 12,
   },
-  // Day 13 — Christchurch → Akaroa (loop)
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 13 — Christchurch, Akaroa kayaking
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: "christchurch",
+    name: "Christchurch",
+    description: "Garden City — explore the city center.",
+    coords: [-43.5321, 172.6362],
+    type: "destination",
+    day: 13,
+  },
   {
     id: "akaroa",
     name: "Akaroa",
-    description: "Charming French-inspired harbor town on Banks Peninsula.",
+    description: "Charming French-inspired harbor town.",
     coords: [-43.8037, 172.9680],
     type: "camp",
     day: 13,
   },
   {
-    id: "akaroa-canoeing",
+    id: "akaroa-kayaking",
     name: "Akaroa Harbour Kayaking",
-    description: "Sea kayaking in the scenic Akaroa Harbour with dolphins and penguins.",
+    description: "Kayaking in Akaroa harbor and Lushington Bay.",
     coords: [-43.8100, 172.9550],
     type: "canoeing",
     day: 13,
   },
-  // Day 14 — Christchurch → Bealey Spur hike → Arthur's Pass → Jacksons
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 14 — Bealey Spur, Devils Punch Bowl, Jacksons
+  // ═══════════════════════════════════════════════════════════════════════════
   {
-    id: "arthurs-pass",
-    name: "Arthur's Pass",
-    description: "Stunning alpine pass through the Southern Alps.",
-    coords: [-42.9426, 171.5600],
-    type: "destination",
+    id: "bealey-spur",
+    name: "Bealey Spur Track",
+    description: "Beautiful beech forest track with Southern Alps panorama.",
+    coords: [-42.9580, 171.5880],
+    type: "hike",
     day: 14,
   },
   {
-    id: "bealey-spur",
-    name: "Bealey Spur",
-    description: "Beautiful beech forest track with Southern Alps panorama.",
-    coords: [-42.958, 171.588],
+    id: "devils-punch-bowl",
+    name: "Devils Punch Bowl",
+    description: "Short walk to dramatic 131m waterfall.",
+    coords: [-42.9420, 171.5650],
     type: "hike",
     day: 14,
   },
   {
     id: "jacksons",
-    name: "Jacksons",
-    description: "Tiny West Coast settlement — great camping stop.",
-    coords: [-42.7254, 171.5128],
+    name: "Jacksons Retreat Alpine Holiday Park",
+    description: "Cozy West Coast holiday park.",
+    coords: [-42.7466, 171.5130],
     type: "camp",
     day: 14,
   },
-  // Day 15 — Jacksons → Franz Josef
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 15 — Franz Josef
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "franz-josef",
     name: "Franz Josef",
-    description: "Famous glacier town — ice meets rainforest.",
+    description: "Famous glacier town — restaurants and bars.",
     coords: [-43.3862, 170.1833],
+    type: "destination",
+    day: 15,
+  },
+  {
+    id: "orange-sheep",
+    name: "Orange Sheep Franz Josef",
+    description: "Accommodation in Franz Josef.",
+    coords: [-43.3870, 170.1840],
     type: "camp",
     day: 15,
   },
-  // Day 16 — Alex Knob hike, drive to Brewster trailhead
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 16 — Alex Knob, drive to Brewster trailhead
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "alex-knob",
-    name: "Alex Knob",
+    name: "Alex Knob Track",
     description: "Challenging summit hike with glacier and coastline views.",
-    coords: [-43.408, 170.142],
+    coords: [-43.4080, 170.1420],
     type: "hike",
     day: 16,
   },
   {
-    id: "brewster",
-    name: "Brewster Trailhead",
-    description: "Parking and campsite at the Brewster Hut trailhead near Fantail Falls.",
+    id: "brewster-trailhead",
+    name: "Brewster Track Trailhead",
+    description: "Campsite at the Brewster Hut trailhead.",
     coords: [-44.0894, 169.3508],
     type: "camp",
     day: 16,
   },
-  // Day 17 — Brewster Hut hike, drive to Wanaka
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 17 — Brewster Track, back to Red Bridge
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "brewster-hut",
-    name: "Brewster Hut",
-    description: "Alpine hut above the bushline with panoramic glacier views.",
+    name: "Brewster Track",
+    description: "Alpine adventure with panoramic glacier views.",
     coords: [-44.1067, 169.3175],
     type: "hike",
     day: 17,
   },
   {
-    id: "wanaka-return",
-    name: "Wanaka",
-    description: "Back in Wanaka — rest and recharge.",
-    coords: [-44.695, 169.132],
+    id: "red-bridge-camp-return",
+    name: "Red Bridge Campground",
+    description: "Back to Red Bridge near Wanaka.",
+    coords: [-44.7287, 169.2826],
     type: "camp",
     day: 17,
   },
-  // Day 18 — Wanaka → Queenstown
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 18 — Wanaka exploration
+  // ═══════════════════════════════════════════════════════════════════════════
   {
-    id: "queenstown-final",
-    name: "Queenstown",
-    description: "Final night in Queenstown before heading north.",
-    coords: [-45.0312, 168.6626],
-    type: "hostel",
+    id: "wanaka-center",
+    name: "Wanaka Center",
+    description: "Leave campervan, explore Wanaka city center.",
+    coords: [-44.6950, 169.1320],
+    type: "destination",
     day: 18,
   },
-  // Day 19 — Fly Queenstown → Wellington
   {
-    id: "wellington",
-    name: "Wellington",
-    description: "NZ's capital — culture, coffee, and wind.",
-    coords: [-41.2865, 174.7762],
+    id: "hampshire-wanaka",
+    name: "Hampshire Holiday Parks - Wanaka",
+    description: "Rest day accommodation in Wanaka.",
+    coords: [-44.6920, 169.1450],
+    type: "camp",
+    day: 18,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 19 — Bus to Queenstown, explore
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: "queenstown-explore",
+    name: "Queenstown",
+    description: "Explore Queenstown city center.",
+    coords: [-45.0312, 168.6626],
+    type: "destination",
+    day: 19,
+  },
+  {
+    id: "black-sheep",
+    name: "Black Sheep Backpackers",
+    description: "Hostel in Queenstown.",
+    coords: [-45.0320, 168.6610],
     type: "hostel",
     day: 19,
   },
-  // Day 20 — Wellington → Porirua → Powell Hut hike → Hastings
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 20 — Fly to Wellington, explore, drive to Porirua
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: "wellington",
+    name: "Wellington",
+    description: "Cuba Street, Cable Car, Botanic Garden.",
+    coords: [-41.2865, 174.7762],
+    type: "destination",
+    day: 20,
+  },
   {
     id: "porirua",
     name: "Porirua",
-    description: "Coastal city north of Wellington.",
+    description: "Airbnb in Porirua.",
     coords: [-41.1339, 174.8405],
     type: "hostel",
     day: 20,
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 21 — Powell Hut, drive to Hastings
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: "powell-hut-trailhead",
+    name: "Powell Hut Trailhead",
+    description: "Tararua Ranges trailhead.",
+    coords: [-40.9300, 175.4650],
+    type: "destination",
+    day: 21,
+  },
   {
     id: "powell-hut",
     name: "Powell Hut",
-    description: "Tararua Range hut with incredible ridge views.",
-    coords: [-41.0500, 175.2667],
+    description: "Challenging climb with incredible ridge views.",
+    coords: [-40.9150, 175.4830],
     type: "hike",
-    day: 20,
+    day: 21,
   },
   {
     id: "hastings",
     name: "Hastings",
-    description: "Art deco town in the heart of Hawke's Bay wine country.",
+    description: "Art deco town in Hawke's Bay wine country.",
     coords: [-39.6381, 176.8493],
     type: "hostel",
-    day: 20,
-  },
-  // Day 21 — Wine tour in Hastings
-  {
-    id: "hastings-wine",
-    name: "Hawke's Bay Wine Tour",
-    description: "Wine tour through Hawke's Bay — world-class reds and vineyard views.",
-    coords: [-39.6381, 176.8493],
-    type: "destination",
     day: 21,
   },
-  // Day 22 — Hastings → Waimarama → Napier → Taupo → Turangi
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 22 — Golf and winery in Hastings
+  // ═══════════════════════════════════════════════════════════════════════════
   {
-    id: "waimarama-surfing",
-    name: "Waimarama Beach Surfing",
-    description: "Morning surf session at the beautiful Waimarama Beach.",
-    coords: [-39.7870, 176.9920],
-    type: "surfing",
+    id: "hastings-golf",
+    name: "Hastings Golf",
+    description: "Morning golf session.",
+    coords: [-39.6100, 176.8300],
+    type: "destination",
     day: 22,
   },
   {
-    id: "waimarama",
-    name: "Waimarama",
-    description: "Secluded beach south of Napier.",
-    coords: [-39.7853, 176.9906],
+    id: "hastings-wine",
+    name: "Hawke's Bay Wineries",
+    description: "Winery tour through Hawke's Bay.",
+    coords: [-39.6381, 176.8493],
     type: "destination",
     day: 22,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 23 — Surfing, Napier, Taupo spa, Turangi
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: "waimarama",
+    name: "Waimarama Beach",
+    description: "Morning surf at Waimarama Beach.",
+    coords: [-39.7870, 176.9920],
+    type: "surfing",
+    day: 23,
   },
   {
     id: "napier",
     name: "Napier",
-    description: "Art deco city on Hawke's Bay — rebuilt after 1931 earthquake.",
+    description: "Art deco city — lunch stop.",
     coords: [-39.4928, 176.9120],
     type: "destination",
-    day: 22,
+    day: 23,
   },
   {
     id: "taupo",
@@ -379,103 +551,159 @@ export const stops = [
     description: "Lakeside town on NZ's largest lake.",
     coords: [-38.6857, 176.0702],
     type: "destination",
-    day: 22,
+    day: 23,
+  },
+  {
+    id: "spa-park",
+    name: "Spa Park Hot Pools",
+    description: "Hot water beach and Otumuheke Stream.",
+    coords: [-38.6840, 176.0620],
+    type: "spa",
+    day: 23,
   },
   {
     id: "turangi",
     name: "Turangi",
-    description: "Trout fishing capital — gateway to Tongariro.",
+    description: "Gateway to Tongariro.",
     coords: [-38.9900, 175.8100],
     type: "hostel",
-    day: 22,
+    day: 23,
   },
-  // Day 23 — Tongariro Alpine Crossing, drive to Rotorua
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 24 — Tongariro Alpine Crossing, Rotorua
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: "tongariro-start",
+    name: "Tongariro Crossing Start",
+    description: "Mangatepopo car park.",
+    coords: [-39.1330, 175.5720],
+    type: "destination",
+    day: 24,
+  },
   {
     id: "tongariro",
     name: "Tongariro Alpine Crossing",
-    description: "NZ's best day hike — volcanic landscapes and emerald lakes.",
-    coords: [-39.115, 175.648],  // Red Crater - the iconic summit point
+    description: "NZ's best day hike — emerald lakes, volcanic craters.",
+    coords: [-39.1150, 175.6480],
     type: "hike",
-    day: 23,
+    day: 24,
   },
   {
     id: "rotorua",
     name: "Rotorua",
-    description: "Geothermal wonderland — mud pools, geysers, and Maori culture.",
+    description: "Geothermal wonderland — explore city center.",
     coords: [-38.1368, 176.2497],
     type: "hostel",
-    day: 23,
+    day: 24,
   },
-  // Day 24 — Kaituna Cascades rafting, Rotorua → Mt Maunganui → Tairua
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 25 — Rafting, Mt Maunganui, Tairua
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "kaituna-cascades",
     name: "Kaituna Cascades",
-    description: "White water rafting down the Kaituna River with the famous 7-meter Tutea Falls.",
+    description: "White water rafting with 7-meter Tutea Falls.",
     coords: [-38.0167, 176.3833],
     type: "rafting",
-    day: 24,
+    day: 25,
   },
   {
     id: "mt-maunganui",
-    name: "Mt Maunganui",
-    description: "Iconic beach town with a climbable volcanic mount.",
+    name: "Mount Maunganui",
+    description: "Base loop track with ocean views.",
     coords: [-37.6318, 176.1711],
-    type: "destination",
-    day: 24,
+    type: "hike",
+    day: 25,
   },
   {
     id: "tairua",
     name: "Tairua",
-    description: "Coromandel Peninsula coastal town — surf and bush walks.",
+    description: "Coromandel Peninsula coastal town.",
     coords: [-36.9930, 175.8450],
     type: "hostel",
-    day: 24,
-  },
-  // Day 25 — The Pinnacles hike
-  {
-    id: "pinnacles",
-    name: "The Pinnacles",
-    description: "Dramatic rock formations — rewarding hike in the Coromandel.",
-    coords: [-36.9580, 175.7500],
-    type: "hike",
     day: 25,
   },
-  // Day 26 — Tairua → Auckland Airport
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 26 — The Pinnacles hike
+  // ═══════════════════════════════════════════════════════════════════════════
   {
-    id: "auckland-airport",
-    name: "Auckland Airport",
-    description: "End of the road — time to fly home.",
-    coords: [-37.0082, 174.7850],
+    id: "pinnacles-trailhead",
+    name: "The Pinnacles Trailhead",
+    description: "Trailhead for The Pinnacles.",
+    coords: [-36.9700, 175.7600],
     type: "destination",
     day: 26,
   },
-  // Day 27 — Fly home
+  {
+    id: "pinnacles",
+    name: "The Pinnacles",
+    description: "Native forest and peninsula views.",
+    coords: [-36.9580, 175.7500],
+    type: "hike",
+    day: 26,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 27 — Sailors Grave beach, Auckland Airport, fly home
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: "sailors-grave",
+    name: "Sailors Grave Beach",
+    description: "Beautiful secluded beach near Tairua — last taste of paradise.",
+    coords: [-36.9565, 175.8419],
+    type: "destination",
+    day: 27,
+  },
+  {
+    id: "auckland-airport",
+    name: "Auckland Airport",
+    description: "Return rental car — time to fly home.",
+    coords: [-37.0082, 174.7850],
+    type: "destination",
+    day: 27,
+  },
   {
     id: "home",
     name: "Home",
     description: "Back home — what a trip!",
-    coords: [-20.0, 160.0],  // Flying away northwest
+    coords: [-28.5, 165.5],
     type: "plane",
     day: 27,
   },
 ];
 
 export const routes = [
-  // ── Day 2: Waiheke Island ferry + bike trip ──
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 2: Auckland → Waiheke Island (ferry + bike)
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: "auckland-harbour-ferry",
+    from: "auckland",
+    to: "auckland-harbour",
+    day: 2,
+    mode: "drive",
+    waypoints: [
+      [-36.8485, 174.7633],
+      [-36.8440, 174.7670],
+    ],
+  },
   {
     id: "auckland-waiheke",
-    from: "auckland",
+    from: "auckland-harbour",
     to: "waiheke",
     day: 2,
     mode: "ferry",
     waypoints: [
-      [-36.844, 174.767],   // Auckland Ferry Terminal
+      [-36.8440, 174.7670],
       [-36.838, 174.810],
       [-36.830, 174.860],
       [-36.822, 174.915],
       [-36.814, 174.970],
       [-36.808, 175.030],
-      [-36.801, 175.088],   // Matiatia Wharf, Waiheke
+      [-36.801, 175.088],
     ],
   },
   {
@@ -485,16 +713,16 @@ export const routes = [
     day: 2,
     mode: "bike",
     waypoints: [
-      [-36.801, 175.088],   // Matiatia Wharf
-      [-36.792, 175.075],   // Oneroa
-      [-36.785, 175.060],   // Little Oneroa
-      [-36.778, 175.045],   // Blackpool
-      [-36.770, 175.030],   // Surfdale
-      [-36.765, 175.015],   // Ostend
-      [-36.775, 175.000],   // Te Whau Point
-      [-36.788, 175.020],   // Through vineyards
-      [-36.795, 175.040],   // Mudbrick area
-      [-36.788, 175.065],   // Back towards Oneroa
+      [-36.801, 175.088],
+      [-36.792, 175.075],
+      [-36.785, 175.060],
+      [-36.778, 175.045],
+      [-36.770, 175.030],
+      [-36.765, 175.015],
+      [-36.775, 175.000],
+      [-36.788, 175.020],
+      [-36.795, 175.040],
+      [-36.788, 175.065],
     ],
   },
   {
@@ -504,29 +732,42 @@ export const routes = [
     day: 2,
     mode: "bike",
     waypoints: [
-      [-36.788, 175.065],   // Oneroa area
+      [-36.788, 175.065],
       [-36.795, 175.075],
-      [-36.801, 175.088],   // Back to Matiatia Wharf
+      [-36.801, 175.088],
     ],
   },
   {
     id: "waiheke-auckland",
     from: "waiheke",
-    to: "auckland",
+    to: "auckland-harbour",
     day: 2,
     mode: "ferry",
     waypoints: [
-      [-36.801, 175.088],   // Matiatia Wharf
+      [-36.801, 175.088],
       [-36.808, 175.030],
       [-36.814, 174.970],
       [-36.822, 174.915],
       [-36.830, 174.860],
       [-36.838, 174.810],
-      [-36.844, 174.767],   // Auckland Ferry Terminal
+      [-36.8440, 174.7670],
+    ],
+  },
+  {
+    id: "harbour-auckland",
+    from: "auckland-harbour",
+    to: "auckland",
+    day: 2,
+    mode: "drive",
+    waypoints: [
+      [-36.8440, 174.7670],
+      [-36.8485, 174.7633],
     ],
   },
 
-  // ── Day 3: Fly to Queenstown, drive to Wanaka, hike Roys Peak ──
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 3: Fly to Queenstown, Crown Range, Roys Peak, Red Bridge
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "auckland-queenstown",
     from: "auckland",
@@ -543,32 +784,31 @@ export const routes = [
     ],
   },
   {
-    id: "queenstown-wanaka",
+    id: "queenstown-crown-range",
     from: "queenstown",
-    to: "wanaka",
+    to: "crown-range",
     day: 3,
     mode: "drive",
     waypoints: [
       [-45.0312, 168.6626],
-      [-45.017, 168.688],
-      [-44.998, 168.713],
-      [-44.982, 168.734],
-      [-44.963, 168.748],
-      [-44.943, 168.758],
-      [-44.929, 168.775],
-      [-44.917, 168.800],
-      [-44.905, 168.828],
-      [-44.890, 168.857],
-      [-44.872, 168.883],
-      [-44.855, 168.912],
-      [-44.838, 168.940],
-      [-44.818, 168.962],
-      [-44.795, 168.985],
-      [-44.773, 169.010],
-      [-44.751, 169.038],
-      [-44.733, 169.063],
-      [-44.718, 169.088],
-      [-44.695, 169.132],
+      [-45.000, 168.720],
+      [-44.980, 168.780],
+      [-44.960, 168.850],
+      [-44.9500, 168.9300],
+    ],
+  },
+  {
+    id: "crown-range-wanaka",
+    from: "crown-range",
+    to: "wanaka",
+    day: 3,
+    mode: "drive",
+    waypoints: [
+      [-44.9500, 168.9300],
+      [-44.880, 169.000],
+      [-44.800, 169.060],
+      [-44.750, 169.100],
+      [-44.6950, 169.1320],
     ],
   },
   {
@@ -578,7 +818,7 @@ export const routes = [
     day: 3,
     mode: "drive",
     waypoints: [
-      [-44.695, 169.132],
+      [-44.6950, 169.1320],
       [-44.690, 169.110],
       [-44.680, 169.090],
       [-44.671, 169.064],
@@ -619,67 +859,81 @@ export const routes = [
     ],
   },
   {
-    id: "roys-trailhead-wanaka",
+    id: "roys-red-bridge",
     from: "roys-peak",
-    to: "wanaka",
+    to: "red-bridge-camp",
     day: 3,
     mode: "drive",
     waypoints: [
       [-44.671, 169.064],
       [-44.680, 169.090],
-      [-44.690, 169.110],
       [-44.695, 169.132],
+      [-44.710, 169.180],
+      [-44.720, 169.230],
+      [-44.7287, 169.2826],
     ],
   },
 
-  // ── Day 4: Wanaka → Te Anau via SH6 (Cromwell, Queenstown, Kingston) ──
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 4: Red Bridge → PackNSave → Te Anau
+  // ═══════════════════════════════════════════════════════════════════════════
   {
-    id: "wanaka-te-anau",
-    from: "wanaka",
+    id: "red-bridge-paknsave",
+    from: "red-bridge-camp",
+    to: "queenstown-paknsave",
+    day: 4,
+    mode: "drive",
+    waypoints: [
+      [-44.7287, 169.2826],
+      [-44.720, 169.200],
+      [-44.710, 169.150],
+      [-44.695, 169.132],
+      [-44.750, 169.100],
+      [-44.800, 169.060],
+      [-44.880, 169.000],
+      [-44.9500, 168.9300],
+      [-44.980, 168.850],
+      [-44.990, 168.790],
+      [-45.0100, 168.7400],
+    ],
+  },
+  {
+    id: "paknsave-te-anau",
+    from: "queenstown-paknsave",
     to: "te-anau",
     day: 4,
     mode: "drive",
     waypoints: [
-      [-44.695, 169.132],   // Wanaka
-      [-44.72, 169.18],     // Albert Town
-      [-44.75, 169.25],     // Luggate
-      [-44.85, 169.25],     // Along Lake Dunstan
-      [-44.95, 169.22],     // Approaching Cromwell
-      [-45.038, 169.199],   // Cromwell
-      [-45.05, 169.10],     // Kawarau Gorge entrance
-      [-45.03, 169.00],     // Nevis Bluff area
-      [-45.03, 168.92],     // Gibbston Valley
-      [-45.00, 168.85],     // Towards Arrow Junction
-      [-44.98, 168.80],     // Arrow Junction
-      [-45.00, 168.75],     // Frankton approach
-      [-45.02, 168.72],     // Frankton (Queenstown bypass)
-      [-45.05, 168.68],     // Kelvin Heights
-      [-45.10, 168.70],     // Lake Wakatipu shore
-      [-45.18, 168.72],     // Devil's Staircase
-      [-45.25, 168.72],     // Approaching Kingston
-      [-45.338, 168.719],   // Kingston
-      [-45.42, 168.62],     // Towards Garston
-      [-45.47, 168.56],     // Garston
-      [-45.52, 168.48],     // Towards Five Rivers
-      [-45.55, 168.42],     // Five Rivers
-      [-45.62, 168.32],     // Towards Mossburn
-      [-45.69, 168.21],     // Mossburn
-      [-45.60, 168.00],     // SH94 towards Te Anau
-      [-45.52, 167.85],     // Approaching Te Anau
-      [-45.4147, 167.7181], // Te Anau
+      [-45.0100, 168.7400],
+      [-45.05, 168.68],
+      [-45.10, 168.70],
+      [-45.18, 168.72],
+      [-45.25, 168.72],
+      [-45.338, 168.719],
+      [-45.42, 168.62],
+      [-45.47, 168.56],
+      [-45.52, 168.48],
+      [-45.55, 168.42],
+      [-45.62, 168.32],
+      [-45.69, 168.21],
+      [-45.60, 168.00],
+      [-45.52, 167.85],
+      [-45.4147, 167.7181],
     ],
   },
 
-  // ── Day 5: Te Anau → Lake Marian trailhead, hike, → Cascade Creek camp ──
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 5: Te Anau → Lake Marian → Lake Gunn → Cascade Creek
+  // ═══════════════════════════════════════════════════════════════════════════
   {
-    id: "te-anau-marian-trailhead",
+    id: "te-anau-lake-marian",
     from: "te-anau",
     to: "lake-marian",
     day: 5,
     mode: "drive",
     waypoints: [
-      [-45.4147, 167.7181],  // Te Anau
-      [-45.370, 167.740],    // Route 94 (Milford Road)
+      [-45.4147, 167.7181],
+      [-45.370, 167.740],
       [-45.320, 167.770],
       [-45.270, 167.800],
       [-45.218, 167.830],
@@ -690,7 +944,7 @@ export const routes = [
       [-44.962, 167.952],
       [-44.900, 168.020],
       [-44.850, 168.080],
-      [-44.7893, 168.1285],  // Lake Marian trailhead on Hollyford Road
+      [-44.7893, 168.1285],
     ],
   },
   {
@@ -700,11 +954,11 @@ export const routes = [
     day: 5,
     mode: "hike",
     waypoints: [
-      [-44.7893, 168.1285],  // Trailhead on Hollyford Road
-      [-44.793, 168.120],    // Through forest
+      [-44.7893, 168.1285],
+      [-44.793, 168.120],
       [-44.798, 168.110],
-      [-44.802, 168.098],    // Climbing
-      [-44.8055, 168.0828],  // Lake Marian
+      [-44.802, 168.098],
+      [-44.8055, 168.0828],
     ],
   },
   {
@@ -714,43 +968,84 @@ export const routes = [
     day: 5,
     mode: "hike",
     waypoints: [
-      [-44.8055, 168.0828],  // Lake Marian
+      [-44.8055, 168.0828],
       [-44.802, 168.098],
       [-44.798, 168.110],
       [-44.793, 168.120],
-      [-44.7893, 168.1285],  // Back to trailhead
+      [-44.7893, 168.1285],
     ],
   },
   {
-    id: "marian-trailhead-cascade-creek",
+    id: "lake-marian-cascade",
     from: "lake-marian",
     to: "cascade-creek",
     day: 5,
     mode: "drive",
     waypoints: [
-      [-44.7893, 168.1285],  // Lake Marian trailhead
-      [-44.820, 168.105],    // Back on Route 94
-      [-44.850, 168.085],
-      [-44.8847, 168.0708],  // Cascade Creek Campsite
+      [-44.7893, 168.1285],
+      [-44.830, 168.095],
+      [-44.860, 168.082],
+      [-44.8939, 168.0756],
+    ],
+  },
+  {
+    id: "cascade-lake-gunn",
+    from: "cascade-creek",
+    to: "lake-gunn",
+    day: 5,
+    mode: "drive",
+    waypoints: [
+      [-44.8939, 168.0756],
+      [-44.9200, 168.0600],
+      [-44.9364, 168.0503],
+    ],
+  },
+  {
+    id: "lake-gunn-walk",
+    from: "lake-gunn",
+    to: "lake-gunn",
+    day: 5,
+    mode: "hike",
+    waypoints: [
+      [-44.9364, 168.0503],
+      [-44.934, 168.055],
+      [-44.932, 168.060],
+      [-44.930, 168.055],
+      [-44.932, 168.052],
+      [-44.9364, 168.0503],
+    ],
+  },
+  {
+    id: "lake-gunn-cascade",
+    from: "lake-gunn",
+    to: "cascade-creek",
+    day: 5,
+    mode: "drive",
+    waypoints: [
+      [-44.9364, 168.0503],
+      [-44.9200, 168.0600],
+      [-44.8939, 168.0756],
     ],
   },
 
-  // ── Day 6: Cascade Creek → Milford Sound cruise → Gertrude Saddle hike → Te Anau ──
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 6: Cascade Creek → Milford Sound → Gertrude Saddle → Te Anau
+  // ═══════════════════════════════════════════════════════════════════════════
   {
-    id: "cascade-creek-milford",
+    id: "cascade-milford",
     from: "cascade-creek",
     to: "milford-sound",
     day: 6,
     mode: "drive",
     waypoints: [
-      [-44.8847, 168.0708],  // Cascade Creek
-      [-44.850, 168.050],    // Along Route 94
+      [-44.8939, 168.0756],
+      [-44.850, 168.050],
       [-44.810, 168.020],
       [-44.770, 167.990],
       [-44.740, 167.965],
-      [-44.710, 167.950],    // Homer Tunnel approach
+      [-44.710, 167.950],
       [-44.690, 167.940],
-      [-44.6714, 167.9269],  // Milford Sound
+      [-44.6714, 167.9269],
     ],
   },
   {
@@ -760,7 +1055,7 @@ export const routes = [
     day: 6,
     mode: "ferry",
     waypoints: [
-      [-44.6714, 167.9269],  // Milford terminal
+      [-44.6714, 167.9269],
       [-44.665, 167.915],
       [-44.658, 167.900],
       [-44.650, 167.885],
@@ -770,11 +1065,11 @@ export const routes = [
       [-44.598, 167.808],
       [-44.580, 167.788],
       [-44.560, 167.768],
-      [-44.540, 167.750],    // Dale Point area
+      [-44.540, 167.750],
       [-44.520, 167.735],
       [-44.500, 167.720],
-      [-44.480, 167.700],    // Anita Bay / mouth of fjord
-      [-44.500, 167.720],    // Return trip
+      [-44.480, 167.700],
+      [-44.500, 167.720],
       [-44.520, 167.735],
       [-44.540, 167.750],
       [-44.560, 167.768],
@@ -786,7 +1081,7 @@ export const routes = [
       [-44.650, 167.885],
       [-44.658, 167.900],
       [-44.665, 167.915],
-      [-44.6714, 167.9269],  // Back to terminal
+      [-44.6714, 167.9269],
     ],
   },
   {
@@ -800,7 +1095,7 @@ export const routes = [
       [-44.690, 167.940],
       [-44.710, 167.950],
       [-44.740, 167.965],
-      [-44.762, 168.020],    // Gertrude trailhead
+      [-44.762, 168.020],
     ],
   },
   {
@@ -840,10 +1135,9 @@ export const routes = [
     day: 6,
     mode: "drive",
     waypoints: [
-      [-44.762, 168.020],    // Gertrude trailhead
+      [-44.762, 168.020],
       [-44.800, 168.045],
-      [-44.830, 168.028],
-      [-44.858, 168.010],
+      [-44.850, 168.050],
       [-44.890, 167.990],
       [-44.922, 167.975],
       [-44.962, 167.952],
@@ -855,50 +1149,53 @@ export const routes = [
       [-45.270, 167.800],
       [-45.320, 167.770],
       [-45.370, 167.740],
-      [-45.4147, 167.7181],  // Te Anau
+      [-45.4147, 167.7181],
     ],
   },
 
-  // ── Day 7: Te Anau → Glenorchy via Route 94, Route 6, Glenorchy-Queenstown Road ──
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 7: Te Anau → Queenstown Small Planet → Earnslaw Burn (tent)
+  // ═══════════════════════════════════════════════════════════════════════════
   {
-    id: "te-anau-glenorchy",
+    id: "te-anau-small-planet",
     from: "te-anau",
-    to: "glenorchy",
+    to: "queenstown-small-planet",
     day: 7,
     mode: "drive",
     waypoints: [
-      [-45.4147, 167.7181],  // Te Anau
-      [-45.52, 167.85],      // Route 94 east
+      [-45.4147, 167.7181],
+      [-45.52, 167.85],
       [-45.60, 168.00],
-      [-45.69, 168.21],      // Mossburn - junction with Route 6
-      [-45.62, 168.32],      // Route 6 north towards Five Rivers
-      [-45.55, 168.42],      // Five Rivers
-      [-45.47, 168.56],      // Garston
+      [-45.69, 168.21],
+      [-45.62, 168.32],
+      [-45.55, 168.42],
+      [-45.47, 168.56],
       [-45.42, 168.62],
-      [-45.338, 168.719],    // Kingston
-      [-45.25, 168.72],      // Along Lake Wakatipu
-      [-45.18, 168.72],      // Devil's Staircase
+      [-45.338, 168.719],
+      [-45.25, 168.72],
+      [-45.18, 168.72],
       [-45.10, 168.70],
-      [-45.05, 168.68],      // Kelvin Heights
-      [-45.0312, 168.6626],  // Queenstown
-      [-45.005, 168.625],    // Glenorchy-Queenstown Road
-      [-44.975, 168.580],
-      [-44.945, 168.535],
-      [-44.915, 168.490],
-      [-44.885, 168.445],
-      [-44.8485, 168.3822],  // Glenorchy
+      [-45.05, 168.68],
+      [-45.0310, 168.6630],
     ],
   },
   {
-    id: "glenorchy-earnslaw-parking",
-    from: "glenorchy",
+    id: "small-planet-earnslaw",
+    from: "queenstown-small-planet",
     to: "earnslaw-burn-parking",
     day: 7,
     mode: "drive",
     waypoints: [
-      [-44.8485, 168.3822],  // Glenorchy
-      [-44.82, 168.38],      // Rees Valley Road
-      [-44.7928, 168.3687],  // Earnslaw Burn Track Parking
+      [-45.0310, 168.6630],
+      [-45.005, 168.625],
+      [-44.975, 168.580],
+      [-44.945, 168.535],
+      [-44.915, 168.490],
+      [-44.885, 168.445],
+      [-44.8485, 168.3822],
+      [-44.800, 168.395],
+      [-44.7600, 168.405],
+      [-44.7404, 168.4105],
     ],
   },
   {
@@ -908,15 +1205,16 @@ export const routes = [
     day: 7,
     mode: "hike",
     waypoints: [
-      [-44.7928, 168.3687],  // Parking
-      [-44.785, 168.365],
-      [-44.775, 168.358],
-      [-44.765, 168.352],
-      [-44.7543, 168.3478],  // Earnslaw Burn waterfall
+      [-44.7404, 168.4105],
+      [-44.750, 168.390],
+      [-44.755, 168.370],
+      [-44.7543, 168.3478],
     ],
   },
 
-  // ── Day 8: Earnslaw Burn return, Glenorchy → Queenstown ──
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 8: Earnslaw Burn return → Queenstown campsite
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "earnslaw-burn-down",
     from: "earnslaw-burn",
@@ -924,55 +1222,38 @@ export const routes = [
     day: 8,
     mode: "hike",
     waypoints: [
-      [-44.7543, 168.3478],  // Earnslaw Burn waterfall
-      [-44.765, 168.352],
-      [-44.775, 168.358],
-      [-44.785, 168.365],
-      [-44.7928, 168.3687],  // Back to parking
+      [-44.7543, 168.3478],
+      [-44.755, 168.370],
+      [-44.750, 168.390],
+      [-44.7404, 168.4105],
     ],
   },
   {
-    id: "earnslaw-parking-glenorchy",
+    id: "earnslaw-queenstown",
     from: "earnslaw-burn-parking",
-    to: "glenorchy",
+    to: "queenstown-camp",
     day: 8,
     mode: "drive",
     waypoints: [
-      [-44.7928, 168.3687],  // Parking
-      [-44.82, 168.38],
-      [-44.8485, 168.3822],  // Glenorchy
-    ],
-  },
-  {
-    id: "glenorchy-queenstown",
-    from: "glenorchy",
-    to: "queenstown-return",
-    day: 8,
-    mode: "drive",
-    waypoints: [
+      [-44.7404, 168.4105],
+      [-44.7600, 168.405],
+      [-44.800, 168.395],
       [-44.8485, 168.3822],
-      [-44.860, 168.405],
-      [-44.875, 168.430],
-      [-44.890, 168.458],
-      [-44.905, 168.485],
-      [-44.918, 168.510],
-      [-44.930, 168.535],
-      [-44.942, 168.555],
-      [-44.955, 168.572],
-      [-44.965, 168.590],
-      [-44.975, 168.608],
-      [-44.985, 168.622],
-      [-44.995, 168.635],
-      [-45.005, 168.645],
-      [-45.015, 168.653],
+      [-44.885, 168.445],
+      [-44.915, 168.490],
+      [-44.945, 168.535],
+      [-44.975, 168.580],
+      [-45.005, 168.625],
       [-45.0312, 168.6626],
     ],
   },
 
-  // ── Day 9: Queenstown → Arrowtown (Christmas Eve) ──
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 9: Queenstown → Arrowtown (Christmas Eve)
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "queenstown-arrowtown",
-    from: "queenstown-return",
+    from: "queenstown-camp",
     to: "arrowtown",
     day: 9,
     mode: "drive",
@@ -987,7 +1268,9 @@ export const routes = [
     ],
   },
 
-  // ── Day 10: Arrowtown → Lake Tekapo ──
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 10: Arrowtown → Lake Tekapo → Mackenzie RV Camping
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "arrowtown-tekapo",
     from: "arrowtown",
@@ -1017,25 +1300,39 @@ export const routes = [
       [-44.230, 170.105],
       [-44.140, 170.210],
       [-44.060, 170.320],
-      [-44.0047, 170.4772],
-    ],
-  },
-
-  // ── Day 11: Spa day in Lake Tekapo, drive to Lake Pukaki ──
-  {
-    id: "tekapo-to-spa",
-    from: "lake-tekapo",
-    to: "tekapo-spa",
-    day: 11,
-    mode: "drive",
-    waypoints: [
-      [-44.0047, 170.4772],
-      [-44.0040, 170.4800],
       [-44.0033, 170.4820],
     ],
   },
   {
-    id: "tekapo-spa-session",
+    id: "tekapo-mackenzie",
+    from: "lake-tekapo",
+    to: "mackenzie-rv-camp",
+    day: 10,
+    mode: "drive",
+    waypoints: [
+      [-44.0033, 170.4820],
+      [-44.0300, 170.490],
+      [-44.0619, 170.5031],
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 11: Mackenzie → Tekapo Hot Springs → Lake Pukaki
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: "mackenzie-spa",
+    from: "mackenzie-rv-camp",
+    to: "tekapo-spa",
+    day: 11,
+    mode: "drive",
+    waypoints: [
+      [-44.0619, 170.5031],
+      [-44.0300, 170.490],
+      [-44.0033, 170.4820],
+    ],
+  },
+  {
+    id: "spa-session",
     from: "tekapo-spa",
     to: "tekapo-spa",
     day: 11,
@@ -1055,18 +1352,19 @@ export const routes = [
     day: 11,
     mode: "drive",
     waypoints: [
-      [-44.0033, 170.4820],  // Tekapo Springs
-      [-44.0019, 170.4747],  // Through Tekapo
-      [-44.02, 170.40],      // SH8 west
+      [-44.0033, 170.4820],
+      [-44.02, 170.40],
       [-44.05, 170.32],
       [-44.08, 170.25],
       [-44.11, 170.20],
-      [-44.14, 170.15],
-      [-44.1700, 170.1250],  // Lake Pukaki Overnight Parking
+      [-44.14, 170.17],
+      [-44.1845, 170.1510],
     ],
   },
 
-  // ── Day 12: Lake Pukaki → Mt Cook, Sealy Tarns hike, → Christchurch ──
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 12: Lake Pukaki → Mt Cook → Sealy Tarns → Blue Lakes → Chamberlains Ford
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "pukaki-mtcook",
     from: "lake-pukaki",
@@ -1074,12 +1372,12 @@ export const routes = [
     day: 12,
     mode: "drive",
     waypoints: [
-      [-44.1700, 170.1250],  // Lake Pukaki Overnight Parking
-      [-44.10, 170.12],      // SH80 north along lake
+      [-44.1845, 170.1510],
+      [-44.10, 170.12],
       [-44.00, 170.11],
       [-43.90, 170.10],
       [-43.80, 170.098],
-      [-43.7340, 170.0964],  // Mt Cook Village
+      [-43.7340, 170.0964],
     ],
   },
   {
@@ -1089,10 +1387,10 @@ export const routes = [
     day: 12,
     mode: "hike",
     waypoints: [
-      [-43.7340, 170.0964],  // Mt Cook Village
-      [-43.733, 170.095],    // Kea Point track
+      [-43.7340, 170.0964],
+      [-43.733, 170.095],
       [-43.732, 170.094],
-      [-43.7315, 170.0940],  // Sealy Tarns
+      [-43.7315, 170.0940],
     ],
   },
   {
@@ -1102,51 +1400,86 @@ export const routes = [
     day: 12,
     mode: "hike",
     waypoints: [
-      [-43.7315, 170.0940],  // Sealy Tarns
+      [-43.7315, 170.0940],
       [-43.732, 170.094],
       [-43.733, 170.095],
-      [-43.7340, 170.0964],  // Mt Cook Village
+      [-43.7340, 170.0964],
     ],
   },
   {
-    id: "mtcook-christchurch",
+    id: "mtcook-blue-lakes",
     from: "mt-cook",
-    to: "christchurch",
+    to: "blue-lakes",
     day: 12,
     mode: "drive",
     waypoints: [
-      [-43.734, 170.0964],
-      [-43.760, 170.135],
-      [-43.800, 170.175],
-      [-43.850, 170.220],
-      [-43.895, 170.268],
-      [-43.935, 170.315],
-      [-43.960, 170.370],
-      [-43.970, 170.430],
-      [-43.965, 170.490],
-      [-43.945, 170.560],
-      [-43.918, 170.635],
-      [-43.890, 170.720],
-      [-43.860, 170.810],
-      [-43.830, 170.905],
-      [-43.800, 171.000],
-      [-43.770, 171.100],
-      [-43.742, 171.205],
-      [-43.715, 171.315],
-      [-43.690, 171.430],
-      [-43.665, 171.550],
-      [-43.642, 171.675],
-      [-43.620, 171.800],
-      [-43.600, 171.930],
-      [-43.582, 172.060],
-      [-43.565, 172.195],
-      [-43.550, 172.330],
-      [-43.540, 172.470],
-      [-43.5321, 172.6362],
+      [-43.7340, 170.0964],
+      [-43.730, 170.120],
+      [-43.725, 170.150],
+      [-43.7200, 170.1800],
+    ],
+  },
+  {
+    id: "blue-lakes-hike",
+    from: "blue-lakes",
+    to: "blue-lakes",
+    day: 12,
+    mode: "hike",
+    waypoints: [
+      [-43.7200, 170.1800],
+      [-43.718, 170.185],
+      [-43.715, 170.190],
+      [-43.718, 170.185],
+      [-43.7200, 170.1800],
+    ],
+  },
+  {
+    id: "blue-lakes-chamberlains",
+    from: "blue-lakes",
+    to: "chamberlains-ford",
+    day: 12,
+    mode: "drive",
+    waypoints: [
+      [-43.7200, 170.1800],
+      [-43.730, 170.220],
+      [-43.760, 170.300],
+      [-43.800, 170.400],
+      [-43.830, 170.520],
+      [-43.850, 170.650],
+      [-43.860, 170.800],
+      [-43.855, 170.950],
+      [-43.840, 171.100],
+      [-43.820, 171.250],
+      [-43.800, 171.400],
+      [-43.780, 171.550],
+      [-43.760, 171.700],
+      [-43.740, 171.850],
+      [-43.720, 172.000],
+      [-43.705, 172.150],
+      [-43.6950, 172.280],
+      [-43.6897, 172.3649],
     ],
   },
 
-  // ── Day 13: Christchurch → Akaroa, kayaking, → Christchurch ──
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 13: Chamberlains Ford → Christchurch → Akaroa kayaking → Akaroa
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: "chamberlains-christchurch",
+    from: "chamberlains-ford",
+    to: "christchurch",
+    day: 13,
+    mode: "drive",
+    waypoints: [
+      [-43.6897, 172.3649],
+      [-43.670, 172.420],
+      [-43.640, 172.480],
+      [-43.610, 172.540],
+      [-43.580, 172.590],
+      [-43.5500, 172.6200],
+      [-43.5321, 172.6362],
+    ],
+  },
   {
     id: "christchurch-akaroa",
     from: "christchurch",
@@ -1169,17 +1502,17 @@ export const routes = [
       [-43.775, 172.898],
       [-43.790, 172.928],
       [-43.800, 172.952],
-      [-43.8037, 172.968],
+      [-43.8037, 172.9680],
     ],
   },
   {
     id: "akaroa-kayaking",
     from: "akaroa",
-    to: "akaroa-canoeing",
+    to: "akaroa-kayaking",
     day: 13,
     mode: "canoeing",
     waypoints: [
-      [-43.8037, 172.968],
+      [-43.8037, 172.9680],
       [-43.810, 172.960],
       [-43.815, 172.950],
       [-43.820, 172.940],
@@ -1189,14 +1522,28 @@ export const routes = [
     ],
   },
   {
-    id: "akaroa-christchurch",
-    from: "akaroa-canoeing",
-    to: "christchurch",
+    id: "kayaking-akaroa",
+    from: "akaroa-kayaking",
+    to: "akaroa",
     day: 13,
-    mode: "drive",
+    mode: "canoeing",
     waypoints: [
       [-43.8100, 172.9550],
-      [-43.8037, 172.968],
+      [-43.8037, 172.9680],
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 14: Akaroa → Bealey Spur → Devils Punch Bowl → Jacksons
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: "akaroa-bealey",
+    from: "akaroa",
+    to: "bealey-spur",
+    day: 14,
+    mode: "drive",
+    waypoints: [
+      [-43.8037, 172.9680],
       [-43.800, 172.952],
       [-43.790, 172.928],
       [-43.775, 172.898],
@@ -1211,18 +1558,6 @@ export const routes = [
       [-43.592, 172.680],
       [-43.570, 172.665],
       [-43.548, 172.650],
-      [-43.5321, 172.6362],
-    ],
-  },
-
-  // ── Day 14: Christchurch → Arthur's Pass, Bealey Spur hike, → Jacksons ──
-  {
-    id: "christchurch-arthurs-pass",
-    from: "christchurch",
-    to: "arthurs-pass",
-    day: 14,
-    mode: "drive",
-    waypoints: [
       [-43.5321, 172.6362],
       [-43.520, 172.540],
       [-43.505, 172.445],
@@ -1242,56 +1577,68 @@ export const routes = [
       [-43.068, 171.558],
       [-43.025, 171.555],
       [-42.980, 171.555],
-      [-42.9426, 171.560],
+      [-42.9580, 171.5880],
     ],
   },
   {
     id: "bealey-spur-up",
-    from: "arthurs-pass",
+    from: "bealey-spur",
     to: "bealey-spur",
     day: 14,
     mode: "hike",
     waypoints: [
-      [-42.943, 171.560],
-      [-42.946, 171.565],
-      [-42.949, 171.572],
-      [-42.952, 171.578],
-      [-42.955, 171.583],
-      [-42.958, 171.588],
+      [-42.9580, 171.5880],
+      [-42.955, 171.592],
+      [-42.952, 171.596],
+      [-42.955, 171.592],
+      [-42.9580, 171.5880],
     ],
   },
   {
-    id: "bealey-spur-down",
+    id: "bealey-devils",
     from: "bealey-spur",
-    to: "arthurs-pass",
+    to: "devils-punch-bowl",
+    day: 14,
+    mode: "drive",
+    waypoints: [
+      [-42.9580, 171.5880],
+      [-42.950, 171.575],
+      [-42.9420, 171.5650],
+    ],
+  },
+  {
+    id: "devils-punch-bowl-walk",
+    from: "devils-punch-bowl",
+    to: "devils-punch-bowl",
     day: 14,
     mode: "hike",
     waypoints: [
-      [-42.958, 171.588],
-      [-42.955, 171.583],
-      [-42.952, 171.578],
-      [-42.949, 171.572],
-      [-42.946, 171.565],
-      [-42.943, 171.560],
+      [-42.9420, 171.5650],
+      [-42.940, 171.568],
+      [-42.938, 171.570],
+      [-42.940, 171.568],
+      [-42.9420, 171.5650],
     ],
   },
   {
-    id: "arthurs-pass-jacksons",
-    from: "arthurs-pass",
+    id: "devils-jacksons",
+    from: "devils-punch-bowl",
     to: "jacksons",
     day: 14,
     mode: "drive",
     waypoints: [
-      [-42.9426, 171.560],
+      [-42.9420, 171.5650],
       [-42.900, 171.555],
       [-42.855, 171.540],
       [-42.810, 171.528],
       [-42.765, 171.520],
-      [-42.7254, 171.5128],
+      [-42.7466, 171.5130],
     ],
   },
 
-  // ── Day 15: Jacksons → Franz Josef ──
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 15: Jacksons → Franz Josef
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "jacksons-franz-josef",
     from: "jacksons",
@@ -1299,7 +1646,7 @@ export const routes = [
     day: 15,
     mode: "drive",
     waypoints: [
-      [-42.7254, 171.5128],
+      [-42.7466, 171.5130],
       [-42.740, 171.460],
       [-42.758, 171.408],
       [-42.775, 171.355],
@@ -1327,123 +1674,168 @@ export const routes = [
       [-43.3862, 170.1833],
     ],
   },
+  {
+    id: "franz-orange-sheep",
+    from: "franz-josef",
+    to: "orange-sheep",
+    day: 15,
+    mode: "drive",
+    waypoints: [
+      [-43.3862, 170.1833],
+      [-43.3870, 170.1840],
+    ],
+  },
 
-  // ── Day 16: Alex Knob hike, drive to Brewster trailhead ──
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 16: Alex Knob hike → Brewster trailhead
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: "orange-sheep-alex",
+    from: "orange-sheep",
+    to: "alex-knob",
+    day: 16,
+    mode: "drive",
+    waypoints: [
+      [-43.3870, 170.1840],
+      [-43.3900, 170.1700],
+      [-43.4000, 170.1500],
+    ],
+  },
   {
     id: "alex-knob-up",
-    from: "franz-josef",
+    from: "alex-knob",
     to: "alex-knob",
     day: 16,
     mode: "hike",
     waypoints: [
-      [-43.386, 170.183],
-      [-43.390, 170.175],
-      [-43.394, 170.167],
-      [-43.398, 170.158],
-      [-43.402, 170.150],
+      [-43.4000, 170.1500],
+      [-43.402, 170.148],
       [-43.405, 170.145],
-      [-43.408, 170.142],
+      [-43.4080, 170.1420],
+      [-43.405, 170.145],
+      [-43.402, 170.148],
+      [-43.4000, 170.1500],
     ],
   },
   {
-    id: "alex-knob-down",
+    id: "alex-brewster",
     from: "alex-knob",
-    to: "franz-josef",
-    day: 16,
-    mode: "hike",
-    waypoints: [
-      [-43.408, 170.142],
-      [-43.405, 170.145],
-      [-43.402, 170.150],
-      [-43.398, 170.158],
-      [-43.394, 170.167],
-      [-43.390, 170.175],
-      [-43.386, 170.183],
-    ],
-  },
-  {
-    id: "franz-josef-brewster",
-    from: "franz-josef",
-    to: "brewster",
+    to: "brewster-trailhead",
     day: 16,
     mode: "drive",
     waypoints: [
-      [-43.3862, 170.1833],  // Franz Josef
-      [-43.4640, 170.0178],  // Fox Glacier
-      [-43.52, 169.88],      // SH6 south along coast
+      [-43.4000, 170.1500],
+      [-43.3862, 170.1833],
+      [-43.4640, 170.0178],
+      [-43.52, 169.88],
       [-43.58, 169.75],
-      [-43.65, 169.55],      // Bruce Bay area
+      [-43.65, 169.55],
       [-43.72, 169.35],
       [-43.80, 169.15],
-      [-43.8810, 169.0420],  // Haast township
-      [-43.92, 169.10],      // SH6 heading inland
-      [-43.96, 169.18],      // Haast River valley
+      [-43.8810, 169.0420],
+      [-43.92, 169.10],
+      [-43.96, 169.18],
       [-44.00, 169.25],
-      [-44.04, 169.30],      // Approaching Haast Pass
-      [-44.0894, 169.3508],  // Brewster Trailhead near Fantail Falls
+      [-44.04, 169.30],
+      [-44.0894, 169.3508],
     ],
   },
 
-  // ── Day 17: Brewster Hut hike, drive to Wanaka ──
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 17: Brewster Track → Red Bridge campground
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "brewster-hut-up",
-    from: "brewster",
+    from: "brewster-trailhead",
     to: "brewster-hut",
     day: 17,
     mode: "hike",
     waypoints: [
-      [-44.0894, 169.3508],  // Trailhead
+      [-44.0894, 169.3508],
       [-44.093, 169.345],
       [-44.097, 169.338],
       [-44.100, 169.330],
       [-44.103, 169.325],
-      [-44.1067, 169.3175],  // Brewster Hut
+      [-44.1067, 169.3175],
     ],
   },
   {
     id: "brewster-hut-down",
     from: "brewster-hut",
-    to: "brewster",
+    to: "brewster-trailhead",
     day: 17,
     mode: "hike",
     waypoints: [
-      [-44.1067, 169.3175],  // Brewster Hut
+      [-44.1067, 169.3175],
       [-44.103, 169.325],
       [-44.100, 169.330],
       [-44.097, 169.338],
       [-44.093, 169.345],
-      [-44.0894, 169.3508],  // Trailhead
+      [-44.0894, 169.3508],
     ],
   },
   {
-    id: "brewster-wanaka",
-    from: "brewster",
-    to: "wanaka-return",
+    id: "brewster-red-bridge",
+    from: "brewster-trailhead",
+    to: "red-bridge-camp-return",
     day: 17,
     mode: "drive",
     waypoints: [
-      [-44.0894, 169.3508],  // Brewster Trailhead
-      [-44.12, 169.35],      // SH6 over Haast Pass
-      [-44.18, 169.32],      // Makarora area
+      [-44.0894, 169.3508],
+      [-44.12, 169.35],
+      [-44.18, 169.32],
       [-44.25, 169.28],
       [-44.32, 169.25],
-      [-44.40, 169.22],      // Lake Wanaka north shore
+      [-44.40, 169.22],
       [-44.50, 169.18],
       [-44.58, 169.15],
       [-44.65, 169.14],
-      [-44.695, 169.132],    // Wanaka
+      [-44.695, 169.132],
+      [-44.710, 169.180],
+      [-44.720, 169.230],
+      [-44.7287, 169.2826],
     ],
   },
 
-  // ── Day 18: Wanaka → Queenstown ──
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 18: Red Bridge → Wanaka center → Hampshire Wanaka
+  // ═══════════════════════════════════════════════════════════════════════════
   {
-    id: "wanaka-queenstown-final",
-    from: "wanaka-return",
-    to: "queenstown-final",
+    id: "red-bridge-wanaka",
+    from: "red-bridge-camp-return",
+    to: "wanaka-center",
+    day: 18,
+    mode: "drive",
+    waypoints: [
+      [-44.7287, 169.2826],
+      [-44.720, 169.230],
+      [-44.710, 169.180],
+      [-44.695, 169.132],
+    ],
+  },
+  {
+    id: "wanaka-hampshire",
+    from: "wanaka-center",
+    to: "hampshire-wanaka",
     day: 18,
     mode: "drive",
     waypoints: [
       [-44.695, 169.132],
+      [-44.6920, 169.1450],
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 19: Bus Wanaka → Queenstown, explore
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: "hampshire-queenstown-bus",
+    from: "hampshire-wanaka",
+    to: "queenstown-explore",
+    day: 19,
+    mode: "drive",
+    waypoints: [
+      [-44.6920, 169.1450],
       [-44.718, 169.088],
       [-44.733, 169.063],
       [-44.751, 169.038],
@@ -1465,26 +1857,37 @@ export const routes = [
       [-45.0312, 168.6626],
     ],
   },
-
-  // ── Day 19: Queenstown → Wellington (fly) ──
   {
-    id: "queenstown-wellington",
-    from: "queenstown-final",
-    to: "wellington",
+    id: "queenstown-black-sheep",
+    from: "queenstown-explore",
+    to: "black-sheep",
     day: 19,
-    mode: "fly",
+    mode: "drive",
     waypoints: [
       [-45.0312, 168.6626],
+      [-45.0320, 168.6610],
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 20: Fly Queenstown → Wellington, explore, drive to Porirua
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: "queenstown-wellington",
+    from: "black-sheep",
+    to: "wellington",
+    day: 20,
+    mode: "fly",
+    waypoints: [
+      [-45.0320, 168.6610],
       [-44.0, 170.0],
       [-43.0, 171.5],
       [-42.0, 173.0],
       [-41.2865, 174.7762],
     ],
   },
-
-  // ── Day 20: Wellington → Holdsworth, Powell Hut hike, → Hastings ──
   {
-    id: "wellington-holdsworth",
+    id: "wellington-porirua",
     from: "wellington",
     to: "porirua",
     day: 20,
@@ -1495,83 +1898,119 @@ export const routes = [
       [-41.210, 174.808],
       [-41.170, 174.825],
       [-41.1339, 174.8405],
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 21: Porirua → Powell Hut → Hastings
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: "porirua-powell-trailhead",
+    from: "porirua",
+    to: "powell-hut-trailhead",
+    day: 21,
+    mode: "drive",
+    waypoints: [
+      [-41.1339, 174.8405],
       [-41.100, 174.870],
       [-41.075, 174.920],
       [-41.055, 174.978],
       [-41.045, 175.050],
       [-41.048, 175.130],
-      [-41.050, 175.200],
-      [-41.085, 175.282],
+      [-41.020, 175.220],
+      [-40.980, 175.320],
+      [-40.950, 175.400],
+      [-40.9300, 175.4650],
     ],
   },
   {
     id: "powell-hut-up",
-    from: "porirua",
+    from: "powell-hut-trailhead",
     to: "powell-hut",
-    day: 20,
+    day: 21,
     mode: "hike",
     waypoints: [
-      [-41.085, 175.282],
-      [-41.078, 175.278],
-      [-41.072, 175.275],
-      [-41.065, 175.272],
-      [-41.058, 175.270],
-      [-41.050, 175.267],
+      [-40.9300, 175.4650],
+      [-40.925, 175.470],
+      [-40.920, 175.477],
+      [-40.9150, 175.4830],
     ],
   },
   {
     id: "powell-hut-down",
     from: "powell-hut",
-    to: "porirua",
-    day: 20,
+    to: "powell-hut-trailhead",
+    day: 21,
     mode: "hike",
     waypoints: [
-      [-41.050, 175.267],
-      [-41.058, 175.270],
-      [-41.065, 175.272],
-      [-41.072, 175.275],
-      [-41.078, 175.278],
-      [-41.085, 175.282],
+      [-40.9150, 175.4830],
+      [-40.920, 175.477],
+      [-40.925, 175.470],
+      [-40.9300, 175.4650],
     ],
   },
   {
-    id: "holdsworth-hastings",
-    from: "porirua",
+    id: "powell-hastings",
+    from: "powell-hut-trailhead",
     to: "hastings",
-    day: 20,
+    day: 21,
     mode: "drive",
     waypoints: [
-      [-41.085, 175.282],
-      [-41.035, 175.340],
-      [-41.010, 175.418],
-      [-40.975, 175.500],
-      [-40.932, 175.585],
-      [-40.885, 175.668],
-      [-40.832, 175.748],
-      [-40.775, 175.825],
-      [-40.712, 175.900],
-      [-40.645, 175.970],
-      [-40.575, 176.038],
-      [-40.502, 176.108],
-      [-40.428, 176.180],
-      [-40.350, 176.255],
-      [-40.272, 176.335],
-      [-40.192, 176.418],
-      [-40.110, 176.502],
-      [-40.025, 176.588],
-      [-39.938, 176.670],
-      [-39.848, 176.745],
-      [-39.755, 176.798],
+      [-40.9300, 175.4650],
+      [-40.880, 175.550],
+      [-40.820, 175.650],
+      [-40.750, 175.750],
+      [-40.680, 175.850],
+      [-40.600, 175.950],
+      [-40.520, 176.050],
+      [-40.440, 176.150],
+      [-40.350, 176.260],
+      [-40.260, 176.380],
+      [-40.160, 176.510],
+      [-40.050, 176.640],
+      [-39.940, 176.750],
+      [-39.830, 176.820],
+      [-39.720, 176.850],
       [-39.6381, 176.8493],
     ],
   },
 
-  // ── Day 22: Hastings → Waimarama surfing → Napier → Taupo → Turangi ──
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 22: Golf and winery in Hastings
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: "hastings-golf",
+    from: "hastings",
+    to: "hastings-golf",
+    day: 22,
+    mode: "drive",
+    waypoints: [
+      [-39.6381, 176.8493],
+      [-39.6200, 176.8400],
+      [-39.6100, 176.8300],
+    ],
+  },
+  {
+    id: "golf-winery",
+    from: "hastings-golf",
+    to: "hastings-wine",
+    day: 22,
+    mode: "drive",
+    waypoints: [
+      [-39.6100, 176.8300],
+      [-39.6200, 176.8400],
+      [-39.6381, 176.8493],
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 23: Surfing → Napier → Taupo spa → Turangi
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "hastings-waimarama",
-    from: "hastings",
-    to: "waimarama-surfing",
-    day: 22,
+    from: "hastings-wine",
+    to: "waimarama",
+    day: 23,
     mode: "drive",
     waypoints: [
       [-39.6381, 176.8493],
@@ -1582,32 +2021,42 @@ export const routes = [
     ],
   },
   {
-    id: "waimarama-surfing-session",
-    from: "waimarama-surfing",
+    id: "waimarama-surfing",
+    from: "waimarama",
     to: "waimarama",
-    day: 22,
+    day: 23,
     mode: "surfing",
     waypoints: [
       [-39.7870, 176.9920],
       [-39.790, 176.998],
       [-39.795, 177.005],
       [-39.790, 176.998],
-      [-39.7853, 176.9906],
+      [-39.7870, 176.9920],
     ],
   },
   {
-    id: "waimarama-turangi",
+    id: "waimarama-napier",
     from: "waimarama",
-    to: "turangi",
-    day: 22,
+    to: "napier",
+    day: 23,
     mode: "drive",
     waypoints: [
-      [-39.7853, 176.9906],
+      [-39.7870, 176.9920],
       [-39.720, 176.955],
       [-39.660, 176.930],
       [-39.600, 176.920],
       [-39.545, 176.915],
-      [-39.4928, 176.912],
+      [-39.4928, 176.9120],
+    ],
+  },
+  {
+    id: "napier-taupo",
+    from: "napier",
+    to: "taupo",
+    day: 23,
+    mode: "drive",
+    waypoints: [
+      [-39.4928, 176.9120],
       [-39.440, 176.870],
       [-39.385, 176.815],
       [-39.330, 176.755],
@@ -1623,62 +2072,97 @@ export const routes = [
       [-38.788, 176.115],
       [-38.738, 176.088],
       [-38.6857, 176.0702],
+    ],
+  },
+  {
+    id: "taupo-spa-park",
+    from: "taupo",
+    to: "spa-park",
+    day: 23,
+    mode: "drive",
+    waypoints: [
+      [-38.6857, 176.0702],
+      [-38.6840, 176.0620],
+    ],
+  },
+  {
+    id: "spa-park-session",
+    from: "spa-park",
+    to: "spa-park",
+    day: 23,
+    mode: "spa",
+    waypoints: [
+      [-38.6840, 176.0620],
+      [-38.6835, 176.0625],
+      [-38.6840, 176.0620],
+    ],
+  },
+  {
+    id: "spa-park-turangi",
+    from: "spa-park",
+    to: "turangi",
+    day: 23,
+    mode: "drive",
+    waypoints: [
+      [-38.6840, 176.0620],
       [-38.720, 176.040],
       [-38.760, 176.000],
       [-38.810, 175.960],
       [-38.855, 175.920],
       [-38.900, 175.878],
       [-38.942, 175.845],
-      [-38.990, 175.810],
+      [-38.9900, 175.8100],
     ],
   },
 
-  // ── Day 23: Turangi → Mangatepopo, Tongariro Crossing, → Rotorua ──
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 24: Tongariro Alpine Crossing → Rotorua
+  // ═══════════════════════════════════════════════════════════════════════════
   {
-    id: "turangi-mangatepopo",
+    id: "turangi-tongariro-start",
     from: "turangi",
-    to: "tongariro",
-    day: 23,
+    to: "tongariro-start",
+    day: 24,
     mode: "drive",
     waypoints: [
-      [-38.990, 175.810],    // Turangi
+      [-38.9900, 175.8100],
       [-39.020, 175.765],
       [-39.055, 175.680],
       [-39.090, 175.620],
-      [-39.133, 175.572],    // Mangatepopo carpark
+      [-39.1330, 175.5720],
     ],
   },
   {
     id: "tongariro-crossing",
-    from: "tongariro",
+    from: "tongariro-start",
     to: "tongariro",
-    day: 23,
+    day: 24,
     mode: "hike",
     waypoints: [
-      [-39.133, 175.572],    // Mangatepopo carpark
-      [-39.128, 175.585],    // Mangatepopo Valley
-      [-39.122, 175.592],    // Soda Springs
-      [-39.117, 175.605],    // Approaching South Crater
-      [-39.115, 175.620],    // South Crater
-      [-39.112, 175.635],    // Climbing to Red Crater
-      [-39.115, 175.648],    // Red Crater summit
-      [-39.116, 175.663],    // Emerald Lakes
-      [-39.112, 175.680],    // Central Crater
-      [-39.105, 175.695],    // Blue Lake
-      [-39.095, 175.710],    // North Crater rim
-      [-39.088, 175.720],    // Ketetahi Shelter
-      [-39.080, 175.735],    // Descending
-      [-39.073, 175.752],    // Ketetahi carpark
+      [-39.1330, 175.5720],
+      [-39.128, 175.585],
+      [-39.122, 175.592],
+      [-39.117, 175.605],
+      [-39.115, 175.620],
+      [-39.112, 175.635],
+      [-39.1150, 175.6480],
+      [-39.116, 175.663],
+      [-39.112, 175.680],
+      [-39.105, 175.695],
+      [-39.095, 175.710],
+      [-39.088, 175.720],
+      [-39.080, 175.735],
+      [-39.073, 175.752],
     ],
   },
   {
-    id: "ketetahi-rotorua",
+    id: "tongariro-rotorua",
     from: "tongariro",
     to: "rotorua",
-    day: 23,
+    day: 24,
     mode: "drive",
     waypoints: [
-      [-39.073, 175.752],    // Ketetahi carpark
+      [-39.073, 175.752],
       [-39.050, 175.775],
       [-39.010, 175.805],
       [-38.968, 175.840],
@@ -1699,16 +2183,18 @@ export const routes = [
       [-38.272, 176.244],
       [-38.222, 176.248],
       [-38.175, 176.249],
-      [-38.1368, 176.2497],  // Rotorua
+      [-38.1368, 176.2497],
     ],
   },
 
-  // ── Day 24: Rotorua → Kaituna Cascades rafting → Mt Maunganui → Tairua ──
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 25: Rafting → Mt Maunganui → Tairua
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "rotorua-kaituna",
     from: "rotorua",
     to: "kaituna-cascades",
-    day: 24,
+    day: 25,
     mode: "drive",
     waypoints: [
       [-38.1368, 176.2497],
@@ -1721,7 +2207,7 @@ export const routes = [
     id: "kaituna-rafting",
     from: "kaituna-cascades",
     to: "kaituna-cascades",
-    day: 24,
+    day: 25,
     mode: "rafting",
     waypoints: [
       [-38.0167, 176.3833],
@@ -1740,10 +2226,10 @@ export const routes = [
     id: "kaituna-maunganui",
     from: "kaituna-cascades",
     to: "mt-maunganui",
-    day: 24,
+    day: 25,
     mode: "drive",
     waypoints: [
-      [-38.0167, 176.3833],  // Kaituna Cascades
+      [-38.0167, 176.3833],
       [-38.000, 176.340],
       [-37.960, 176.300],
       [-37.920, 176.260],
@@ -1752,104 +2238,157 @@ export const routes = [
       [-37.788, 176.200],
       [-37.738, 176.190],
       [-37.688, 176.180],
-      [-37.6318, 176.1711], // Mt Maunganui
+      [-37.6318, 176.1711],
+    ],
+  },
+  {
+    id: "maunganui-hike",
+    from: "mt-maunganui",
+    to: "mt-maunganui",
+    day: 25,
+    mode: "hike",
+    waypoints: [
+      [-37.6318, 176.1711],
+      [-37.635, 176.175],
+      [-37.638, 176.178],
+      [-37.635, 176.175],
+      [-37.6318, 176.1711],
     ],
   },
   {
     id: "maunganui-tairua",
     from: "mt-maunganui",
     to: "tairua",
-    day: 24,
+    day: 25,
     mode: "drive",
     waypoints: [
-      [-37.6318, 176.1711], // Mt Maunganui
-      [-37.670, 176.130],   // SH2 heading south
-      [-37.710, 176.080],   // Te Puke area
-      [-37.750, 176.020],
-      [-37.785, 175.960],   // Paengaroa
-      [-37.815, 175.910],
-      [-37.840, 175.870],   // Approaching Waihi
-      [-37.3856, 175.8355], // Waihi - SH2/SH25 junction
-      [-37.340, 175.840],   // SH25 north
-      [-37.300, 175.850],   // Waihi Beach area
-      [-37.250, 175.860],
-      [-37.2116, 175.8675], // Whangamata
-      [-37.160, 175.870],
-      [-37.110, 175.868],
-      [-37.060, 175.862],
-      [-37.010, 175.855],
-      [-36.993, 175.845],   // Tairua
+      [-37.6318, 176.1711],
+      [-37.580, 176.130],
+      [-37.520, 176.080],
+      [-37.460, 176.020],
+      [-37.400, 175.960],
+      [-37.340, 175.900],
+      [-37.280, 175.860],
+      [-37.220, 175.850],
+      [-37.160, 175.845],
+      [-37.100, 175.843],
+      [-37.040, 175.844],
+      [-36.9930, 175.8450],
     ],
   },
 
-  // ── Day 25: The Pinnacles hike ──
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 26: The Pinnacles hike
+  // ═══════════════════════════════════════════════════════════════════════════
   {
-    id: "tairua-pinnacles",
+    id: "tairua-pinnacles-trailhead",
     from: "tairua",
+    to: "pinnacles-trailhead",
+    day: 26,
+    mode: "drive",
+    waypoints: [
+      [-36.9930, 175.8450],
+      [-36.980, 175.820],
+      [-36.9700, 175.7600],
+    ],
+  },
+  {
+    id: "pinnacles-up",
+    from: "pinnacles-trailhead",
     to: "pinnacles",
-    day: 25,
+    day: 26,
     mode: "hike",
     waypoints: [
-      [-36.993, 175.845],
-      [-36.988, 175.832],
-      [-36.982, 175.818],
-      [-36.978, 175.802],
-      [-36.975, 175.788],
-      [-36.972, 175.775],
-      [-36.968, 175.762],
-      [-36.962, 175.755],
-      [-36.958, 175.750],
+      [-36.9700, 175.7600],
+      [-36.968, 175.758],
+      [-36.965, 175.755],
+      [-36.962, 175.752],
+      [-36.9580, 175.7500],
+    ],
+  },
+  {
+    id: "pinnacles-down",
+    from: "pinnacles",
+    to: "pinnacles-trailhead",
+    day: 26,
+    mode: "hike",
+    waypoints: [
+      [-36.9580, 175.7500],
+      [-36.962, 175.752],
+      [-36.965, 175.755],
+      [-36.968, 175.758],
+      [-36.9700, 175.7600],
     ],
   },
   {
     id: "pinnacles-tairua",
-    from: "pinnacles",
+    from: "pinnacles-trailhead",
     to: "tairua",
-    day: 25,
-    mode: "hike",
-    waypoints: [
-      [-36.958, 175.750],
-      [-36.962, 175.755],
-      [-36.968, 175.762],
-      [-36.972, 175.775],
-      [-36.975, 175.788],
-      [-36.978, 175.802],
-      [-36.982, 175.818],
-      [-36.988, 175.832],
-      [-36.993, 175.845],
-    ],
-  },
-
-  // ── Day 26: Tairua → Thames → Auckland Airport ──
-  {
-    id: "tairua-airport",
-    from: "tairua",
-    to: "auckland-airport",
     day: 26,
     mode: "drive",
     waypoints: [
-      [-36.993, 175.845],    // Tairua
-      [-37.020, 175.780],    // SH25 south
-      [-37.050, 175.720],
-      [-37.080, 175.660],
-      [-37.110, 175.600],
-      [-37.1383, 175.5378],  // Thames
-      [-37.150, 175.480],    // SH25 west towards Kopu
-      [-37.180, 175.380],    // SH2 south of Thames
-      [-37.200, 175.300],
-      [-37.220, 175.220],
-      [-37.230, 175.140],
-      [-37.225, 175.060],    // Heading towards Pokeno
-      [-37.210, 174.980],
-      [-37.180, 174.920],
-      [-37.140, 174.870],    // SH1 area
-      [-37.100, 174.840],
-      [-37.060, 174.810],
-      [-37.0082, 174.785],   // Auckland Airport
+      [-36.9700, 175.7600],
+      [-36.980, 175.820],
+      [-36.9930, 175.8450],
     ],
   },
 
-  // ── Day 27: Auckland → Home (fly away from NZ) ──
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Day 27: Sailors Grave beach → Auckland Airport → Home
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: "tairua-sailors-grave",
+    from: "tairua",
+    to: "sailors-grave",
+    day: 27,
+    mode: "drive",
+    waypoints: [
+      [-36.9930, 175.8450],
+      [-36.970, 175.843],
+      [-36.9565, 175.8419],
+    ],
+  },
+  {
+    id: "sailors-grave-beach",
+    from: "sailors-grave",
+    to: "sailors-grave",
+    day: 27,
+    mode: "hike",
+    waypoints: [
+      [-36.9565, 175.8419],
+      [-36.955, 175.845],
+      [-36.954, 175.848],
+      [-36.955, 175.845],
+      [-36.9565, 175.8419],
+    ],
+  },
+  {
+    id: "sailors-grave-airport",
+    from: "sailors-grave",
+    to: "auckland-airport",
+    day: 27,
+    mode: "drive",
+    waypoints: [
+      [-36.9565, 175.8419],
+      [-37.020, 175.780],
+      [-37.050, 175.720],
+      [-37.080, 175.660],
+      [-37.110, 175.600],
+      [-37.1383, 175.5378],
+      [-37.150, 175.480],
+      [-37.180, 175.380],
+      [-37.200, 175.300],
+      [-37.220, 175.220],
+      [-37.230, 175.140],
+      [-37.225, 175.060],
+      [-37.210, 174.980],
+      [-37.180, 174.920],
+      [-37.140, 174.870],
+      [-37.100, 174.840],
+      [-37.060, 174.810],
+      [-37.0082, 174.7850],
+    ],
+  },
   {
     id: "auckland-home",
     from: "auckland-airport",
@@ -1857,13 +2396,10 @@ export const routes = [
     day: 27,
     mode: "fly",
     waypoints: [
-      [-37.0082, 174.785],   // Auckland Airport
-      [-35.5, 173.0],        // Heading northwest
-      [-33.0, 170.0],
-      [-30.0, 167.0],
-      [-27.0, 164.0],
-      [-24.0, 162.0],
-      [-20.0, 160.0],        // Flying away into the distance
+      [-37.0082, 174.7850],
+      [-34.0, 172.0],
+      [-31.0, 169.0],
+      [-28.5, 165.5],
     ],
   },
 ];

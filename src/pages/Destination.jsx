@@ -1,6 +1,28 @@
+import { useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { stops } from "../data/trip";
+import { getStopImageUrl, getUnsplashFallbackUrl } from "../utils/images";
 import "../styles/destination.css";
+
+// Image component with fallback handling
+function FallbackImage({ src, fallbackSrc, alt, className }) {
+  const [useFallback, setUseFallback] = useState(false);
+
+  const handleError = () => {
+    if (!useFallback && fallbackSrc) {
+      setUseFallback(true);
+    }
+  };
+
+  return (
+    <img
+      src={useFallback ? fallbackSrc : src}
+      alt={alt}
+      className={className}
+      onError={handleError}
+    />
+  );
+}
 
 function Destination() {
   const { id } = useParams();
@@ -23,12 +45,20 @@ function Destination() {
     );
   }
 
+  const handleBack = () => {
+    // Use browser back to preserve map state
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate("/map");
+    }
+  };
+
   const pages = stop.pages || [
     {
       title: stop.name,
-      image:
-        stop.image ||
-        `https://source.unsplash.com/1200x800/?${encodeURIComponent(stop.name + " new zealand")}`,
+      image: getStopImageUrl(stop),
+      fallbackImage: getUnsplashFallbackUrl(stop),
       text: stop.content || stop.description,
     },
   ];
@@ -37,15 +67,16 @@ function Destination() {
     <div className="destination">
       {/* Hero image */}
       <div className="destination__hero">
-        <img
+        <FallbackImage
           src={pages[0].image}
+          fallbackSrc={pages[0].fallbackImage}
           alt={stop.name}
           className="destination__hero-image"
         />
         <div className="destination__hero-overlay" />
         <button
           className="destination__back-btn"
-          onClick={() => navigate("/map")}
+          onClick={handleBack}
         >
           <span className="destination__back-icon">←</span>
           <span className="destination__back-text">Back to Map</span>
@@ -67,8 +98,9 @@ function Destination() {
               {index > 0 && (
                 <>
                   <h2 className="destination__section-title">{page.title}</h2>
-                  <img
+                  <FallbackImage
                     src={page.image}
+                    fallbackSrc={page.fallbackImage}
                     alt={page.title}
                     className="destination__section-image"
                   />

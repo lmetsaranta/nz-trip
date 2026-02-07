@@ -269,6 +269,126 @@ const ICONS = {
     <line x1="30" y1="22" x2="30" y2="34" stroke="#9ca3af" stroke-width="0.5" opacity="0.5"/>
     <line x1="24" y1="28" x2="36" y2="28" stroke="#9ca3af" stroke-width="0.5" opacity="0.5"/>
   </svg>`,
+
+  // Walking Santa Claus for Christmas Eve
+  santa: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 44" width="40" height="44">
+    <!-- Shadow -->
+    <ellipse cx="20" cy="42" rx="8" ry="2" fill="rgba(0,0,0,0.15)"/>
+    <!-- Back leg -->
+    <path d="M22 28 L26 40" stroke="#1f2937" stroke-width="4" stroke-linecap="round"/>
+    <!-- Front leg -->
+    <path d="M18 28 L14 40" stroke="#1f2937" stroke-width="4" stroke-linecap="round"/>
+    <!-- Boots -->
+    <ellipse cx="14" cy="41" rx="4" ry="2" fill="#1f2937"/>
+    <ellipse cx="26" cy="41" rx="4" ry="2" fill="#1f2937"/>
+    <!-- Body (red coat) -->
+    <path d="M14 16 L14 28 L26 28 L26 16 Z" fill="#dc2626"/>
+    <!-- White fur trim bottom -->
+    <rect x="12" y="26" width="16" height="3" fill="#fff" rx="1"/>
+    <!-- Belt -->
+    <rect x="14" y="22" width="12" height="3" fill="#1f2937"/>
+    <rect x="18" y="21" width="4" height="5" fill="#fbbf24"/>
+    <!-- Arms -->
+    <path d="M14 18 L6 22" stroke="#dc2626" stroke-width="4" stroke-linecap="round"/>
+    <path d="M26 18 L34 22" stroke="#dc2626" stroke-width="4" stroke-linecap="round"/>
+    <!-- White cuffs -->
+    <circle cx="6" cy="22" r="3" fill="#fff"/>
+    <circle cx="34" cy="22" r="3" fill="#fff"/>
+    <!-- Mittens -->
+    <circle cx="5" cy="23" r="2.5" fill="#dc2626"/>
+    <circle cx="35" cy="23" r="2.5" fill="#dc2626"/>
+    <!-- Sack on back -->
+    <ellipse cx="28" cy="18" rx="5" ry="6" fill="#92400e"/>
+    <path d="M26 12 L30 12" stroke="#a16207" stroke-width="2"/>
+    <!-- Head -->
+    <circle cx="20" cy="10" r="6" fill="#fef3c7"/>
+    <!-- Beard -->
+    <path d="M14 10 Q14 18 20 20 Q26 18 26 10" fill="#fff"/>
+    <!-- Mustache -->
+    <path d="M16 11 Q20 13 24 11" fill="#fff" stroke="#fff" stroke-width="1"/>
+    <!-- Rosy cheeks -->
+    <circle cx="16" cy="10" r="1.5" fill="#fca5a5"/>
+    <circle cx="24" cy="10" r="1.5" fill="#fca5a5"/>
+    <!-- Eyes -->
+    <circle cx="17" cy="8" r="1" fill="#1f2937"/>
+    <circle cx="23" cy="8" r="1" fill="#1f2937"/>
+    <!-- Hat -->
+    <path d="M12 8 L20 2 L28 8 Q24 6 20 6 Q16 6 12 8 Z" fill="#dc2626"/>
+    <!-- Hat brim -->
+    <ellipse cx="20" cy="8" rx="9" ry="2" fill="#fff"/>
+    <!-- Hat pom pom -->
+    <circle cx="20" cy="2" r="3" fill="#fff"/>
+  </svg>`,
+
+  // Christmas scene - Santa walking with Christmas tree for Christmas Eve
+  christmas: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 48" width="56" height="48">
+    <!-- Shadow -->
+    <ellipse cx="28" cy="46" rx="24" ry="3" fill="rgba(0,0,0,0.12)"/>
+
+    <!-- Christmas Tree (right side) -->
+    <!-- Trunk -->
+    <rect x="38" y="38" width="4" height="5" fill="#92400e"/>
+    <!-- Tree bottom layer -->
+    <path d="M40 32 L30 42 L50 42 Z" fill="#16a34a"/>
+    <!-- Tree middle layer -->
+    <path d="M40 22 L32 34 L48 34 Z" fill="#22c55e"/>
+    <!-- Tree top layer -->
+    <path d="M40 12 L34 24 L46 24 Z" fill="#4ade80"/>
+    <!-- Star -->
+    <path d="M40 8 L41 10 L43 10.5 L41.5 12 L42 14 L40 13 L38 14 L38.5 12 L37 10.5 L39 10 Z" fill="#fbbf24"/>
+    <!-- Ornaments -->
+    <circle cx="36" cy="36" r="1.5" fill="#dc2626"/>
+    <circle cx="44" cy="38" r="1.5" fill="#fbbf24"/>
+    <circle cx="40" cy="28" r="1.5" fill="#3b82f6"/>
+    <circle cx="37" cy="26" r="1" fill="#22d3ee"/>
+    <circle cx="43" cy="24" r="1" fill="#f472b6"/>
+
+    <!-- Walking Santa (left side) -->
+    <!-- Back leg -->
+    <path d="M18 32 L22 44" stroke="#1f2937" stroke-width="3" stroke-linecap="round"/>
+    <!-- Front leg -->
+    <path d="M14 32 L10 44" stroke="#1f2937" stroke-width="3" stroke-linecap="round"/>
+    <!-- Boots -->
+    <ellipse cx="10" cy="45" rx="3" ry="1.5" fill="#1f2937"/>
+    <ellipse cx="22" cy="45" rx="3" ry="1.5" fill="#1f2937"/>
+    <!-- Body (red coat) -->
+    <path d="M11 20 L11 32 L21 32 L21 20 Z" fill="#dc2626"/>
+    <!-- White fur trim bottom -->
+    <rect x="10" y="30" width="12" height="2.5" fill="#fff" rx="1"/>
+    <!-- Belt -->
+    <rect x="11" y="26" width="10" height="2.5" fill="#1f2937"/>
+    <rect x="14" y="25.5" width="4" height="3.5" fill="#fbbf24"/>
+    <!-- Arms -->
+    <path d="M11 22 L5 26" stroke="#dc2626" stroke-width="3" stroke-linecap="round"/>
+    <path d="M21 22 L27 26" stroke="#dc2626" stroke-width="3" stroke-linecap="round"/>
+    <!-- White cuffs -->
+    <circle cx="5" cy="26" r="2.5" fill="#fff"/>
+    <circle cx="27" cy="26" r="2.5" fill="#fff"/>
+    <!-- Mittens -->
+    <circle cx="4" cy="27" r="2" fill="#dc2626"/>
+    <circle cx="28" cy="27" r="2" fill="#dc2626"/>
+    <!-- Gift in hand -->
+    <rect x="25" y="24" width="5" height="5" fill="#22c55e" rx="0.5"/>
+    <path d="M25 26.5 L30 26.5 M27.5 24 L27.5 29" stroke="#dc2626" stroke-width="0.8"/>
+    <!-- Head -->
+    <circle cx="16" cy="14" r="5" fill="#fef3c7"/>
+    <!-- Beard -->
+    <path d="M11 14 Q11 20 16 22 Q21 20 21 14" fill="#fff"/>
+    <!-- Mustache -->
+    <path d="M13 15 Q16 16.5 19 15" fill="#fff" stroke="#fff" stroke-width="0.8"/>
+    <!-- Rosy cheeks -->
+    <circle cx="13" cy="14" r="1" fill="#fca5a5"/>
+    <circle cx="19" cy="14" r="1" fill="#fca5a5"/>
+    <!-- Eyes -->
+    <circle cx="14" cy="12" r="0.8" fill="#1f2937"/>
+    <circle cx="18" cy="12" r="0.8" fill="#1f2937"/>
+    <!-- Hat -->
+    <path d="M10 12 L16 6 L22 12 Q18 10 16 10 Q14 10 10 12 Z" fill="#dc2626"/>
+    <!-- Hat brim -->
+    <ellipse cx="16" cy="12" rx="7" ry="1.5" fill="#fff"/>
+    <!-- Hat pom pom -->
+    <circle cx="16" cy="6" r="2.5" fill="#fff"/>
+  </svg>`,
 };
 
 const SIZES = {
@@ -282,6 +402,8 @@ const SIZES = {
   canoeing: [40, 40],
   spa: [40, 40],
   bike: [40, 40],
+  santa: [40, 44],
+  christmas: [56, 48],
 };
 
 const ANCHORS = {
@@ -295,12 +417,22 @@ const ANCHORS = {
   canoeing: [20, 32],
   spa: [20, 36],
   bike: [20, 32],
+  santa: [20, 42],
+  christmas: [28, 46],
 };
 
-function createIcon(type) {
-  const svg = ICONS[type] || ICONS.destination;
-  const size = SIZES[type] || SIZES.destination;
-  const anchor = ANCHORS[type] || ANCHORS.destination;
+function createIcon(type, day) {
+  // Special Christmas icons for day 9 (Christmas Eve)
+  let iconType = type;
+  if (day === 9) {
+    if (type === "camp") {
+      iconType = "christmas"; // Santa walking with Christmas tree
+    }
+  }
+
+  const svg = ICONS[iconType] || ICONS.destination;
+  const size = SIZES[iconType] || SIZES.destination;
+  const anchor = ANCHORS[iconType] || ANCHORS.destination;
   return L.divIcon({
     html: svg,
     className: "map-icon",
@@ -310,7 +442,7 @@ function createIcon(type) {
   });
 }
 
-function StopMarker({ stop, onClick }) {
+function StopMarker({ stop, onClick, isOvernight }) {
   if (!stop.coords) return null;
 
   const handleClick = () => {
@@ -320,8 +452,9 @@ function StopMarker({ stop, onClick }) {
   return (
     <Marker
       position={stop.coords}
-      icon={createIcon(stop.type)}
+      icon={createIcon(stop.type, stop.day)}
       eventHandlers={{ click: handleClick }}
+      zIndexOffset={isOvernight ? 500 : 0}
     />
   );
 }
