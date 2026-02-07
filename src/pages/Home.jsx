@@ -569,7 +569,7 @@ function Home() {
         <TreasureModal
           isOpen={showTreasure}
           onClose={() => setShowTreasure(false)}
-          projectUrl="https://www.farmoi.com/?lang=fi"
+          projectUrl="https://www.farmoi.com/?lang=fi&nz=1"
           projectName="Farmoi"
           projectDescription="You're curious too! I thought you'd click here. So click ahead and check out an important project called Farmoi. Let's support Finnish local food production."
         />
