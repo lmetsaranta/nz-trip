@@ -62,10 +62,13 @@
     "title": "Matkan tilastot",
     "close": "Sulje",
     "days": "Päivää",
-    "routes": "Reittiä",
-    "byTransportMode": "Kulkuvälineittäin",
-    "route": "reitti",
-    "routes_plural": "reittiä"
+    "flights": "Lentoa",
+    "distances": "Etäisyydet",
+    "driving": "Ajaminen",
+    "hiking": "Vaellus",
+    "highlights": "Kohokohdat",
+    "hotSprings": "Kuumat lähteet",
+    "iceCreams": "Real Fruit -jäätelöt"
   },
   "weather": {
     "title": "Sää",

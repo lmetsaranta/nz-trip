@@ -62,10 +62,13 @@
     "title": "Trip Statistics",
     "close": "Close",
     "days": "Days",
-    "routes": "Routes",
-    "byTransportMode": "By Transport Mode",
-    "route": "route",
-    "routes_plural": "routes"
+    "flights": "Flights",
+    "distances": "Distances",
+    "driving": "Driving",
+    "hiking": "Hiking",
+    "highlights": "Highlights",
+    "hotSprings": "Hot Springs",
+    "iceCreams": "Real Fruit Ice Creams"
   },
   "weather": {
     "title": "Weather",

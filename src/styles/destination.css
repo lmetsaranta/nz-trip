@@ -4,7 +4,7 @@
 
 .destination {
   min-height: 100vh;
-  background: #fff;
+  background: #fefffe;
 }
 
 .destination--not-found {
@@ -129,40 +129,40 @@
 }
 
 .destination__type--destination {
-  background: #10B981;
+  background: #4a9c7d;
 }
 
 .destination__type--camp {
-  background: #22c55e;
+  background: #6db892;
 }
 
 .destination__type--hostel {
-  background: #f59e0b;
+  background: #c9956a;
 }
 
 .destination__type--hike {
-  background: #10b981;
+  background: #8bc9a8;
 }
 
 .destination__type--plane {
-  background: #0D9488;
+  background: #5ba3bf;
 }
 
 .destination__type--rafting {
-  background: #14B8A6;
+  background: #5ba3bf;
 }
 
 .destination__type--surfing {
-  background: #0D9488;
+  background: #5ba3bf;
 }
 
 .destination__type--canoeing {
-  background: #059669;
+  background: #5b9e7a;
 }
 
 .destination__type--spa {
-  background: #6EE7B7;
-  color: #064E3B;
+  background: #7aa88c;
+  color: #1a2420;
 }
 
 .destination__title {
@@ -203,7 +203,7 @@
   margin: 0 0 20px;
   font-size: 24px;
   font-weight: 600;
-  color: #111;
+  color: #2d3a35;
 }
 
 .destination__section-image {
@@ -218,7 +218,7 @@
   margin: 0;
   font-size: 17px;
   line-height: 1.7;
-  color: #444;
+  color: #4a5650;
 }
 
 /* ── Meta ── */
@@ -228,7 +228,7 @@
   justify-content: space-between;
   gap: 24px;
   padding: 24px;
-  background: #f8f8f8;
+  background: #e8f0eb;
   border-radius: 16px;
 }
 
@@ -243,14 +243,14 @@
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #888;
+  color: #6b7a72;
 }
 
 .destination__coords-value {
   font-size: 14px;
   font-weight: 500;
   font-family: ui-monospace, "SF Mono", monospace;
-  color: #333;
+  color: #2d3a35;
 }
 
 .destination__maps-link {
@@ -258,14 +258,14 @@
   font-size: 14px;
   font-weight: 500;
   color: #fff;
-  background: #10B981;
+  background: #4a9c7d;
   border-radius: 100px;
   text-decoration: none;
   transition: background 0.2s ease, transform 0.15s ease;
 }
 
 .destination__maps-link:hover {
-  background: #059669;
+  background: #3d8268;
   transform: translateY(-1px);
 }
 
@@ -277,7 +277,7 @@
   font-size: 14px;
   font-weight: 500;
   color: #fff;
-  background: #10B981;
+  background: #4a9c7d;
   border-radius: 100px;
   text-decoration: none;
 }
@@ -288,27 +288,27 @@
 
 @media (prefers-color-scheme: dark) {
   .destination {
-    background: #040d08;
+    background: #1a2420;
   }
 
   .destination__section-title {
-    color: #fff;
+    color: #e8f0eb;
   }
 
   .destination__text {
-    color: #9CA3AF;
+    color: #a8b5ae;
   }
 
   .destination__meta {
-    background: #0a1410;
+    background: #232f2a;
   }
 
   .destination__coords-label {
-    color: #6B7280;
+    color: #6b7a72;
   }
 
   .destination__coords-value {
-    color: #D1D5DB;
+    color: #d4ddd8;
   }
 
   .destination__gallery-image {

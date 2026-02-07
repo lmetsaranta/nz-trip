@@ -43,15 +43,13 @@ export function getDayDate(dayNumber) {
 }
 
 // Helper to format time from ISO string
+// The API returns times in NZ local time (e.g., "2025-12-16T05:46")
+// so we just extract the HH:MM portion directly
 export function formatTime(isoString) {
   if (!isoString) return "";
-  const date = new Date(isoString);
-  return date.toLocaleTimeString("en-NZ", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-    timeZone: "Pacific/Auckland",
-  });
+  // Extract HH:MM from "YYYY-MM-DDTHH:MM" format
+  const timePart = isoString.split("T")[1];
+  return timePart ? timePart.slice(0, 5) : "";
 }
 
 // Get weather info from code
@@ -61,4 +59,4 @@ export function getWeatherInfo(code) {
 
 // localStorage key for caching
 export const WEATHER_CACHE_KEY = "nz-trip-weather-data";
-export const WEATHER_CACHE_VERSION = 1;
+export const WEATHER_CACHE_VERSION = 2; // Bumped for per-location weather

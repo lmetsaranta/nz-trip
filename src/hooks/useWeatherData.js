@@ -1,8 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { stops } from "../data/trip";
 import {
-  TRIP_START_DATE,
-  TRIP_END_DATE,
   getDayDate,
   WEATHER_CACHE_KEY,
   WEATHER_CACHE_VERSION,
@@ -14,55 +12,33 @@ function getPrimaryStopForDay(day) {
   return dayStops[0] || null;
 }
 
-// Build location groups for batch fetching
-// Group consecutive days that are in similar regions
-function buildLocationGroups() {
-  const groups = [];
-  let currentGroup = null;
+// Build location list - one entry per day for accurate local weather
+function buildLocationList() {
+  const locations = [];
 
   for (let day = 1; day <= 27; day++) {
     const stop = getPrimaryStopForDay(day);
     if (!stop) continue;
 
-    const [lat, lng] = stop.coords;
-
-    // Check if this location is close enough to current group (within 2 degrees)
-    if (currentGroup) {
-      const [groupLat, groupLng] = currentGroup.coords;
-      const distance = Math.sqrt(
-        Math.pow(lat - groupLat, 2) + Math.pow(lng - groupLng, 2)
-      );
-
-      if (distance < 2) {
-        currentGroup.days.push(day);
-        continue;
-      }
-    }
-
-    // Start new group
-    currentGroup = {
-      coords: [lat, lng],
-      days: [day],
-    };
-    groups.push(currentGroup);
+    locations.push({
+      day,
+      coords: stop.coords,
+    });
   }
 
-  return groups;
+  return locations;
 }
 
-// Fetch weather for a location group
-async function fetchWeatherForGroup(group) {
-  const [lat, lng] = group.coords;
-  const startDay = Math.min(...group.days);
-  const endDay = Math.max(...group.days);
-  const startDate = getDayDate(startDay);
-  const endDate = getDayDate(endDay);
+// Fetch weather for a specific day and location
+async function fetchWeatherForDay(location) {
+  const [lat, lng] = location.coords;
+  const date = getDayDate(location.day);
 
   const params = new URLSearchParams({
     latitude: lat.toString(),
     longitude: lng.toString(),
-    start_date: startDate,
-    end_date: endDate,
+    start_date: date,
+    end_date: date,
     daily: [
       "temperature_2m_max",
       "temperature_2m_min",
@@ -88,33 +64,24 @@ async function fetchWeatherForGroup(group) {
   return response.json();
 }
 
-// Parse API response into day-indexed data
-function parseWeatherResponse(data, group) {
-  const result = {};
+// Parse API response for a single day
+function parseWeatherResponse(data, day) {
   const daily = data.daily;
 
-  if (!daily || !daily.time) return result;
+  if (!daily || !daily.time || !daily.time[0]) return null;
 
-  daily.time.forEach((date, index) => {
-    // Find which day this date corresponds to
-    const dayNumber = group.days.find((d) => getDayDate(d) === date);
-    if (!dayNumber) return;
-
-    result[dayNumber] = {
-      date,
-      tempMax: daily.temperature_2m_max?.[index],
-      tempMin: daily.temperature_2m_min?.[index],
-      precipitation: daily.precipitation_sum?.[index],
-      precipitationProbability: daily.precipitation_probability_max?.[index],
-      weatherCode: daily.weathercode?.[index],
-      windSpeed: daily.windspeed_10m_max?.[index],
-      uvIndex: daily.uv_index_max?.[index],
-      sunrise: daily.sunrise?.[index],
-      sunset: daily.sunset?.[index],
-    };
-  });
-
-  return result;
+  return {
+    date: daily.time[0],
+    tempMax: daily.temperature_2m_max?.[0],
+    tempMin: daily.temperature_2m_min?.[0],
+    precipitation: daily.precipitation_sum?.[0],
+    precipitationProbability: daily.precipitation_probability_max?.[0],
+    weatherCode: daily.weathercode?.[0],
+    windSpeed: daily.windspeed_10m_max?.[0],
+    uvIndex: daily.uv_index_max?.[0],
+    sunrise: daily.sunrise?.[0],
+    sunset: daily.sunset?.[0],
+  };
 }
 
 // Load from cache
@@ -172,17 +139,19 @@ export function useWeatherData() {
     setError(null);
 
     try {
-      const groups = buildLocationGroups();
+      const locations = buildLocationList();
       const allData = {};
 
-      // Fetch each group sequentially to avoid rate limiting
-      for (const group of groups) {
-        const response = await fetchWeatherForGroup(group);
-        const parsed = parseWeatherResponse(response, group);
-        Object.assign(allData, parsed);
+      // Fetch weather for each day's specific location
+      for (const location of locations) {
+        const response = await fetchWeatherForDay(location);
+        const parsed = parseWeatherResponse(response, location.day);
+        if (parsed) {
+          allData[location.day] = parsed;
+        }
 
-        // Small delay between requests
-        await new Promise((resolve) => setTimeout(resolve, 100));
+        // Small delay between requests to avoid rate limiting
+        await new Promise((resolve) => setTimeout(resolve, 50));
       }
 
       saveToCache(allData);
