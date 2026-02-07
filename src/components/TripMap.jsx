@@ -49,6 +49,7 @@ function TripMap({
   isPlaying,
   vehiclePosition,
   vehicleMode,
+  vehicleBearing,
   routeIndex,
   routeProgress,
   routeDistance,
@@ -58,10 +59,66 @@ function TripMap({
   onZoomHandled,
   onStopClick,
   arrivingStop,
+  isFinalDay,
+  onMapViewChange,
+  initialView,
 }) {
   const tile = TILE_LAYERS[theme];
 
-  const visibleStops = stops.filter((s) => s.day <= currentDay);
+  // Get visible stops and identify overnight destinations for z-index boosting
+  // During playback, stops only appear when vehicle is 80%+ through the route to that stop
+  const { visibleStops, overnightStopIds } = useMemo(() => {
+    // All stops from previous days are visible
+    const pastStops = stops.filter((s) => s.day < currentDay);
+
+    // For current day, determine which stops should be visible based on progress
+    const currentDayStops = stops.filter((s) => s.day === currentDay);
+    const currentDayRoutes = routes.filter((r) => r.day === currentDay);
+
+    let visibleCurrentDayStops = [];
+
+    if (isPlaying) {
+      // During playback: only show stops when 80% through the route to that stop
+      for (const stop of currentDayStops) {
+        // Find the route that leads TO this stop
+        const routeToStop = currentDayRoutes.findIndex((r) => r.to === stop.id);
+
+        if (routeToStop === -1) {
+          // This is a starting point (no route leads to it), show if it's the first stop
+          const isStartingPoint = currentDayRoutes.length > 0 && currentDayRoutes[0].from === stop.id;
+          if (isStartingPoint) {
+            visibleCurrentDayStops.push(stop);
+          }
+        } else if (routeToStop < routeIndex) {
+          // Route to this stop is already completed
+          visibleCurrentDayStops.push(stop);
+        } else if (routeToStop === routeIndex && routeProgress >= 0.8) {
+          // Currently on the route to this stop and 80%+ complete
+          visibleCurrentDayStops.push(stop);
+        }
+        // Otherwise, don't show this stop yet
+      }
+    } else {
+      // Not playing: show all current day stops
+      visibleCurrentDayStops = currentDayStops;
+    }
+
+    const visible = [...pastStops, ...visibleCurrentDayStops];
+
+    // Find the overnight destination IDs for each day (last route's "to" destination)
+    const overnightIds = new Set();
+    for (let day = 1; day <= currentDay; day++) {
+      const dayRoutes = routes.filter((r) => r.day === day);
+      if (dayRoutes.length > 0) {
+        const lastRoute = dayRoutes[dayRoutes.length - 1];
+        if (lastRoute.to) {
+          overnightIds.add(lastRoute.to);
+        }
+      }
+    }
+
+    return { visibleStops: visible, overnightStopIds: overnightIds };
+  }, [currentDay, isPlaying, routeIndex, routeProgress]);
 
   const { pastRoutes, completedSegments, activeRoute } = useMemo(() => {
     const past = routes.filter((r) => r.day < currentDay);
@@ -102,6 +159,9 @@ function TripMap({
           vehicleMode={vehicleMode}
           routeProgress={routeProgress}
           routeDistance={routeDistance}
+          isFinalDay={isFinalDay}
+          onMapViewChange={onMapViewChange}
+          initialView={initialView}
         />
 
         {/* Past routes — fully drawn */}
@@ -125,7 +185,12 @@ function TripMap({
 
         {/* Stop markers */}
         {visibleStops.map((stop) => (
-          <StopMarker key={stop.id} stop={stop} onClick={onStopClick} />
+          <StopMarker
+            key={stop.id}
+            stop={stop}
+            onClick={onStopClick}
+            isOvernight={overnightStopIds.has(stop.id)}
+          />
         ))}
 
         {/* Arrival animation at destination */}
@@ -135,7 +200,7 @@ function TripMap({
 
         {/* Animated vehicle */}
         {isPlaying && vehiclePosition && (
-          <AnimatedVehicle position={vehiclePosition} mode={vehicleMode} />
+          <AnimatedVehicle position={vehiclePosition} mode={vehicleMode} bearing={vehicleBearing} />
         )}
 
         {/* Stop tooltip on arrival */}

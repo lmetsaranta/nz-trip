@@ -4,60 +4,60 @@ import { Marker } from "react-leaflet";
 
 /* ── Modern vehicle SVGs ── */
 
-// Isometric white van
-const VAN_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 36" width="48" height="36">
+// Flat illustrated campervan - side view, clean and modern
+const VAN_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 28" width="40" height="28">
   <!-- Shadow -->
-  <ellipse cx="24" cy="34" rx="16" ry="2" fill="rgba(0,0,0,0.15)"/>
-  <!-- Body back (right side) -->
-  <path d="M24 12 L40 20 L40 28 L24 32 Z" fill="#e5e7eb"/>
-  <!-- Body front (left side) -->
-  <path d="M24 12 L8 20 L8 28 L24 32 Z" fill="#f9fafb"/>
-  <!-- Roof -->
-  <path d="M10 14 L24 8 L38 14 L24 20 Z" fill="#fff"/>
-  <!-- Windshield left -->
-  <path d="M10 14 L18 10 L18 16 L10 20 Z" fill="#bfdbfe"/>
-  <!-- Windshield right -->
-  <path d="M38 14 L30 10 L30 16 L38 20 Z" fill="#93c5fd"/>
-  <!-- Side windows left -->
-  <path d="M12 21 L18 18 L18 24 L12 26 Z" fill="#bfdbfe"/>
-  <!-- Side windows right -->
-  <path d="M36 21 L30 18 L30 24 L36 26 Z" fill="#93c5fd"/>
-  <!-- Front light -->
-  <path d="M10 20 L14 18 L14 20 L10 22 Z" fill="#fef08a"/>
-  <!-- Rear light -->
-  <path d="M38 22 L34 20 L34 22 L38 24 Z" fill="#fca5a5"/>
-  <!-- Wheel left -->
-  <ellipse cx="14" cy="30" rx="3" ry="1.5" fill="#1f2937"/>
-  <ellipse cx="14" cy="30" rx="1.5" ry="0.8" fill="#6b7280"/>
-  <!-- Wheel right -->
-  <ellipse cx="34" cy="30" rx="3" ry="1.5" fill="#1f2937"/>
-  <ellipse cx="34" cy="30" rx="1.5" ry="0.8" fill="#6b7280"/>
-  <!-- Roof rack -->
-  <path d="M16 10 L24 6 L32 10 L24 14 Z" fill="#d1d5db" opacity="0.5"/>
+  <ellipse cx="20" cy="26" rx="14" ry="2" fill="rgba(0,0,0,0.15)"/>
+  <!-- Body - orange -->
+  <path d="M4 12 L4 22 Q4 24 6 24 L34 24 Q36 24 36 22 L36 12 L4 12 Z" fill="#f97316"/>
+  <!-- Roof/cabin top - cream -->
+  <path d="M4 12 L4 8 Q4 6 8 6 L28 6 Q32 6 34 8 L36 12 L4 12 Z" fill="#fef3c7"/>
+  <!-- Windshield -->
+  <path d="M30 6 Q32 6 34 8 L36 12 L30 12 L30 6 Z" fill="#67e8f9"/>
+  <!-- Side windows -->
+  <rect x="6" y="8" width="8" height="4" rx="1" fill="#67e8f9"/>
+  <rect x="16" y="8" width="8" height="4" rx="1" fill="#67e8f9"/>
+  <!-- Door line -->
+  <line x1="26" y1="12" x2="26" y2="24" stroke="#ea580c" stroke-width="1"/>
+  <!-- Door handle -->
+  <rect x="27" y="16" width="3" height="1" rx="0.5" fill="#374151"/>
+  <!-- Front wheel -->
+  <circle cx="10" cy="24" r="4" fill="#374151"/>
+  <circle cx="10" cy="24" r="2" fill="#6b7280"/>
+  <!-- Rear wheel -->
+  <circle cx="30" cy="24" r="4" fill="#374151"/>
+  <circle cx="30" cy="24" r="2" fill="#6b7280"/>
+  <!-- Headlight -->
+  <rect x="34" y="14" width="2" height="3" rx="0.5" fill="#fde047"/>
+  <!-- Taillight -->
+  <rect x="4" y="14" width="1.5" height="3" rx="0.5" fill="#ef4444"/>
 </svg>`;
 
-// Isometric airplane
-const PLANE_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 36" width="48" height="36">
+// Flat illustrated airplane - angled top-down view
+const PLANE_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
   <!-- Shadow -->
-  <ellipse cx="24" cy="34" rx="12" ry="2" fill="rgba(0,0,0,0.15)"/>
-  <!-- Fuselage back -->
-  <path d="M24 4 L28 8 L28 24 L24 28 Z" fill="#6d28d9"/>
-  <!-- Fuselage front -->
-  <path d="M24 4 L20 8 L20 24 L24 28 Z" fill="#a78bfa"/>
-  <!-- Left wing -->
-  <path d="M20 12 L4 18 L4 20 L20 16 Z" fill="#8b5cf6"/>
-  <!-- Right wing -->
-  <path d="M28 12 L44 18 L44 20 L28 16 Z" fill="#5b21b6"/>
-  <!-- Tail left -->
-  <path d="M20 22 L14 20 L14 22 L20 24 Z" fill="#8b5cf6"/>
-  <!-- Tail right -->
-  <path d="M28 22 L34 20 L34 22 L28 24 Z" fill="#5b21b6"/>
+  <ellipse cx="20" cy="38" rx="12" ry="2" fill="rgba(0,0,0,0.12)"/>
+  <!-- Fuselage - white -->
+  <path d="M20 2 L23 8 L23 30 L20 36 L17 30 L17 8 Z" fill="#ffffff"/>
+  <!-- Wings - sky blue -->
+  <path d="M17 14 L2 22 L2 24 L17 20 Z" fill="#38bdf8"/>
+  <path d="M23 14 L38 22 L38 24 L23 20 Z" fill="#38bdf8"/>
+  <!-- Tail wings -->
+  <path d="M17 28 L10 30 L10 32 L17 31 Z" fill="#38bdf8"/>
+  <path d="M23 28 L30 30 L30 32 L23 31 Z" fill="#38bdf8"/>
   <!-- Tail fin -->
-  <path d="M24 22 L24 18 L28 20 Z" fill="#c4b5fd"/>
-  <!-- Cockpit -->
-  <path d="M22 6 L24 4 L26 6 L24 8 Z" fill="#ddd6fe"/>
-  <!-- Engine glow -->
-  <ellipse cx="24" cy="28" rx="2" ry="1" fill="#c4b5fd" opacity="0.6"/>
+  <path d="M20 26 L20 22 L23 26 Z" fill="#1e3a5a"/>
+  <!-- Cockpit windows -->
+  <ellipse cx="20" cy="7" rx="2" ry="3" fill="#1e3a5a"/>
+  <!-- Fuselage windows -->
+  <circle cx="20" cy="13" r="1" fill="#1e3a5a"/>
+  <circle cx="20" cy="17" r="1" fill="#1e3a5a"/>
+  <!-- Wing accents -->
+  <path d="M17 15 L6 21 L6 22 L17 18 Z" fill="#0ea5e9"/>
+  <path d="M23 15 L34 21 L34 22 L23 18 Z" fill="#0ea5e9"/>
+  <!-- Engine pods -->
+  <ellipse cx="12" cy="20" rx="2" ry="1.5" fill="#e5e7eb"/>
+  <ellipse cx="28" cy="20" rx="2" ry="1.5" fill="#e5e7eb"/>
 </svg>`;
 
 // Isometric hiker
@@ -118,15 +118,15 @@ const BOAT_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 36" wi
 const vanIcon = L.divIcon({
   html: VAN_SVG,
   className: "vehicle-icon vehicle-van",
-  iconSize: [48, 36],
-  iconAnchor: [24, 30],
+  iconSize: [40, 28],
+  iconAnchor: [20, 24],
 });
 
 const planeIcon = L.divIcon({
   html: PLANE_SVG,
   className: "vehicle-icon vehicle-plane",
-  iconSize: [48, 36],
-  iconAnchor: [24, 28],
+  iconSize: [40, 40],
+  iconAnchor: [20, 36],
 });
 
 const hikerIcon = L.divIcon({
@@ -271,10 +271,83 @@ const spaIcon = L.divIcon({
   iconAnchor: [24, 28],
 });
 
-const ICONS = { drive: vanIcon, fly: planeIcon, hike: hikerIcon, ferry: boatIcon, canoeing: kayakIcon, surfing: surferIcon, rafting: rafterIcon, spa: spaIcon };
+// Isometric cyclist
+const CYCLIST_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 40" width="48" height="40">
+  <!-- Shadow -->
+  <ellipse cx="24" cy="38" rx="16" ry="3" fill="rgba(0,0,0,0.12)"/>
+  <!-- Back wheel -->
+  <ellipse cx="12" cy="30" rx="8" ry="8" fill="none" stroke="#374151" stroke-width="2"/>
+  <ellipse cx="12" cy="30" rx="2" ry="2" fill="#6b7280"/>
+  <!-- Front wheel -->
+  <ellipse cx="36" cy="30" rx="8" ry="8" fill="none" stroke="#374151" stroke-width="2"/>
+  <ellipse cx="36" cy="30" rx="2" ry="2" fill="#6b7280"/>
+  <!-- Frame -->
+  <path d="M12 30 L24 18 L36 30" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M12 30 L24 30 L24 18" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Seat post -->
+  <line x1="20" y1="24" x2="18" y2="16" stroke="#dc2626" stroke-width="2"/>
+  <!-- Seat -->
+  <ellipse cx="17" cy="15" rx="4" ry="1.5" fill="#1f2937"/>
+  <!-- Handlebars -->
+  <line x1="24" y1="18" x2="32" y2="16" stroke="#dc2626" stroke-width="2"/>
+  <path d="M30 14 L34 16 L32 18" fill="none" stroke="#1f2937" stroke-width="2" stroke-linecap="round"/>
+  <!-- Rider body -->
+  <path d="M18 15 Q22 14 26 16" stroke="#22c55e" stroke-width="4" stroke-linecap="round"/>
+  <!-- Rider head -->
+  <circle cx="28" cy="10" r="4" fill="#fef3c7"/>
+  <!-- Helmet -->
+  <path d="M24 8 L28 5 L32 8" fill="#22c55e" stroke="#16a34a" stroke-width="0.5"/>
+  <!-- Legs on pedals -->
+  <path d="M20 22 L24 30" stroke="#fef3c7" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M22 20 L20 30" stroke="#fcd34d" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Pedals -->
+  <circle cx="24" cy="30" r="2.5" fill="#6b7280"/>
+</svg>`;
 
-function AnimatedVehicle({ position, mode }) {
-  const icon = useMemo(() => ICONS[mode] || ICONS.drive, [mode]);
+const cyclistIcon = L.divIcon({
+  html: CYCLIST_SVG,
+  className: "vehicle-icon vehicle-cyclist",
+  iconSize: [48, 40],
+  iconAnchor: [24, 36],
+});
+
+const STATIC_ICONS = { hike: hikerIcon, ferry: boatIcon, canoeing: kayakIcon, surfing: surferIcon, rafting: rafterIcon, spa: spaIcon, bike: cyclistIcon };
+
+// Create a rotated plane icon
+function createRotatedPlaneIcon(bearing) {
+  const html = `<div style="transform: rotate(${bearing}deg); transform-origin: center center;">${PLANE_SVG}</div>`;
+  return L.divIcon({
+    html,
+    className: "vehicle-icon vehicle-plane",
+    iconSize: [40, 40],
+    iconAnchor: [20, 20],
+  });
+}
+
+// Create a van icon that flips based on direction (side view)
+function createDirectionalVanIcon(bearing) {
+  // Van faces right (east = 90°). Flip horizontally if heading more west than east
+  const isHeadingWest = bearing > 90 && bearing < 270;
+  const transform = isHeadingWest ? "scaleX(-1)" : "";
+  const html = `<div style="transform: ${transform}; transform-origin: center center;">${VAN_SVG}</div>`;
+  return L.divIcon({
+    html,
+    className: "vehicle-icon vehicle-van",
+    iconSize: [40, 28],
+    iconAnchor: [20, 24],
+  });
+}
+
+function AnimatedVehicle({ position, mode, bearing = 0 }) {
+  const icon = useMemo(() => {
+    if (mode === "fly") {
+      return createRotatedPlaneIcon(bearing);
+    }
+    if (mode === "drive") {
+      return createDirectionalVanIcon(bearing);
+    }
+    return STATIC_ICONS[mode] || createDirectionalVanIcon(bearing);
+  }, [mode, bearing]);
 
   if (!position) return null;
 

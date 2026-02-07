@@ -44,7 +44,7 @@ function Landing() {
             </filter>
           </defs>
 
-          {/* Continents with accurate shapes */}
+          {/* World map continents */}
           <g fill="url(#dot-pattern)">
             {/* North America */}
             <path d="M55,55 L70,48 L90,45 L115,42 L140,38 L165,35 L190,38 L210,45 L225,42 L240,38 L252,42 L260,52 L255,65 L245,75 L232,82 L222,92 L218,108 L225,120 L238,128 L252,135 L262,148 L258,162 L248,175 L238,188 L232,202 L238,215 L252,222 L262,232 L258,245 L245,252 L228,248 L212,242 L195,238 L178,242 L162,252 L148,258 L135,255 L122,248 L108,238 L95,232 L82,238 L68,248 L55,255 L45,248 L38,235 L35,218 L32,198 L35,178 L42,158 L48,138 L52,118 L55,98 L55,78 Z" />
@@ -158,7 +158,7 @@ function Landing() {
               </filter>
             </defs>
 
-            {/* World map with dotted pattern - matching background style */}
+            {/* World map continents */}
             <g fill="url(#flight-dot-pattern)">
               {/* North America */}
               <path d="M55,55 L70,48 L90,45 L115,42 L140,38 L165,35 L190,38 L210,45 L225,42 L240,38 L252,42 L260,52 L255,65 L245,75 L232,82 L222,92 L218,108 L225,120 L238,128 L252,135 L262,148 L258,162 L248,175 L238,188 L232,202 L238,215 L252,222 L262,232 L258,245 L245,252 L228,248 L212,242 L195,238 L178,242 L162,252 L148,258 L135,255 L122,248 L108,238 L95,232 L82,238 L68,248 L55,255 L45,248 L38,235 L35,218 L32,198 L35,178 L42,158 L48,138 L52,118 L55,98 L55,78 Z" />
@@ -230,12 +230,20 @@ function Landing() {
               strokeLinecap="round"
             />
 
-            {/* Animated plane */}
+            {/* Animated plane - elegant flat illustration */}
             <g className="flight-plane">
-              <path
-                d="M0,-12 L5,-4 L18,0 L5,4 L4,10 L0,6 L-4,10 L-5,4 L-18,0 L-5,-4 Z"
-                fill="#fff"
-              />
+              {/* Fuselage */}
+              <path d="M0,-14 L3,-8 L3,8 L0,14 L-3,8 L-3,-8 Z" fill="#ffffff"/>
+              {/* Wings */}
+              <path d="M-3,-2 L-16,4 L-16,6 L-3,2 Z" fill="rgba(255,255,255,0.9)"/>
+              <path d="M3,-2 L16,4 L16,6 L3,2 Z" fill="rgba(255,255,255,0.9)"/>
+              {/* Tail wings */}
+              <path d="M-3,6 L-8,9 L-8,11 L-3,9 Z" fill="rgba(255,255,255,0.85)"/>
+              <path d="M3,6 L8,9 L8,11 L3,9 Z" fill="rgba(255,255,255,0.85)"/>
+              {/* Tail fin */}
+              <path d="M0,5 L0,2 L2.5,5 Z" fill="rgba(255,255,255,0.7)"/>
+              {/* Cockpit */}
+              <ellipse cx="0" cy="-9" rx="1.5" ry="2.5" fill="rgba(56,189,248,0.8)"/>
             </g>
           </svg>
 

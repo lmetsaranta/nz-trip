@@ -1,7 +1,9 @@
 import { useState, useCallback, useMemo, useRef, useEffect } from "react";
 import { TIMELINE_CONFIG, routes, stops } from "../data/trip";
 import { useAnimationTick } from "../hooks/useAnimationTick";
-import { interpolatePosition } from "../utils/interpolate";
+import { interpolatePosition, calculateBearing } from "../utils/interpolate";
+import { getStopImageUrl } from "../utils/images";
+import { useMapState } from "../context/MapStateContext";
 import TripNav from "../components/TripNav";
 import TripMap from "../components/TripMap";
 import StopModal from "../components/StopModal";
@@ -75,25 +77,49 @@ function calculateDayDuration(dayRoutes, isFinalDay = false) {
 const SPEED_OPTIONS = [0.5, 1, 2];
 
 function Home() {
-  const [theme, setTheme] = useState("dark");
-  const [currentDay, setCurrentDay] = useState(1);
-  const [isPlaying, setIsPlaying] = useState(false);
+  // Get persisted state from context
+  const { state: mapState, updateState, saveMapView } = useMapState();
+
+  // Initialize local state from context (or defaults for first visit)
+  const [theme, setTheme] = useState(mapState.theme);
+  const [currentDay, setCurrentDay] = useState(mapState.currentDay);
+  const [isPlaying, setIsPlaying] = useState(false); // Always start paused when returning
   const [zoomCommand, setZoomCommand] = useState(null);
   const [selectedStop, setSelectedStop] = useState(null);
-  const [speedMultiplier, setSpeedMultiplier] = useState(1);
-  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [speedMultiplier, setSpeedMultiplier] = useState(mapState.speedMultiplier);
+  const [showOnboarding, setShowOnboarding] = useState(!mapState.initialZoomDone);
   const [onboardingStep, setOnboardingStep] = useState(0);
   const [showTripEnd, setShowTripEnd] = useState(false);
-  const [initialZoomDone, setInitialZoomDone] = useState(false);
-  const [showStats, setShowStats] = useState(false);
-  const [showWeather, setShowWeather] = useState(false);
+  const [initialZoomDone, setInitialZoomDone] = useState(mapState.initialZoomDone);
+  const [showStats, setShowStats] = useState(mapState.showStats);
+  const [showWeather, setShowWeather] = useState(mapState.showWeather);
   const shownTooltipsRef = useRef(new Set());
 
   // Weather data hook
   const { weatherData, loading: weatherLoading } = useWeatherData();
 
-  // Initial zoom to Auckland on mount, then show onboarding
+  // Sync state changes back to context
   useEffect(() => {
+    updateState({
+      currentDay,
+      theme,
+      speedMultiplier,
+      showStats,
+      showWeather,
+      initialZoomDone,
+    });
+  }, [currentDay, theme, speedMultiplier, showStats, showWeather, initialZoomDone, updateState]);
+
+  // Handle map view changes
+  const handleMapViewChange = useCallback((center, zoom) => {
+    saveMapView(center, zoom);
+  }, [saveMapView]);
+
+  // Initial zoom to Auckland on mount (only if first visit)
+  useEffect(() => {
+    // If we have a saved view, don't do initial zoom
+    if (mapState.mapView) return;
+
     // Trigger zoom to Auckland immediately
     setZoomCommand({ type: "flyTo", coords: AUCKLAND_COORDS, zoom: 11 });
 
@@ -116,9 +142,7 @@ function Home() {
       daysToPreload.forEach((day) => {
         const dayStops = stops.filter((s) => s.day === day);
         dayStops.forEach((stop) => {
-          const imageUrl =
-            stop.image ||
-            `https://source.unsplash.com/800x600/?${encodeURIComponent(stop.name + " new zealand")}`;
+          const imageUrl = getStopImageUrl(stop);
           const img = new Image();
           img.src = imageUrl;
         });
@@ -156,11 +180,23 @@ function Home() {
   // Animation progress (0 to 1) over the calculated day duration
   const progress = useAnimationTick(isPlaying, currentDay, dayDuration, handleDayComplete, speedMultiplier);
 
+  // Track previous day to detect day transitions
+  const prevDayForVehicle = useRef(currentDay);
+
   // Compute vehicle position - each segment takes time proportional to distance * mode speed
   // Also accounts for pause time between route segments
   const vehicleData = useMemo(() => {
     if (!currentRoutes.length)
       return { position: null, mode: "drive", routeIndex: 0, routeProgress: 0, isPaused: false };
+
+    // Guard against stale progress during day transitions
+    // When day changes, currentRoutes updates before progress resets to 0
+    // This prevents the vehicle from briefly appearing at the destination
+    let safeProgress = progress;
+    if (prevDayForVehicle.current !== currentDay) {
+      safeProgress = 0;
+      prevDayForVehicle.current = currentDay;
+    }
 
     // Calculate time for each segment based on distance * msPerUnit
     const segmentTimes = currentRoutes.map((r) => {
@@ -188,10 +224,10 @@ function Home() {
       const segStart = accumulated / totalTime;
       const segEnd = (accumulated + segmentTimes[i]) / totalTime;
 
-      if (progress < segEnd || i === currentRoutes.length - 1) {
+      if (safeProgress < segEnd || i === currentRoutes.length - 1) {
         routeIndex = i;
         routeProgress = Math.min(
-          Math.max((progress - segStart) / (segEnd - segStart), 0),
+          Math.max((safeProgress - segStart) / (segEnd - segStart), 0),
           1,
         );
         break;
@@ -203,7 +239,7 @@ function Home() {
         const pauseStart = accumulated / totalTime;
         const pauseEnd = (accumulated + PAUSE_AT_STOP_MS) / totalTime;
 
-        if (progress >= pauseStart && progress < pauseEnd) {
+        if (safeProgress >= pauseStart && safeProgress < pauseEnd) {
           routeIndex = i;
           routeProgress = 1; // At end of current route
           isPaused = true;
@@ -215,12 +251,13 @@ function Home() {
 
     const route = currentRoutes[routeIndex];
     if (!route?.waypoints?.length)
-      return { position: null, mode: "drive", routeIndex, routeProgress: 0, isPaused: false, routeDistance: 0 };
+      return { position: null, mode: "drive", routeIndex, routeProgress: 0, isPaused: false, routeDistance: 0, bearing: 0 };
 
     const position = interpolatePosition(route.waypoints, routeProgress);
+    const bearing = calculateBearing(route.waypoints, routeProgress);
     const routeDistance = calculateRouteDistance(route.waypoints);
-    return { position, mode: route.mode, routeProgress, routeIndex, isPaused, routeDistance };
-  }, [currentRoutes, progress, isFinalDay]);
+    return { position, mode: route.mode, routeProgress, routeIndex, isPaused, routeDistance, bearing };
+  }, [currentRoutes, progress, isFinalDay, currentDay]);
 
   // Compute arriving stop when routeProgress > 0.85 (only show once per stop)
   const arrivingStop = useMemo(() => {
@@ -257,13 +294,14 @@ function Home() {
   }, [currentDay, vehicleData.routeIndex]);
 
   // Arrival animation (landing / parking / camping)
+  // Shows at 80% progress to match when destination stop markers appear
   const arrivalData = useMemo(() => {
     if (!isPlaying || !currentRoutes.length) return null;
 
     const route = currentRoutes[vehicleData.routeIndex];
     if (!route?.waypoints?.length) return null;
 
-    const threshold = route.mode === "fly" ? 0.75 : 0.85;
+    const threshold = 0.8;
     if (vehicleData.routeProgress < threshold) return null;
 
     const destPosition = route.waypoints[route.waypoints.length - 1];
@@ -436,6 +474,7 @@ function Home() {
         isPlaying={isPlaying}
         vehiclePosition={vehicleData.position}
         vehicleMode={vehicleData.mode}
+        vehicleBearing={vehicleData.bearing}
         routeIndex={vehicleData.routeIndex}
         routeProgress={vehicleData.routeProgress}
         routeDistance={vehicleData.routeDistance}
@@ -446,6 +485,8 @@ function Home() {
         onStopClick={handleStopClick}
         arrivingStop={arrivingStop}
         isFinalDay={isFinalDay}
+        onMapViewChange={handleMapViewChange}
+        initialView={mapState.mapView}
       />
       <TripStats
         theme={theme}

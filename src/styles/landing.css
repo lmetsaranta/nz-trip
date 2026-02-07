@@ -239,6 +239,7 @@
 .flight-plane {
   offset-path: path("M508,55 Q650,20 780,120 Q880,220 948,445");
   offset-distance: 0%;
+  offset-rotate: auto -90deg;
   animation: fly-plane 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.6));
 }
@@ -246,11 +247,9 @@
 @keyframes fly-plane {
   0% {
     offset-distance: 0%;
-    offset-rotate: auto;
   }
   100% {
     offset-distance: 100%;
-    offset-rotate: auto;
   }
 }
 
