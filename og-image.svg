@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#040d08"/>
+      <stop offset="50%" stop-color="#064E3B"/>
+      <stop offset="100%" stop-color="#040d08"/>
+    </linearGradient>
+
+    <!-- Glow effect -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Decorative dots pattern -->
+  <g fill="rgba(16,185,129,0.1)">
+    <circle cx="100" cy="100" r="3"/>
+    <circle cx="200" cy="80" r="2"/>
+    <circle cx="300" cy="120" r="3"/>
+    <circle cx="400" cy="90" r="2"/>
+    <circle cx="500" cy="110" r="3"/>
+    <circle cx="700" cy="100" r="2"/>
+    <circle cx="800" cy="85" r="3"/>
+    <circle cx="900" cy="115" r="2"/>
+    <circle cx="1000" cy="95" r="3"/>
+    <circle cx="1100" cy="105" r="2"/>
+
+    <circle cx="150" cy="530" r="2"/>
+    <circle cx="250" cy="550" r="3"/>
+    <circle cx="350" cy="520" r="2"/>
+    <circle cx="450" cy="540" r="3"/>
+    <circle cx="550" cy="510" r="2"/>
+    <circle cx="750" cy="530" r="3"/>
+    <circle cx="850" cy="550" r="2"/>
+    <circle cx="950" cy="520" r="3"/>
+    <circle cx="1050" cy="540" r="2"/>
+  </g>
+
+  <!-- NZ silhouette hint -->
+  <g transform="translate(850, 180)" opacity="0.15">
+    <!-- North Island -->
+    <path d="M60 0 Q80 20 70 60 Q60 100 80 140 Q100 180 70 200 Q40 180 30 140 Q20 100 40 60 Q50 20 60 0" fill="#10B981"/>
+    <!-- South Island -->
+    <path d="M50 220 Q70 240 60 300 Q50 360 30 400 Q10 360 20 300 Q30 240 50 220" fill="#10B981"/>
+  </g>
+
+  <!-- Main content -->
+  <g filter="url(#glow)">
+    <!-- Badge -->
+    <rect x="480" y="160" width="240" height="40" rx="20" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+    <text x="600" y="187" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-family="system-ui, sans-serif" font-size="14" font-weight="600" letter-spacing="2">27-DAY JOURNEY</text>
+  </g>
+
+  <!-- Title -->
+  <text x="600" y="290" text-anchor="middle" fill="#ffffff" font-family="system-ui, sans-serif" font-size="72" font-weight="700">New Zealand</text>
+  <text x="600" y="380" text-anchor="middle" fill="#10B981" font-family="system-ui, sans-serif" font-size="72" font-weight="700">Adventure</text>
+
+  <!-- Subtitle -->
+  <text x="600" y="450" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-family="system-ui, sans-serif" font-size="24">An interactive road trip through Aotearoa</text>
+
+  <!-- Route line decoration -->
+  <g stroke="#10B981" stroke-width="2" fill="none" opacity="0.6">
+    <path d="M200 500 Q400 480 600 500 Q800 520 1000 500" stroke-dasharray="8 4"/>
+    <!-- Location dots -->
+    <circle cx="200" cy="500" r="6" fill="#10B981"/>
+    <circle cx="600" cy="500" r="6" fill="#10B981"/>
+    <circle cx="1000" cy="500" r="6" fill="#10B981"/>
+  </g>
+
+  <!-- Van icon -->
+  <g transform="translate(580, 475)">
+    <rect x="0" y="8" width="40" height="16" rx="3" fill="#f97316"/>
+    <rect x="0" y="4" width="40" height="8" rx="2" fill="#fef3c7"/>
+    <circle cx="8" cy="24" r="5" fill="#374151"/>
+    <circle cx="32" cy="24" r="5" fill="#374151"/>
+  </g>
+</svg>

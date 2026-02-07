@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Background circle - dark forest green -->
+  <circle cx="16" cy="16" r="15" fill="#065F46"/>
+  <circle cx="16" cy="16" r="14" fill="#064E3B"/>
+
+  <!-- Stylized NZ fern frond -->
+  <g fill="#10B981">
+    <!-- Main stem -->
+    <path d="M16 6 Q16 16 16 26" stroke="#10B981" stroke-width="1.5" fill="none"/>
+
+    <!-- Left fronds -->
+    <path d="M16 8 Q12 9 10 8" stroke="#10B981" stroke-width="1" fill="none"/>
+    <path d="M16 11 Q11 12 8 10" stroke="#10B981" stroke-width="1" fill="none"/>
+    <path d="M16 14 Q10 15 7 12" stroke="#10B981" stroke-width="1" fill="none"/>
+    <path d="M16 17 Q10 18 7 15" stroke="#10B981" stroke-width="1" fill="none"/>
+    <path d="M16 20 Q11 21 8 19" stroke="#10B981" stroke-width="1" fill="none"/>
+    <path d="M16 23 Q12 24 10 23" stroke="#10B981" stroke-width="1" fill="none"/>
+
+    <!-- Right fronds -->
+    <path d="M16 8 Q20 9 22 8" stroke="#10B981" stroke-width="1" fill="none"/>
+    <path d="M16 11 Q21 12 24 10" stroke="#10B981" stroke-width="1" fill="none"/>
+    <path d="M16 14 Q22 15 25 12" stroke="#10B981" stroke-width="1" fill="none"/>
+    <path d="M16 17 Q22 18 25 15" stroke="#10B981" stroke-width="1" fill="none"/>
+    <path d="M16 20 Q21 21 24 19" stroke="#10B981" stroke-width="1" fill="none"/>
+    <path d="M16 23 Q20 24 22 23" stroke="#10B981" stroke-width="1" fill="none"/>
+  </g>
+
+  <!-- Subtle highlight -->
+  <circle cx="12" cy="10" r="6" fill="rgba(255,255,255,0.05)"/>
+</svg>
