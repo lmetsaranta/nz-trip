@@ -254,6 +254,13 @@
   letter-spacing: -0.02em;
 }
 
+/* ── Language switcher ── */
+.trip-nav__lang {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
 /* ── Play button ── */
 .trip-nav__play {
   width: 34px;

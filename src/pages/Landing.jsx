@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import "../styles/landing.css";
 
 function Landing() {
   const [isAnimating, setIsAnimating] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     // Stagger content appearance
@@ -113,22 +115,20 @@ function Landing() {
 
       {/* Hero content */}
       <main className={`landing__hero ${showContent ? "visible" : ""}`}>
-        <div className="landing__badge">27-Day Journey</div>
+        <div className="landing__badge">{t("landing.badge")}</div>
         <h1 className="landing__title">
-          <span className="landing__title-line">New Zealand</span>
-          <span className="landing__title-line landing__title-line--accent">Adventure</span>
+          <span className="landing__title-line">{t("landing.title1")}</span>
+          <span className="landing__title-line landing__title-line--accent">{t("landing.title2")}</span>
         </h1>
         <p className="landing__desc">
-          An epic road trip through Aotearoa — from glaciers to fiords,
-          volcanic peaks to pristine beaches. Follow our journey across
-          both islands of this stunning country.
+          {t("landing.description")}
         </p>
         <button
           className="landing__btn"
           onClick={handleStart}
           disabled={isAnimating}
         >
-          <span className="landing__btn-text">Start Journey</span>
+          <span className="landing__btn-text">{t("landing.startJourney")}</span>
           <span className="landing__btn-icon">→</span>
         </button>
       </main>
@@ -206,7 +206,7 @@ function Landing() {
 
             {/* Helsinki marker with label */}
             <g filter="url(#flight-glow)">
-              <text x="508" y="38" fill="rgba(255,255,255,0.9)" fontSize="14" textAnchor="middle" fontWeight="600">Helsinki</text>
+              <text x="508" y="38" fill="rgba(255,255,255,0.9)" fontSize="14" textAnchor="middle" fontWeight="600">{t("landing.helsinki")}</text>
               <circle cx="508" cy="55" r="10" fill="rgba(16,185,129,0.4)" />
               <circle cx="508" cy="55" r="6" fill="#10B981" />
               <circle cx="508" cy="55" r="2.5" fill="#fff" />
@@ -217,7 +217,7 @@ function Landing() {
               <circle cx="948" cy="445" r="10" fill="rgba(6,95,70,0.5)" />
               <circle cx="948" cy="445" r="6" fill="#065F46" />
               <circle cx="948" cy="445" r="2.5" fill="#fff" />
-              <text x="948" y="472" fill="rgba(255,255,255,0.9)" fontSize="14" textAnchor="middle" fontWeight="600">Auckland</text>
+              <text x="948" y="472" fill="rgba(255,255,255,0.9)" fontSize="14" textAnchor="middle" fontWeight="600">{t("landing.auckland")}</text>
             </g>
 
             {/* Flight path - curved route through India */}
@@ -250,11 +250,11 @@ function Landing() {
           {/* Flight info */}
           <div className="flight-info">
             <div className="flight-info__route">
-              <span className="flight-info__city">Helsinki</span>
+              <span className="flight-info__city">{t("landing.helsinki")}</span>
               <span className="flight-info__arrow">✈</span>
-              <span className="flight-info__city">Auckland</span>
+              <span className="flight-info__city">{t("landing.auckland")}</span>
             </div>
-            <div className="flight-info__distance">17,000 km</div>
+            <div className="flight-info__distance">{t("landing.flightDistance")}</div>
           </div>
         </div>
       )}

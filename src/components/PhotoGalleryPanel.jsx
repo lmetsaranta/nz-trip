@@ -1,9 +1,11 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { stops } from "../data/trip";
 import { probeLocalImages } from "../utils/images";
 import "../styles/gallery.css";
 
 function PhotoGalleryPanel({ theme, isVisible, onClose, currentDay }) {
+  const { t } = useTranslation();
   const [selectedDay, setSelectedDay] = useState(0); // 0 = all, 1-27 = specific day
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -127,11 +129,11 @@ function PhotoGalleryPanel({ theme, isVisible, onClose, currentDay }) {
         className={`gallery-panel${theme === "dark" ? " gallery-panel--dark" : ""}${!isVisible ? " gallery-panel--hidden" : ""}`}
       >
         <div className="gallery-panel__header">
-          <h3 className="gallery-panel__title">Photos</h3>
+          <h3 className="gallery-panel__title">{t("gallery.title")}</h3>
           <button
             className="gallery-panel__close"
             onClick={onClose}
-            title="Close"
+            title={t("gallery.close")}
           >
             &times;
           </button>
@@ -142,7 +144,7 @@ function PhotoGalleryPanel({ theme, isVisible, onClose, currentDay }) {
             className={`gallery-panel__day-btn${selectedDay === 0 ? " gallery-panel__day-btn--active" : ""}`}
             onClick={() => setSelectedDay(0)}
           >
-            All
+            {t("gallery.all")}
           </button>
           {daysWithPhotos.map((day) => (
             <button
@@ -164,7 +166,7 @@ function PhotoGalleryPanel({ theme, isVisible, onClose, currentDay }) {
               <div className="gallery-panel__skeleton" />
             </div>
           ) : filteredPhotos.length === 0 ? (
-            <div className="gallery-panel__empty">No photos for this day</div>
+            <div className="gallery-panel__empty">{t("gallery.noPhotos")}</div>
           ) : (
             <div className="gallery-panel__grid">
               {filteredPhotos.map((photo, idx) => (
@@ -179,7 +181,7 @@ function PhotoGalleryPanel({ theme, isVisible, onClose, currentDay }) {
                     loading="lazy"
                   />
                   <span className="gallery-panel__thumb-label">
-                    Day {photo.day}
+                    {t("gallery.day")} {photo.day}
                   </span>
                 </div>
               ))}
@@ -198,7 +200,7 @@ function PhotoGalleryPanel({ theme, isVisible, onClose, currentDay }) {
             <button
               className="gallery-lightbox__close"
               onClick={closeLightbox}
-              title="Close"
+              title={t("gallery.close")}
             >
               &times;
             </button>
@@ -214,7 +216,7 @@ function PhotoGalleryPanel({ theme, isVisible, onClose, currentDay }) {
                 {lightboxPhoto.stopName}
               </span>
               <span className="gallery-lightbox__day">
-                Day {lightboxPhoto.day}
+                {t("gallery.day")} {lightboxPhoto.day}
               </span>
             </div>
 
@@ -226,7 +228,7 @@ function PhotoGalleryPanel({ theme, isVisible, onClose, currentDay }) {
                     e.stopPropagation();
                     prevPhoto();
                   }}
-                  title="Previous"
+                  title={t("gallery.previous")}
                 >
                   ‹
                 </button>
@@ -236,7 +238,7 @@ function PhotoGalleryPanel({ theme, isVisible, onClose, currentDay }) {
                     e.stopPropagation();
                     nextPhoto();
                   }}
-                  title="Next"
+                  title={t("gallery.next")}
                 >
                   ›
                 </button>

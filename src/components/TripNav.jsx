@@ -1,5 +1,7 @@
+import { useTranslation } from "react-i18next";
 import "../styles/navbar.css";
 import { TIMELINE_CONFIG } from "../data/trip";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 function TripNav({
   theme,
@@ -21,6 +23,7 @@ function TripNav({
   showGallery,
   onGalleryToggle,
 }) {
+  const { t } = useTranslation();
   const dayProgress = ((currentDay - 1) / (TIMELINE_CONFIG.totalDays - 1)) * 100;
 
   // Highlight mapping:
@@ -33,35 +36,36 @@ function TripNav({
 
   return (
     <div className={`trip-nav${theme === "dark" ? " trip-nav--dark" : ""}`}>
-      {/* Left: zoom + theme + stats */}
+      {/* Left: zoom + theme + language + stats */}
       <div className={`trip-nav__left${highlightLeft ? " trip-nav__highlight" : ""}`}>
-        <button className="trip-nav__btn" onClick={onZoomIn} title="Zoom in">
+        <button className="trip-nav__btn" onClick={onZoomIn} title={t("nav.zoomIn")}>
           +
         </button>
-        <button className="trip-nav__btn" onClick={onZoomOut} title="Zoom out">
+        <button className="trip-nav__btn" onClick={onZoomOut} title={t("nav.zoomOut")}>
           −
         </button>
-        <button className="trip-nav__btn" onClick={onThemeToggle} title="Toggle theme">
+        <button className="trip-nav__btn" onClick={onThemeToggle} title={t("nav.toggleTheme")}>
           {theme === "light" ? "☾" : "☀"}
         </button>
+        <LanguageSwitcher />
         <button
           className={`trip-nav__btn${showStats ? " trip-nav__btn--active" : ""}`}
           onClick={onStatsToggle}
-          title="Trip statistics"
+          title={t("nav.tripStats")}
         >
           📊
         </button>
         <button
           className={`trip-nav__btn${showWeather ? " trip-nav__btn--active" : ""}`}
           onClick={onWeatherToggle}
-          title="Weather"
+          title={t("nav.weather")}
         >
           🌤️
         </button>
         <button
           className={`trip-nav__btn${showGallery ? " trip-nav__btn--active" : ""}`}
           onClick={onGalleryToggle}
-          title="Photo gallery"
+          title={t("nav.photoGallery")}
         >
           📷
         </button>
@@ -72,7 +76,7 @@ function TripNav({
       {/* Center: timeline slider */}
       <div className={`trip-nav__center${highlightCenter ? " trip-nav__highlight" : ""}`}>
         <div className="trip-nav__day-info">
-          <span className="trip-nav__day-label">Day {currentDay}</span>
+          <span className="trip-nav__day-label">{t("nav.day")} {currentDay}</span>
           <div className="trip-nav__day-progress">
             <div
               className="trip-nav__day-progress-fill"
@@ -98,14 +102,14 @@ function TripNav({
         <button
           className="trip-nav__btn trip-nav__speed"
           onClick={onSpeedChange}
-          title="Change speed"
+          title={t("nav.changeSpeed")}
         >
           {speedMultiplier}x
         </button>
         <button
           className={`trip-nav__btn trip-nav__play${isPlaying ? " trip-nav__play--playing" : ""}`}
           onClick={onPlayPause}
-          title={isPlaying ? "Pause" : "Play"}
+          title={isPlaying ? t("nav.pause") : t("nav.play")}
         >
           {isPlaying ? "⏸" : "▶"}
         </button>

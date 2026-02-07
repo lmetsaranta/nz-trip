@@ -1,37 +1,80 @@
+import { useTranslation } from "react-i18next";
 import { getWeatherInfo, formatTime, getDayDate } from "../data/weather";
 import WeatherIcon from "./WeatherIcon";
 import "../styles/weather.css";
 
+// Map weather codes to translation keys
+const WEATHER_LABEL_KEYS = {
+  0: "sunny",
+  1: "mainlyClear",
+  2: "partlyCloudy",
+  3: "overcast",
+  45: "fog",
+  48: "rimeFog",
+  51: "lightDrizzle",
+  53: "moderateDrizzle",
+  55: "denseDrizzle",
+  56: "freezingDrizzle",
+  57: "freezingDrizzle",
+  61: "slightRain",
+  63: "moderateRain",
+  65: "heavyRain",
+  66: "freezingRain",
+  67: "heavyRain",
+  71: "slightSnow",
+  73: "moderateSnow",
+  75: "heavySnow",
+  77: "snowGrains",
+  80: "slightShowers",
+  81: "moderateShowers",
+  82: "violentShowers",
+  85: "slightSnowShowers",
+  86: "heavySnowShowers",
+  95: "thunderstorm",
+  96: "thunderstormHail",
+  99: "thunderstormHeavyHail",
+};
+
 function WeatherPanel({ theme, currentDay, weatherData, isVisible, onClose, loading }) {
+  const { t, i18n } = useTranslation();
   const dayWeather = weatherData?.[currentDay];
   const weatherInfo = dayWeather ? getWeatherInfo(dayWeather.weatherCode) : null;
   const dateStr = getDayDate(currentDay);
 
-  // Format date nicely
+  // Get locale for date formatting
+  const locale = i18n.language === "fi" ? "fi-FI" : "en-NZ";
+
+  // Format date nicely with locale
   const formattedDate = dateStr
-    ? new Date(dateStr).toLocaleDateString("en-NZ", {
+    ? new Date(dateStr).toLocaleDateString(locale, {
         weekday: "short",
         month: "short",
         day: "numeric",
       })
     : "";
 
+  // Get translated weather label
+  const getWeatherLabel = (code) => {
+    const key = WEATHER_LABEL_KEYS[code];
+    return key ? t(`weather.conditions.${key}`) : weatherInfo?.label || "";
+  };
+
   return (
     <div
       className={`weather-panel${theme === "dark" ? " weather-panel--dark" : ""}${!isVisible ? " weather-panel--hidden" : ""}`}
     >
       <div className="weather-panel__header">
-        <h3 className="weather-panel__title">Weather</h3>
-        <button className="weather-panel__close" onClick={onClose} title="Close">
+        <h3 className="weather-panel__title">{t("weather.title")}</h3>
+        <button className="weather-panel__close" onClick={onClose} title={t("weather.close")}>
           &times;
         </button>
       </div>
 
       <div className="weather-panel__content">
         {loading ? (
-          <div className="weather-panel__loading">Loading weather...</div>
+          <div className="weather-panel__loading">{t("weather.loading")}</div>
         ) : !dayWeather ? (
-          <div className="weather-panel__error">Weather data unavailable</div>
+          <div className="weather-panel__error">{t("weather.unavailable")}</div>
         ) : (
           <>
             {/* Date */}
@@ -53,7 +96,7 @@ function WeatherPanel({ theme, currentDay, weatherData, isVisible, onClose, load
             </div>
 
             {/* Condition label */}
-            <div className="weather-panel__condition">{weatherInfo.label}</div>
+            <div className="weather-panel__condition">{getWeatherLabel(dayWeather.weatherCode)}</div>
 
             {/* Details grid */}
             <div className="weather-panel__details">

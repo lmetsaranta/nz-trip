@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import "../styles/treasure.css";
 
 function TreasureModal({ isOpen, onClose, projectUrl, projectName, projectDescription }) {
   const [isVisible, setIsVisible] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
   const [showContent, setShowContent] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (isOpen) {
@@ -103,7 +105,7 @@ function TreasureModal({ isOpen, onClose, projectUrl, projectName, projectDescri
 
         {/* Project Info */}
         <div className={`treasure-reveal ${showContent ? "visible" : ""}`}>
-          <h2 className="treasure-title">You found a treasure!</h2>
+          <h2 className="treasure-title">{t("treasure.title")}</h2>
           <p className="treasure-description">{projectDescription}</p>
           <a
             href={projectUrl}
@@ -111,7 +113,7 @@ function TreasureModal({ isOpen, onClose, projectUrl, projectName, projectDescri
             rel="noopener noreferrer"
             className="treasure-btn"
           >
-            Discover {projectName} →
+            {t("treasure.discover")} {projectName} →
           </a>
         </div>
       </div>

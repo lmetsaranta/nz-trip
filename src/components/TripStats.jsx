@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { routes, TIMELINE_CONFIG } from "../data/trip";
 import "../styles/stats.css";
 
@@ -14,19 +15,9 @@ const MODE_ICONS = {
   spa: "♨",
 };
 
-const MODE_LABELS = {
-  fly: "Flights",
-  drive: "Driving",
-  hike: "Hiking",
-  ferry: "Ferry",
-  bike: "Biking",
-  canoeing: "Canoeing",
-  rafting: "Rafting",
-  surfing: "Surfing",
-  spa: "Hot Springs",
-};
-
 function TripStats({ theme, isVisible, onClose }) {
+  const { t } = useTranslation();
+
   const stats = useMemo(() => {
     // Count routes by mode
     const modeCount = {};
@@ -51,8 +42,8 @@ function TripStats({ theme, isVisible, onClose }) {
       className={`trip-stats${theme === "dark" ? " trip-stats--dark" : ""}${!isVisible ? " trip-stats--hidden" : ""}`}
     >
       <div className="trip-stats__header">
-        <h3 className="trip-stats__title">Trip Statistics</h3>
-        <button className="trip-stats__close" onClick={onClose} title="Close">
+        <h3 className="trip-stats__title">{t("stats.title")}</h3>
+        <button className="trip-stats__close" onClick={onClose} title={t("stats.close")}>
           ×
         </button>
       </div>
@@ -62,16 +53,16 @@ function TripStats({ theme, isVisible, onClose }) {
         <div className="trip-stats__summary">
           <div className="trip-stats__stat">
             <span className="trip-stats__stat-value">{stats.totalDays}</span>
-            <span className="trip-stats__stat-label">Days</span>
+            <span className="trip-stats__stat-label">{t("stats.days")}</span>
           </div>
           <div className="trip-stats__stat">
             <span className="trip-stats__stat-value">{stats.totalRoutes}</span>
-            <span className="trip-stats__stat-label">Routes</span>
+            <span className="trip-stats__stat-label">{t("stats.routes")}</span>
           </div>
         </div>
 
         {/* Mode breakdown */}
-        <h4 className="trip-stats__section-title">By Transport Mode</h4>
+        <h4 className="trip-stats__section-title">{t("stats.byTransportMode")}</h4>
         <div className="trip-stats__modes">
           {stats.modes.map(({ mode, count }) => (
             <div key={mode} className="trip-stats__mode">
@@ -80,10 +71,10 @@ function TripStats({ theme, isVisible, onClose }) {
               </div>
               <div className="trip-stats__mode-info">
                 <div className="trip-stats__mode-name">
-                  {MODE_LABELS[mode] || mode}
+                  {t(`modes.${mode}`)}
                 </div>
                 <div className="trip-stats__mode-count">
-                  {count} {count === 1 ? "route" : "routes"}
+                  {count} {count === 1 ? t("stats.route") : t("stats.routes_plural")}
                 </div>
               </div>
             </div>

@@ -1,0 +1,146 @@
+{
+  "nav": {
+    "zoomIn": "Lähennä",
+    "zoomOut": "Loitonna",
+    "toggleTheme": "Vaihda teemaa",
+    "tripStats": "Matkan tilastot",
+    "weather": "Sää",
+    "photoGallery": "Valokuvat",
+    "changeSpeed": "Vaihda nopeutta",
+    "play": "Toista",
+    "pause": "Tauko",
+    "day": "Päivä"
+  },
+  "landing": {
+    "badge": "27 päivän matka",
+    "title1": "Uusi-Seelanti",
+    "title2": "Seikkailu",
+    "description": "Eeppinen maantieseikkailu halki Aotearoan — jäätiköiltä vuonoihin, tulivuorilta koskemattomille rannoille. Seuraa matkaamme läpi tämän upean maan molempien saarten.",
+    "startJourney": "Aloita matka",
+    "helsinki": "Helsinki",
+    "auckland": "Auckland",
+    "flightDistance": "17 000 km"
+  },
+  "onboarding": {
+    "step1": {
+      "title": "Tervetuloa Uuteen-Seelantiin",
+      "subtitle": "27 päivän seikkailu",
+      "content": "Matkamme alkaa Aucklandista, Purjeiden kaupungista. Täältä tutkimme molempia saaria, vulkaanisista maisemista koskemattomiin vuonoihin."
+    },
+    "step2": {
+      "title": "Navigointi",
+      "subtitle": "Ohjaimesi",
+      "content": "Käytä aikajanaa hypätäksesi mille tahansa päivälle ja säädä toistonopeutta (0.5x-2x). Avaa säätiedot, valokuvagalleria ja vaihda vaalean ja tumman teeman välillä."
+    },
+    "step3": {
+      "title": "Katso matka",
+      "subtitle": "Suositeltu ensimmäinen kokemus",
+      "content": "Suosittelemme katsomaan koko animaation ensin nähdäksesi koko seikkailun. Reitti piirtyy reaaliajassa matkatessamme läpi Uuden-Seelannin."
+    },
+    "step4": {
+      "title": "Tutki omaan tahtiisi",
+      "subtitle": "Sukella syvemmälle",
+      "content": "Klikkaa mitä tahansa kohdetta kartalla oppiaksesi lisää. Selaa valokuvagalleriaa, tarkista säätiedot ja löydä tietoja kustakin kohteesta."
+    },
+    "back": "Takaisin",
+    "next": "Seuraava",
+    "exploreManually": "Tutki itse",
+    "startJourney": "Aloita matka",
+    "skipIntro": "Ohita intro"
+  },
+  "tripEnd": {
+    "subtitle": "Matka päättyi",
+    "title": "Kiitos katsomisesta!",
+    "content": "Olet juuri kokenut 27 päivän seikkailumme halki Uuden-Seelannin. Nyt voit tutkia jokaista kohdetta tarkemmin — klikkaa mitä tahansa merkkiä kartalla löytääksesi valokuvia, tarinoita ja vinkkejä.",
+    "days": "Päivää",
+    "islands": "Saarta",
+    "memories": "Muistoja",
+    "watchAgain": "Katso uudelleen",
+    "exploreStops": "Tutki kohteita"
+  },
+  "stats": {
+    "title": "Matkan tilastot",
+    "close": "Sulje",
+    "days": "Päivää",
+    "routes": "Reittiä",
+    "byTransportMode": "Kulkuvälineittäin",
+    "route": "reitti",
+    "routes_plural": "reittiä"
+  },
+  "weather": {
+    "title": "Sää",
+    "close": "Sulje",
+    "loading": "Ladataan säätietoja...",
+    "unavailable": "Säätiedot eivät saatavilla",
+    "conditions": {
+      "sunny": "Aurinkoinen",
+      "mainlyClear": "Pääosin selkeä",
+      "partlyCloudy": "Puolipilvinen",
+      "overcast": "Pilvinen",
+      "fog": "Sumua",
+      "rimeFog": "Huurretta",
+      "lightDrizzle": "Kevyttä tihkua",
+      "moderateDrizzle": "Kohtalaista tihkua",
+      "denseDrizzle": "Tiheää tihkua",
+      "freezingDrizzle": "Jäätävää tihkua",
+      "slightRain": "Heikkoa sadetta",
+      "moderateRain": "Kohtalaista sadetta",
+      "heavyRain": "Voimakasta sadetta",
+      "freezingRain": "Jäätävää sadetta",
+      "slightSnow": "Heikkoa lumisadetta",
+      "moderateSnow": "Kohtalaista lumisadetta",
+      "heavySnow": "Voimakasta lumisadetta",
+      "snowGrains": "Lumijyväsiä",
+      "slightShowers": "Heikkoja sadekuuroja",
+      "moderateShowers": "Kohtalaisia sadekuuroja",
+      "violentShowers": "Voimakkaita sadekuuroja",
+      "slightSnowShowers": "Heikkoja lumikuuroja",
+      "heavySnowShowers": "Voimakkaita lumikuuroja",
+      "thunderstorm": "Ukkosmyrsky",
+      "thunderstormHail": "Ukkosmyrsky ja rakeita",
+      "thunderstormHeavyHail": "Ukkosmyrsky ja voimakkaita rakeita"
+    }
+  },
+  "gallery": {
+    "title": "Valokuvat",
+    "close": "Sulje",
+    "all": "Kaikki",
+    "noPhotos": "Ei valokuvia tälle päivälle",
+    "day": "Päivä",
+    "previous": "Edellinen",
+    "next": "Seuraava"
+  },
+  "stopModal": {
+    "day": "Päivä",
+    "imageUnavailable": "Kuva ei saatavilla",
+    "previousImage": "Edellinen kuva",
+    "nextImage": "Seuraava kuva"
+  },
+  "treasure": {
+    "title": "Löysit aarteen!",
+    "discover": "Tutustu"
+  },
+  "modes": {
+    "fly": "Lennot",
+    "drive": "Ajaminen",
+    "hike": "Vaellus",
+    "ferry": "Lautta",
+    "bike": "Pyöräily",
+    "canoeing": "Melonta",
+    "rafting": "Koskimelonta",
+    "surfing": "Surffaus",
+    "spa": "Kuumat lähteet"
+  },
+  "stopTypes": {
+    "destination": "Kohde",
+    "hike": "Vaellus",
+    "camp": "Leirintä",
+    "hostel": "Hostelli",
+    "bike": "Pyöräily",
+    "spa": "Kylpylä",
+    "canoeing": "Melonta",
+    "rafting": "Koskimelonta",
+    "surfing": "Surffaus",
+    "plane": "Lento"
+  }
+}

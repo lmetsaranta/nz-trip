@@ -1,37 +1,21 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import "../styles/onboarding.css";
 
-const ONBOARDING_STEPS = [
-  {
-    title: "Welcome to New Zealand",
-    subtitle: "27 Days of Adventure",
-    content: "Our journey begins in Auckland, the City of Sails. From here we'll explore both islands, from volcanic landscapes to pristine fjords.",
-    icon: "🇳🇿",
-  },
-  {
-    title: "How to Navigate",
-    subtitle: "Your Controls",
-    content: "Use the timeline to jump to any day and adjust playback speed (0.5x-2x). Toggle the weather panel for conditions, photo gallery for snapshots, and switch between light/dark themes.",
-    icon: "🎛️",
-  },
-  {
-    title: "Watch the Journey",
-    subtitle: "Recommended First Experience",
-    content: "We recommend watching the full animation first to see the complete adventure unfold. The route draws in real-time as we travel across New Zealand.",
-    icon: "▶️",
-  },
-  {
-    title: "Explore at Your Pace",
-    subtitle: "Dive Deeper",
-    content: "Click any stop marker to learn more about that location. Browse the photo gallery, check weather conditions, and discover details about each destination.",
-    icon: "📍",
-  },
-];
+const STEP_ICONS = ["🇳🇿", "🎛️", "▶️", "📍"];
 
 function OnboardingModal({ onComplete, onStartAnimation, onStepChange }) {
   const [currentStep, setCurrentStep] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
+  const { t } = useTranslation();
+
+  const steps = [
+    { key: "step1", icon: STEP_ICONS[0] },
+    { key: "step2", icon: STEP_ICONS[1] },
+    { key: "step3", icon: STEP_ICONS[2] },
+    { key: "step4", icon: STEP_ICONS[3] },
+  ];
 
   useEffect(() => {
     requestAnimationFrame(() => setIsVisible(true));
@@ -43,7 +27,7 @@ function OnboardingModal({ onComplete, onStartAnimation, onStepChange }) {
   }, [currentStep, onStepChange]);
 
   const handleNext = () => {
-    if (currentStep < ONBOARDING_STEPS.length - 1) {
+    if (currentStep < steps.length - 1) {
       setCurrentStep((s) => s + 1);
     }
   };
@@ -69,15 +53,15 @@ function OnboardingModal({ onComplete, onStartAnimation, onStepChange }) {
     }, 400);
   };
 
-  const step = ONBOARDING_STEPS[currentStep];
-  const isLastStep = currentStep === ONBOARDING_STEPS.length - 1;
+  const step = steps[currentStep];
+  const isLastStep = currentStep === steps.length - 1;
 
   return (
     <div className={`onboarding-overlay ${isVisible && !isExiting ? "visible" : ""}`}>
       <div className={`onboarding-modal ${isVisible && !isExiting ? "visible" : ""}`}>
         {/* Progress dots */}
         <div className="onboarding-progress">
-          {ONBOARDING_STEPS.map((_, i) => (
+          {steps.map((_, i) => (
             <button
               key={i}
               className={`onboarding-dot ${i === currentStep ? "active" : ""} ${i < currentStep ? "completed" : ""}`}
@@ -91,16 +75,16 @@ function OnboardingModal({ onComplete, onStartAnimation, onStepChange }) {
 
         {/* Content */}
         <div className="onboarding-content">
-          <p className="onboarding-subtitle">{step.subtitle}</p>
-          <h2 className="onboarding-title">{step.title}</h2>
-          <p className="onboarding-text">{step.content}</p>
+          <p className="onboarding-subtitle">{t(`onboarding.${step.key}.subtitle`)}</p>
+          <h2 className="onboarding-title">{t(`onboarding.${step.key}.title`)}</h2>
+          <p className="onboarding-text">{t(`onboarding.${step.key}.content`)}</p>
         </div>
 
         {/* Navigation */}
         <div className="onboarding-nav">
           {currentStep > 0 ? (
             <button className="onboarding-btn onboarding-btn--secondary" onClick={handlePrev}>
-              Back
+              {t("onboarding.back")}
             </button>
           ) : (
             <div />
@@ -109,15 +93,15 @@ function OnboardingModal({ onComplete, onStartAnimation, onStepChange }) {
           {isLastStep ? (
             <div className="onboarding-actions">
               <button className="onboarding-btn onboarding-btn--secondary" onClick={handleExploreManually}>
-                Explore Manually
+                {t("onboarding.exploreManually")}
               </button>
               <button className="onboarding-btn onboarding-btn--primary" onClick={handleStartWatching}>
-                Start Journey
+                {t("onboarding.startJourney")}
               </button>
             </div>
           ) : (
             <button className="onboarding-btn onboarding-btn--primary" onClick={handleNext}>
-              Next
+              {t("onboarding.next")}
             </button>
           )}
         </div>
@@ -125,7 +109,7 @@ function OnboardingModal({ onComplete, onStartAnimation, onStepChange }) {
         {/* Skip link */}
         {!isLastStep && (
           <button className="onboarding-skip" onClick={handleExploreManually}>
-            Skip intro
+            {t("onboarding.skipIntro")}
           </button>
         )}
       </div>

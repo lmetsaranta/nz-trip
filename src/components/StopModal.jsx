@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { probeLocalImages, getUnsplashFallbackUrl } from "../utils/images";
 import "../styles/modal.css";
 
 function StopModal({ stop, onClose }) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(0);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
@@ -13,11 +15,16 @@ function StopModal({ stop, onClose }) {
   const [localImages, setLocalImages] = useState([]);
   const [imagesProbed, setImagesProbed] = useState(false);
 
+  // Get translated description for this stop
+  const getStopDescription = () => {
+    return t(`${stop.id}`, { ns: "stops", defaultValue: stop.description });
+  };
+
   // Get pages - either from stop.pages or create single page from stop data
   const pages = stop.pages || [
     {
       title: stop.name,
-      text: stop.content || stop.description,
+      text: stop.content || getStopDescription(),
     },
   ];
 
@@ -147,7 +154,7 @@ function StopModal({ stop, onClose }) {
                 <path d="M12 3v5.5" />
                 <path d="M8 14l2 2 4-4 2 2" />
               </svg>
-              <span>Image unavailable</span>
+              <span>{t("stopModal.imageUnavailable")}</span>
             </div>
           ) : (
             imagesProbed && (
@@ -168,14 +175,14 @@ function StopModal({ stop, onClose }) {
               <button
                 className="stop-modal__image-nav stop-modal__image-nav--prev"
                 onClick={prevImage}
-                aria-label="Previous image"
+                aria-label={t("stopModal.previousImage")}
               >
                 ‹
               </button>
               <button
                 className="stop-modal__image-nav stop-modal__image-nav--next"
                 onClick={nextImage}
-                aria-label="Next image"
+                aria-label={t("stopModal.nextImage")}
               >
                 ›
               </button>
@@ -186,10 +193,10 @@ function StopModal({ stop, onClose }) {
           )}
 
           {/* Day badge */}
-          <div className="stop-modal__day">Day {stop.day}</div>
+          <div className="stop-modal__day">{t("stopModal.day")} {stop.day}</div>
           {/* Type badge */}
           <div className={`stop-modal__type stop-modal__type--${stop.type}`}>
-            {stop.type}
+            {t(`stopTypes.${stop.type}`, { defaultValue: stop.type })}
           </div>
         </div>
 

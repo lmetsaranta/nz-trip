@@ -1,0 +1,146 @@
+{
+  "nav": {
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "toggleTheme": "Toggle theme",
+    "tripStats": "Trip statistics",
+    "weather": "Weather",
+    "photoGallery": "Photo gallery",
+    "changeSpeed": "Change speed",
+    "play": "Play",
+    "pause": "Pause",
+    "day": "Day"
+  },
+  "landing": {
+    "badge": "27-Day Journey",
+    "title1": "New Zealand",
+    "title2": "Adventure",
+    "description": "An epic road trip through Aotearoa — from glaciers to fiords, volcanic peaks to pristine beaches. Follow our journey across both islands of this stunning country.",
+    "startJourney": "Start Journey",
+    "helsinki": "Helsinki",
+    "auckland": "Auckland",
+    "flightDistance": "17,000 km"
+  },
+  "onboarding": {
+    "step1": {
+      "title": "Welcome to New Zealand",
+      "subtitle": "27 Days of Adventure",
+      "content": "Our journey begins in Auckland, the City of Sails. From here we'll explore both islands, from volcanic landscapes to pristine fjords."
+    },
+    "step2": {
+      "title": "How to Navigate",
+      "subtitle": "Your Controls",
+      "content": "Use the timeline to jump to any day and adjust playback speed (0.5x-2x). Toggle the weather panel for conditions, photo gallery for snapshots, and switch between light/dark themes."
+    },
+    "step3": {
+      "title": "Watch the Journey",
+      "subtitle": "Recommended First Experience",
+      "content": "We recommend watching the full animation first to see the complete adventure unfold. The route draws in real-time as we travel across New Zealand."
+    },
+    "step4": {
+      "title": "Explore at Your Pace",
+      "subtitle": "Dive Deeper",
+      "content": "Click any stop marker to learn more about that location. Browse the photo gallery, check weather conditions, and discover details about each destination."
+    },
+    "back": "Back",
+    "next": "Next",
+    "exploreManually": "Explore Manually",
+    "startJourney": "Start Journey",
+    "skipIntro": "Skip intro"
+  },
+  "tripEnd": {
+    "subtitle": "Journey Complete",
+    "title": "Thanks for Watching!",
+    "content": "You've just experienced our 27-day adventure across New Zealand. Now you can explore each stop in detail — click any marker on the map to discover photos, stories, and tips from that location.",
+    "days": "Days",
+    "islands": "Islands",
+    "memories": "Memories",
+    "watchAgain": "Watch Again",
+    "exploreStops": "Explore Stops"
+  },
+  "stats": {
+    "title": "Trip Statistics",
+    "close": "Close",
+    "days": "Days",
+    "routes": "Routes",
+    "byTransportMode": "By Transport Mode",
+    "route": "route",
+    "routes_plural": "routes"
+  },
+  "weather": {
+    "title": "Weather",
+    "close": "Close",
+    "loading": "Loading weather...",
+    "unavailable": "Weather data unavailable",
+    "conditions": {
+      "sunny": "Clear sky",
+      "mainlyClear": "Mainly clear",
+      "partlyCloudy": "Partly cloudy",
+      "overcast": "Overcast",
+      "fog": "Fog",
+      "rimeFog": "Depositing rime fog",
+      "lightDrizzle": "Light drizzle",
+      "moderateDrizzle": "Moderate drizzle",
+      "denseDrizzle": "Dense drizzle",
+      "freezingDrizzle": "Freezing drizzle",
+      "slightRain": "Slight rain",
+      "moderateRain": "Moderate rain",
+      "heavyRain": "Heavy rain",
+      "freezingRain": "Freezing rain",
+      "slightSnow": "Slight snow",
+      "moderateSnow": "Moderate snow",
+      "heavySnow": "Heavy snow",
+      "snowGrains": "Snow grains",
+      "slightShowers": "Slight rain showers",
+      "moderateShowers": "Moderate rain showers",
+      "violentShowers": "Violent rain showers",
+      "slightSnowShowers": "Slight snow showers",
+      "heavySnowShowers": "Heavy snow showers",
+      "thunderstorm": "Thunderstorm",
+      "thunderstormHail": "Thunderstorm with hail",
+      "thunderstormHeavyHail": "Thunderstorm with heavy hail"
+    }
+  },
+  "gallery": {
+    "title": "Photos",
+    "close": "Close",
+    "all": "All",
+    "noPhotos": "No photos for this day",
+    "day": "Day",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "stopModal": {
+    "day": "Day",
+    "imageUnavailable": "Image unavailable",
+    "previousImage": "Previous image",
+    "nextImage": "Next image"
+  },
+  "treasure": {
+    "title": "You found a treasure!",
+    "discover": "Discover"
+  },
+  "modes": {
+    "fly": "Flights",
+    "drive": "Driving",
+    "hike": "Hiking",
+    "ferry": "Ferry",
+    "bike": "Biking",
+    "canoeing": "Canoeing",
+    "rafting": "Rafting",
+    "surfing": "Surfing",
+    "spa": "Hot Springs"
+  },
+  "stopTypes": {
+    "destination": "Destination",
+    "hike": "Hike",
+    "camp": "Camping",
+    "hostel": "Hostel",
+    "bike": "Biking",
+    "spa": "Spa",
+    "canoeing": "Canoeing",
+    "rafting": "Rafting",
+    "surfing": "Surfing",
+    "plane": "Flight"
+  }
+}
