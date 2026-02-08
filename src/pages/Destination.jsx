@@ -20,6 +20,34 @@ function Destination() {
   const pageRef = useRef(null);
   useImageProtection(pageRef);
 
+  // Drag to scroll for gallery
+  const galleryScrollRef = useRef(null);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
+
+  const handleMouseDown = (e) => {
+    isDragging.current = true;
+    startX.current = e.pageX - galleryScrollRef.current.offsetLeft;
+    scrollLeft.current = galleryScrollRef.current.scrollLeft;
+    galleryScrollRef.current.style.cursor = "grabbing";
+  };
+
+  const handleMouseUp = () => {
+    isDragging.current = false;
+    if (galleryScrollRef.current) {
+      galleryScrollRef.current.style.cursor = "grab";
+    }
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging.current) return;
+    e.preventDefault();
+    const x = e.pageX - galleryScrollRef.current.offsetLeft;
+    const walk = (x - startX.current) * 1.5;
+    galleryScrollRef.current.scrollLeft = scrollLeft.current - walk;
+  };
+
   // Probe for local images
   useEffect(() => {
     if (stop) {
@@ -100,25 +128,34 @@ function Destination() {
         <div className="destination__content">
           <p className="destination__text">{displayContent}</p>
         </div>
+      </div>
 
-        {/* Image carousel */}
-        {images.length > 0 && (
-          <div className="destination__gallery">
-            <div className="destination__gallery-scroll">
-              {images.map((img, index) => (
-                <div key={index} className="destination__gallery-item">
-                  <ProtectedImage
-                    src={img}
-                    alt={`${stop.name} ${index + 1}`}
-                    className="destination__gallery-image"
-                  />
-                </div>
-              ))}
-            </div>
+      {/* Image carousel - outside container for full width */}
+      {images.length > 0 && (
+        <div className="destination__gallery">
+          <div
+            className="destination__gallery-scroll"
+            ref={galleryScrollRef}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+            onMouseMove={handleMouseMove}
+          >
+            {images.map((img, index) => (
+              <div key={index} className="destination__gallery-item">
+                <ProtectedImage
+                  src={img}
+                  alt={`${stop.name} ${index + 1}`}
+                  className="destination__gallery-image"
+                />
+              </div>
+            ))}
           </div>
-        )}
+        </div>
+      )}
 
-        {/* Coordinates */}
+      {/* Coordinates */}
+      <div className="destination__container">
         <div className="destination__meta">
           <div className="destination__coords">
             <span className="destination__coords-label">{t("destination.coordinates")}</span>

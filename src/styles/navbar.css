@@ -328,40 +328,59 @@
 /* ── Mobile responsive ── */
 @media (max-width: 640px) {
   .trip-nav {
-    padding: 4px 8px;
+    flex-wrap: wrap;
+    padding: 6px 8px;
     height: auto;
-    min-height: 48px;
-    gap: 4px;
-  }
-
-  .trip-nav__left,
-  .trip-nav__right {
-    gap: 2px;
-  }
-
-  .trip-nav__btn {
-    width: 44px;
-    height: 44px;
-    font-size: 16px;
-  }
-
-  .trip-nav__play {
-    width: 48px;
-    height: 48px;
-    font-size: 18px;
-  }
-
-  .trip-nav__speed {
-    font-size: 12px;
-  }
-
-  .trip-nav__center {
-    padding: 0 4px;
     gap: 6px;
   }
 
+  /* Top row: all buttons */
+  .trip-nav__left {
+    order: 1;
+    gap: 2px;
+  }
+
+  .trip-nav__right {
+    order: 2;
+    gap: 2px;
+    margin-left: auto;
+  }
+
+  /* Hide dividers on mobile */
+  .trip-nav__divider {
+    display: none;
+  }
+
+  /* Bottom row: timeline takes full width */
+  .trip-nav__center {
+    order: 3;
+    width: 100%;
+    padding: 4px 0 0;
+    gap: 8px;
+  }
+
+  .trip-nav__btn {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+
+  .trip-nav__play {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .trip-nav__speed {
+    font-size: 11px;
+  }
+
+  .trip-nav__lang {
+    font-size: 9px;
+  }
+
   .trip-nav__day-info {
-    min-width: 40px;
+    min-width: 44px;
   }
 
   .trip-nav__day-label {
@@ -369,36 +388,37 @@
   }
 
   .trip-nav__slider {
-    min-width: 60px;
+    min-width: 80px;
   }
 
   .trip-nav__slider::-webkit-slider-thumb {
-    width: 24px;
-    height: 24px;
-    border-width: 3px;
+    width: 20px;
+    height: 20px;
+    border-width: 2px;
   }
 
   .trip-nav__slider::-moz-range-thumb {
-    width: 24px;
-    height: 24px;
-    border-width: 3px;
-  }
-
-  .trip-nav__divider {
-    height: 16px;
+    width: 20px;
+    height: 20px;
+    border-width: 2px;
   }
 }
 
-@media (max-width: 420px) {
-  .trip-nav__left .trip-nav__btn:nth-child(3) {
-    display: none; /* Hide theme toggle on very small screens */
+@media (max-width: 380px) {
+  /* Hide less essential buttons on very small screens */
+  .trip-nav__left .trip-nav__btn:nth-child(1),
+  .trip-nav__left .trip-nav__btn:nth-child(2) {
+    display: none; /* Hide zoom buttons - use pinch to zoom */
   }
 
-  .trip-nav__day-label {
-    font-size: 10px;
+  .trip-nav__btn {
+    width: 34px;
+    height: 34px;
+    font-size: 13px;
   }
 
-  .trip-nav__slider {
-    min-width: 40px;
+  .trip-nav__play {
+    width: 38px;
+    height: 38px;
   }
 }

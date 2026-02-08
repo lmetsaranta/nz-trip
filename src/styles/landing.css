@@ -61,7 +61,7 @@
 .landing__hero {
   position: relative;
   z-index: 10;
-  max-width: 800px;
+  max-width: 960px;
   padding: 2rem;
   text-align: center;
   opacity: 0;
@@ -151,6 +151,8 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  /* Scale down for longer Finnish word "Uudessa-Seelannissa" */
+  font-size: clamp(24px, 6.5vw, 72px);
 }
 
 @keyframes title-reveal {

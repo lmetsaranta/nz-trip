@@ -8,6 +8,8 @@
   position: absolute;
   inset: 0;
   z-index: 1;
+  /* Allow scroll/swipe but block right-click via JS */
+  pointer-events: none;
 }
 
 .protected-image {
@@ -16,5 +18,4 @@
   user-drag: none;
   -webkit-user-select: none;
   user-select: none;
-  pointer-events: none;
 }
