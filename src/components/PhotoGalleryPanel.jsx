@@ -1,7 +1,9 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { stops } from "../data/trip";
 import { probeLocalImages } from "../utils/images";
+import ProtectedImage from "./ProtectedImage";
+import { useImageProtection } from "../hooks/useImageProtection";
 import "../styles/gallery.css";
 
 function PhotoGalleryPanel({ theme, isVisible, onClose, currentDay }) {
@@ -11,6 +13,12 @@ function PhotoGalleryPanel({ theme, isVisible, onClose, currentDay }) {
   const [loading, setLoading] = useState(true);
   const [lightboxPhoto, setLightboxPhoto] = useState(null);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+
+  // Image protection
+  const panelRef = useRef(null);
+  const lightboxRef = useRef(null);
+  useImageProtection(panelRef);
+  useImageProtection(lightboxRef);
 
   // Probe all stops for images on mount
   useEffect(() => {
@@ -126,6 +134,7 @@ function PhotoGalleryPanel({ theme, isVisible, onClose, currentDay }) {
   return (
     <>
       <div
+        ref={panelRef}
         className={`gallery-panel${theme === "dark" ? " gallery-panel--dark" : ""}${!isVisible ? " gallery-panel--hidden" : ""}`}
       >
         <div className="gallery-panel__header">
@@ -175,7 +184,7 @@ function PhotoGalleryPanel({ theme, isVisible, onClose, currentDay }) {
                   className="gallery-panel__thumb"
                   onClick={() => openLightbox(photo)}
                 >
-                  <img
+                  <ProtectedImage
                     src={photo.imageUrl}
                     alt={photo.stopName}
                     loading="lazy"
@@ -192,7 +201,7 @@ function PhotoGalleryPanel({ theme, isVisible, onClose, currentDay }) {
 
       {/* Lightbox */}
       {lightboxPhoto && (
-        <div className="gallery-lightbox" onClick={closeLightbox}>
+        <div className="gallery-lightbox" onClick={closeLightbox} ref={lightboxRef}>
           <div
             className="gallery-lightbox__content"
             onClick={(e) => e.stopPropagation()}
@@ -205,7 +214,7 @@ function PhotoGalleryPanel({ theme, isVisible, onClose, currentDay }) {
               &times;
             </button>
 
-            <img
+            <ProtectedImage
               src={lightboxPhoto.imageUrl}
               alt={lightboxPhoto.stopName}
               className="gallery-lightbox__image"

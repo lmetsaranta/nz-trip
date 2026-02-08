@@ -8,7 +8,8 @@
     "build": "vite build && cp dist/index.html dist/404.html",
     "preview": "vite preview",
     "lint": "eslint src",
-    "deploy": "npm run build && gh-pages -d dist"
+    "deploy": "npm run build && gh-pages -d dist",
+    "optimize-images": "node scripts/optimize-images.js"
   },
   "dependencies": {
     "i18next": "^25.8.4",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.18.0",
+    "sharp": "^0.33.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.0",

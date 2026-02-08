@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { probeLocalImages, getUnsplashFallbackUrl } from "../utils/images";
+import ProtectedImage from "./ProtectedImage";
+import { useImageProtection } from "../hooks/useImageProtection";
 import "../styles/modal.css";
 
 function StopModal({ stop, onClose }) {
@@ -14,6 +16,10 @@ function StopModal({ stop, onClose }) {
   const [imageError, setImageError] = useState(false);
   const [localImages, setLocalImages] = useState([]);
   const [imagesProbed, setImagesProbed] = useState(false);
+
+  // Image protection
+  const modalRef = useRef(null);
+  useImageProtection(modalRef);
 
   // Get translated description for this stop
   const getStopDescription = () => {
@@ -128,7 +134,7 @@ function StopModal({ stop, onClose }) {
       className={`stop-modal-overlay ${isVisible ? "visible" : ""}`}
       onClick={handleBackdropClick}
     >
-      <div className={`stop-modal ${isVisible ? "visible" : ""}`}>
+      <div className={`stop-modal ${isVisible ? "visible" : ""}`} ref={modalRef}>
         {/* Close button */}
         <button className="stop-modal__close" onClick={handleClose}>
           ×
@@ -158,7 +164,7 @@ function StopModal({ stop, onClose }) {
             </div>
           ) : (
             imagesProbed && (
-              <img
+              <ProtectedImage
                 src={getCurrentImageUrl()}
                 alt={page.title}
                 className={`stop-modal__image ${imageLoading ? "stop-modal__image--loading" : "stop-modal__image--loaded"}`}

@@ -1,0 +1,20 @@
+.protected-image-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.protected-image-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.protected-image {
+  display: block;
+  -webkit-user-drag: none;
+  user-drag: none;
+  -webkit-user-select: none;
+  user-select: none;
+  pointer-events: none;
+}

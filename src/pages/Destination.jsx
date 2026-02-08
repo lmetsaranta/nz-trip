@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { stops } from "../data/trip";
 import { probeLocalImages, getUnsplashFallbackUrl } from "../utils/images";
+import ProtectedImage from "../components/ProtectedImage";
+import { useImageProtection } from "../hooks/useImageProtection";
 import "../styles/destination.css";
 
 function Destination() {
@@ -13,6 +15,10 @@ function Destination() {
 
   const [images, setImages] = useState([]);
   const [imagesLoaded, setImagesLoaded] = useState(false);
+
+  // Image protection
+  const pageRef = useRef(null);
+  useImageProtection(pageRef);
 
   // Probe for local images
   useEffect(() => {
@@ -61,11 +67,11 @@ function Destination() {
   const heroImage = images[0] || getUnsplashFallbackUrl(stop);
 
   return (
-    <div className="destination">
+    <div className="destination" ref={pageRef}>
       {/* Hero image */}
       <div className="destination__hero">
         {imagesLoaded && (
-          <img
+          <ProtectedImage
             src={heroImage}
             alt={stop.name}
             className="destination__hero-image"
@@ -101,7 +107,7 @@ function Destination() {
             <div className="destination__gallery-scroll">
               {images.map((img, index) => (
                 <div key={index} className="destination__gallery-item">
-                  <img
+                  <ProtectedImage
                     src={img}
                     alt={`${stop.name} ${index + 1}`}
                     className="destination__gallery-image"

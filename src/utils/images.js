@@ -5,6 +5,11 @@ const IMAGE_EXTENSIONS = ['.jpg', '.JPG', '.jpeg', '.JPEG', '.png', '.PNG', '.we
 // Base path for the app (must match vite.config.js)
 const BASE_PATH = import.meta.env.BASE_URL || '/nz-trip/';
 
+// Image directories
+const ORIGINAL_DIR = 'images/stops';
+const WEB_DIR = 'images/web';
+const THUMBS_DIR = 'images/thumbs';
+
 /**
  * Get the primary image URL for a stop.
  * Note: This returns the .jpg path; actual probing handles other formats.
@@ -114,4 +119,56 @@ function checkImageExists(url) {
     img.onerror = () => resolve(false);
     img.src = url;
   });
+}
+
+/**
+ * Get optimized image URLs for a given original image URL.
+ * Falls back to original if optimized versions don't exist.
+ *
+ * @param {string} originalUrl - The original image URL
+ * @returns {Object} - Object with web and thumb URLs
+ */
+export function getOptimizedUrls(originalUrl) {
+  // Extract the base name from the original URL
+  const match = originalUrl.match(/\/images\/stops\/([^/]+)\.(jpg|jpeg|png|webp)$/i);
+  if (!match) {
+    return { web: originalUrl, thumb: originalUrl };
+  }
+
+  const baseName = match[1];
+  return {
+    web: `${BASE_PATH}${WEB_DIR}/${baseName}.webp`,
+    thumb: `${BASE_PATH}${THUMBS_DIR}/${baseName}.webp`,
+    original: originalUrl
+  };
+}
+
+/**
+ * Probe for optimized images, falling back to originals if not found.
+ * Returns optimized URLs for web and thumbnail variants.
+ *
+ * @param {string} stopId - The stop ID
+ * @param {number} maxImages - Maximum images to check (default 10)
+ * @returns {Promise<Object[]>} - Array of objects with web, thumb, and original URLs
+ */
+export async function probeOptimizedImages(stopId, maxImages = 10) {
+  const originalImages = await probeLocalImages(stopId, maxImages);
+
+  return Promise.all(
+    originalImages.map(async (originalUrl) => {
+      const urls = getOptimizedUrls(originalUrl);
+
+      // Check if optimized versions exist
+      const [webExists, thumbExists] = await Promise.all([
+        checkImageExists(urls.web),
+        checkImageExists(urls.thumb)
+      ]);
+
+      return {
+        web: webExists ? urls.web : originalUrl,
+        thumb: thumbExists ? urls.thumb : originalUrl,
+        original: originalUrl
+      };
+    })
+  );
 }
