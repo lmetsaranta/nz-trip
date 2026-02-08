@@ -22,6 +22,12 @@
   overflow: hidden;
 }
 
+.destination__hero .protected-image-wrapper {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .destination__hero-image {
   width: 100%;
   height: 100%;
@@ -50,6 +56,7 @@
 
 .destination__gallery-scroll {
   display: flex;
+  justify-content: center;
   gap: 16px;
   padding: 0 24px;
   overflow-x: auto;
@@ -66,6 +73,11 @@
 .destination__gallery-item {
   flex-shrink: 0;
   scroll-snap-align: start;
+}
+
+.destination__gallery-item .protected-image-wrapper {
+  display: block;
+  height: 100%;
 }
 
 .destination__gallery-image {
