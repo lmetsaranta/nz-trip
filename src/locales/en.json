@@ -152,6 +152,7 @@
     "notFound": "Destination not found",
     "notFoundDescription": "The destination you're looking for doesn't exist.",
     "coordinates": "Coordinates",
-    "openInGoogleMaps": "Open in Google Maps"
+    "openInGoogleMaps": "Open in Google Maps",
+    "viewOnDOC": "View on DOC website"
   }
 }

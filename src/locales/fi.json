@@ -15,7 +15,7 @@
     "badge": "27 päivän matka",
     "title1": "Road Trip",
     "title2": "Uudessa‑Seelannissa",
-    "description": "Ikimuistoinen seikkailu halki Aotearoan — jäätiköiltä vuonoihin, tulivuorilta koskemattomille rannoille. Tervetuloa seuraamaan matkaamme läpi tämän upean maan.",
+    "description": "Vaelluksia, viinitiloja ja seikkailua Uuden-Seelannin saarilla 12/2025-01/2026.",
     "startJourney": "Aloita matka",
     "helsinki": "Helsinki",
     "auckland": "Auckland",
@@ -25,7 +25,7 @@
     "step1": {
       "title": "Tervetuloa Uuteen-Seelantiin",
       "subtitle": "27 päivän seikkailu",
-      "content": "Matkamme alkaa Aucklandista ja kulkee läpi molempien saarien. Tulivuorimaisemista koskemattomiin vuonoihin — vaelluksilta rannoille."
+      "content": "Matka alkaa Aucklandista ja jatkuu eteläsaarelle."
     },
     "step2": {
       "title": "Navigointi",
@@ -121,7 +121,7 @@
   },
   "treasure": {
     "title": "Löysit aarteen!",
-    "description": "Sinäkin olet utelias! Arvasinkin että klikkaisit tänne. Jatka siis klikkailua ja tutustu tärkeään projektiin nimeltä Farmoi. Tuetaan yhdessä suomalaista lähiruokaa.",
+    "description": "Arvasinkin että klikkaat tänne. Jatka siis klikkailua ja tutustu tärkeään projektiin nimeltä Farmoi. Tuetaan yhdessä suomalaista lähiruokaa.",
     "discover": "Tutustu"
   },
   "modes": {
@@ -152,6 +152,7 @@
     "notFound": "Kohdetta ei löytynyt",
     "notFoundDescription": "Etsimääsi kohdetta ei ole olemassa.",
     "coordinates": "Koordinaatit",
-    "openInGoogleMaps": "Avaa Google Mapsissa"
+    "openInGoogleMaps": "Avaa Google Mapsissa",
+    "viewOnDOC": "Katso DOC-sivustolla"
   }
 }

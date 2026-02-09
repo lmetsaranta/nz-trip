@@ -26,6 +26,14 @@ export const stops = [
   // Day 1 — Auckland arrival
   // ═══════════════════════════════════════════════════════════════════════════
   {
+    id: "auckland-airport-arrival",
+    name: "Auckland Airport",
+    description: "Arrival in New Zealand — drive to the city.",
+    coords: [-37.0082, 174.7850],
+    type: "destination",
+    day: 1,
+  },
+  {
     id: "auckland",
     name: "Auckland",
     description: "City of Sails — walking in the city center and good food.",
@@ -37,14 +45,6 @@ export const stops = [
   // ═══════════════════════════════════════════════════════════════════════════
   // Day 2 — Waiheke Island (ferry + bike)
   // ═══════════════════════════════════════════════════════════════════════════
-  {
-    id: "auckland-harbour",
-    name: "Auckland Harbour",
-    description: "Ferry terminal for Waiheke Island.",
-    coords: [-36.8440, 174.7670],
-    type: "destination",
-    day: 2,
-  },
   {
     id: "waiheke",
     name: "Waiheke Island",
@@ -70,7 +70,7 @@ export const stops = [
     name: "Queenstown",
     description: "Adventure capital of NZ — pick up campervan.",
     coords: [-45.0312, 168.6626],
-    type: "destination",
+    type: "plane",
     day: 3,
   },
   {
@@ -96,6 +96,7 @@ export const stops = [
     coords: [-44.6980, 169.0440],
     type: "hike",
     day: 3,
+    url: "https://www.doc.govt.nz/parks-and-recreation/places-to-go/otago/places/wanaka-area/things-to-do/roys-peak-track/",
   },
   {
     id: "red-bridge-camp",
@@ -136,6 +137,7 @@ export const stops = [
     coords: [-44.8055, 168.0828],
     type: "hike",
     day: 5,
+    url: "https://www.doc.govt.nz/parks-and-recreation/places-to-go/fiordland/places/fiordland-national-park/things-to-do/tracks/lake-marian-track/",
   },
   {
     id: "lake-gunn",
@@ -144,6 +146,7 @@ export const stops = [
     coords: [-44.9364, 168.0503],
     type: "hike",
     day: 5,
+    url: "https://www.doc.govt.nz/parks-and-recreation/places-to-go/fiordland/places/fiordland-national-park/things-to-do/tracks/lake-gunn-nature-walk/",
   },
   {
     id: "cascade-creek",
@@ -172,6 +175,7 @@ export const stops = [
     coords: [-44.7750, 167.9900],
     type: "hike",
     day: 6,
+    url: "https://www.doc.govt.nz/parks-and-recreation/places-to-go/fiordland/places/fiordland-national-park/things-to-do/tracks/gertrude-saddle-route/",
   },
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -197,9 +201,10 @@ export const stops = [
     id: "earnslaw-burn",
     name: "Earnslaw Burn",
     description: "Into the valley near hanging glacier — tent camping overnight.",
-    coords: [-44.7543, 168.3478],
+    coords: [-44.7105, 168.4273],
     type: "hike",
     day: 7,
+    url: "https://www.doc.govt.nz/parks-and-recreation/places-to-go/otago/places/glenorchy-area/things-to-do/earnslaw-burn-track/",
   },
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -284,6 +289,7 @@ export const stops = [
     coords: [-43.7315, 170.0940],
     type: "hike",
     day: 12,
+    url: "https://www.doc.govt.nz/parks-and-recreation/places-to-go/canterbury/places/aoraki-mount-cook-national-park/things-to-do/tracks/sealy-tarns-track/",
   },
   {
     id: "blue-lakes",
@@ -292,6 +298,7 @@ export const stops = [
     coords: [-43.7200, 170.1800],
     type: "hike",
     day: 12,
+    url: "https://www.doc.govt.nz/parks-and-recreation/places-to-go/canterbury/places/aoraki-mount-cook-national-park/things-to-do/tracks/blue-lakes-and-tasman-glacier-walks/",
   },
   {
     id: "chamberlains-ford",
@@ -340,6 +347,7 @@ export const stops = [
     coords: [-42.9580, 171.5880],
     type: "hike",
     day: 14,
+    url: "https://www.doc.govt.nz/parks-and-recreation/places-to-go/canterbury/places/arthurs-pass-national-park/things-to-do/tracks/bealey-spur-track/",
   },
   {
     id: "devils-punch-bowl",
@@ -348,6 +356,7 @@ export const stops = [
     coords: [-42.9420, 171.5650],
     type: "hike",
     day: 14,
+    url: "https://www.doc.govt.nz/parks-and-recreation/places-to-go/canterbury/places/arthurs-pass-national-park/things-to-do/tracks/devils-punchbowl-walking-track/",
   },
   {
     id: "jacksons",
@@ -388,6 +397,7 @@ export const stops = [
     coords: [-43.4080, 170.1420],
     type: "hike",
     day: 16,
+    url: "https://www.doc.govt.nz/parks-and-recreation/places-to-go/west-coast/places/westland-tai-poutini-national-park/things-to-do/tracks/alex-knob-track/",
   },
   {
     id: "brewster-trailhead",
@@ -408,6 +418,7 @@ export const stops = [
     coords: [-44.1067, 169.3175],
     type: "hike",
     day: 17,
+    url: "https://www.doc.govt.nz/parks-and-recreation/places-to-go/otago/places/mount-aspiring-national-park/things-to-do/tracks/brewster-track/",
   },
   {
     id: "blue-pools",
@@ -416,6 +427,7 @@ export const stops = [
     coords: [-44.1550, 169.2710],
     type: "hike",
     day: 17,
+    url: "https://www.doc.govt.nz/parks-and-recreation/places-to-go/otago/places/mount-aspiring-national-park/things-to-do/tracks/blue-pools-track/",
   },
   {
     id: "red-bridge-camp-return",
@@ -504,6 +516,7 @@ export const stops = [
     coords: [-40.9150, 175.4830],
     type: "hike",
     day: 21,
+    url: "https://www.doc.govt.nz/parks-and-recreation/places-to-go/wellington-kapiti/places/tararua-forest-park/things-to-do/tracks/holdsworth-roadend-to-powell-hut-mount-holdsworth/",
   },
   {
     id: "hastings",
@@ -596,6 +609,7 @@ export const stops = [
     coords: [-39.1150, 175.6480],
     type: "hike",
     day: 24,
+    url: "https://www.doc.govt.nz/parks-and-recreation/places-to-go/central-north-island/places/tongariro-national-park/things-to-do/tracks/tongariro-alpine-crossing/",
   },
   {
     id: "rotorua",
@@ -652,6 +666,7 @@ export const stops = [
     coords: [-36.9580, 175.7500],
     type: "hike",
     day: 26,
+    url: "https://www.doc.govt.nz/parks-and-recreation/places-to-go/coromandel/places/coromandel-forest-park/things-to-do/kauaeranga-kauri-trail/",
   },
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -685,27 +700,33 @@ export const stops = [
 
 export const routes = [
   // ═══════════════════════════════════════════════════════════════════════════
+  // Day 1: Airport → Auckland (drive)
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: "airport-auckland",
+    from: "auckland-airport-arrival",
+    to: "auckland",
+    day: 1,
+    mode: "drive",
+    waypoints: [
+      [-37.0082, 174.7850],
+      [-36.9500, 174.7700],
+      [-36.9000, 174.7650],
+      [-36.8485, 174.7633],
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
   // Day 2: Auckland → Waiheke Island (ferry + bike)
   // ═══════════════════════════════════════════════════════════════════════════
   {
-    id: "auckland-harbour-ferry",
-    from: "auckland",
-    to: "auckland-harbour",
-    day: 2,
-    mode: "drive",
-    waypoints: [
-      [-36.8485, 174.7633],
-      [-36.8440, 174.7670],
-    ],
-  },
-  {
     id: "auckland-waiheke",
-    from: "auckland-harbour",
+    from: "auckland",
     to: "waiheke",
     day: 2,
     mode: "ferry",
     waypoints: [
-      [-36.8440, 174.7670],
+      [-36.8485, 174.7633],
       [-36.838, 174.810],
       [-36.830, 174.860],
       [-36.822, 174.915],
@@ -748,7 +769,7 @@ export const routes = [
   {
     id: "waiheke-auckland",
     from: "waiheke",
-    to: "auckland-harbour",
+    to: "auckland",
     day: 2,
     mode: "ferry",
     waypoints: [
@@ -758,7 +779,7 @@ export const routes = [
       [-36.822, 174.915],
       [-36.830, 174.860],
       [-36.838, 174.810],
-      [-36.8440, 174.7670],
+      [-36.8485, 174.7633],
     ],
   },
   {
@@ -1248,7 +1269,7 @@ export const routes = [
       [-44.7404, 168.4105],
       [-44.750, 168.390],
       [-44.755, 168.370],
-      [-44.7543, 168.3478],
+      [-44.7105, 168.4273],
     ],
   },
 
@@ -1262,7 +1283,7 @@ export const routes = [
     day: 8,
     mode: "hike",
     waypoints: [
-      [-44.7543, 168.3478],
+      [-44.7105, 168.4273],
       [-44.755, 168.370],
       [-44.750, 168.390],
       [-44.7404, 168.4105],

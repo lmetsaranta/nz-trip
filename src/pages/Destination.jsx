@@ -164,12 +164,12 @@ function Destination() {
             </span>
           </div>
           <a
-            href={`https://www.google.com/maps?q=${stop.coords[0]},${stop.coords[1]}`}
+            href={stop.url || `https://www.google.com/maps?q=${stop.coords[0]},${stop.coords[1]}`}
             target="_blank"
             rel="noopener noreferrer"
             className="destination__maps-link"
           >
-            {t("destination.openInGoogleMaps")}
+            {stop.url ? t("destination.viewOnDOC") : t("destination.openInGoogleMaps")}
           </a>
         </div>
       </div>
