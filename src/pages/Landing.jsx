@@ -3,6 +3,18 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "../styles/landing.css";
 
+const BASE_PATH = import.meta.env.BASE_URL || '/nz-trip/';
+
+const polaroids = [
+  { src: `${BASE_PATH}images/web/brewster-hut-3.webp`, label: 'Brewster Hut', x: '12%', y: '15%', rotation: -8 },
+  { src: `${BASE_PATH}images/web/earnslaw-burn-7.webp`, label: 'Earnslaw Burn', x: '70%', y: '12%', rotation: 6 },
+  { src: `${BASE_PATH}images/web/lake-marian-2.webp`, label: 'Lake Marian', x: '5%', y: '55%', rotation: -4 },
+  { src: `${BASE_PATH}images/web/milford-sound-2.webp`, label: 'Milford Sound', x: '75%', y: '55%', rotation: 10 },
+  { src: `${BASE_PATH}images/web/gertrude-saddle-5.webp`, label: 'Gertrude Saddle', x: '35%', y: '8%', rotation: -6 },
+  { src: `${BASE_PATH}images/web/roys-peak-2.webp`, label: "Roy's Peak", x: '60%', y: '72%', rotation: 5 },
+  { src: `${BASE_PATH}images/web/tongariro-2.webp`, label: 'Tongariro', x: '20%', y: '75%', rotation: -9 },
+];
+
 function LandingLanguageSwitcher() {
   const { i18n } = useTranslation();
 
@@ -43,9 +55,30 @@ function Landing() {
   };
 
   return (
-    <div className="landing">
+    <div className="landing polaroid-landing">
       {/* Language switcher */}
       <LandingLanguageSwitcher />
+
+      {/* Polaroids layer */}
+      <div className="polaroid-scatter">
+        {polaroids.map((p, i) => (
+          <div
+            key={i}
+            className="polaroid"
+            style={{
+              '--x': p.x,
+              '--y': p.y,
+              '--rotation': `${p.rotation}deg`,
+              '--delay': `${0.2 + i * 0.15}s`
+            }}
+          >
+            <div className="polaroid__frame">
+              <img src={p.src} alt={p.label} draggable="false" />
+              <span className="polaroid__caption">{p.label}</span>
+            </div>
+          </div>
+        ))}
+      </div>
 
       {/* Animated background gradient */}
       <div className="landing__gradient" />
@@ -135,25 +168,27 @@ function Landing() {
         </svg>
       </div>
 
-      {/* Hero content */}
-      <main className={`landing__hero ${showContent ? "visible" : ""}`}>
-        <div className="landing__badge">{t("landing.badge")}</div>
-        <h1 className="landing__title">
-          <span className="landing__title-line">{t("landing.title1")}</span>
-          <span className="landing__title-line landing__title-line--accent">{t("landing.title2")}</span>
-        </h1>
-        <p className="landing__desc">
-          {t("landing.description")}
-        </p>
-        <button
-          className="landing__btn"
-          onClick={handleStart}
-          disabled={isAnimating}
-        >
-          <span className="landing__btn-text">{t("landing.startJourney")}</span>
-          <span className="landing__btn-icon">→</span>
-        </button>
-      </main>
+      {/* Hero content in glassmorphism card */}
+      <div className="polaroid-hero">
+        <div className={`polaroid-hero__card ${showContent ? "visible" : ""}`}>
+          <div className="landing__badge">{t("landing.badge")}</div>
+          <h1 className="landing__title">
+            <span className="landing__title-line">{t("landing.title1")}</span>
+            <span className="landing__title-line landing__title-line--accent">{t("landing.title2")}</span>
+          </h1>
+          <p className="landing__desc">
+            {t("landing.description")}
+          </p>
+          <button
+            className="landing__btn"
+            onClick={handleStart}
+            disabled={isAnimating}
+          >
+            <span className="landing__btn-text">{t("landing.startJourney")}</span>
+            <span className="landing__btn-icon">→</span>
+          </button>
+        </div>
+      </div>
 
       {/* Flight animation overlay */}
       {isAnimating && (

@@ -57,6 +57,130 @@
   50% { opacity: 0.5; r: 8; }
 }
 
+/* ══════════════════════════════════════════════════════════
+   Polaroid Scatter Animation
+   ══════════════════════════════════════════════════════════ */
+
+/* Polaroid container */
+.polaroid-scatter {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Individual polaroid */
+.polaroid {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  pointer-events: auto;
+  opacity: 0;
+  animation: polaroid-drop 1.08s cubic-bezier(0.34, 1.56, 0.64, 1) var(--delay) forwards;
+}
+
+@keyframes polaroid-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-120vh) rotate(calc(var(--rotation) - 20deg));
+  }
+  50% {
+    opacity: 1;
+  }
+  70% {
+    transform: translateY(15px) rotate(calc(var(--rotation) + 8deg));
+  }
+  85% {
+    transform: translateY(-8px) rotate(calc(var(--rotation) - 3deg));
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(var(--rotation));
+  }
+}
+
+/* Polaroid frame */
+.polaroid__frame {
+  padding: 10px 10px 36px;
+  background: #fefefe;
+  border-radius: 3px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transform: rotate(var(--rotation));
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.35s ease;
+}
+
+.polaroid:hover .polaroid__frame {
+  transform: scale(1.1) rotate(0deg);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+  z-index: 100;
+}
+
+.polaroid__frame img {
+  display: block;
+  width: 160px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+.polaroid__caption {
+  display: block;
+  margin-top: 10px;
+  font-family: 'Caveat', cursive, system-ui;
+  font-size: 15px;
+  color: #2a3530;
+  text-align: center;
+}
+
+/* Hero card */
+.polaroid-hero {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.polaroid-hero__card {
+  background: rgba(26, 36, 32, 0.88);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(74, 156, 125, 0.2);
+  border-radius: 20px;
+  padding: 44px 52px;
+  max-width: 900px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.215, 0.61, 0.355, 1),
+              transform 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.polaroid-hero__card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Reset hero styles for polaroid layout */
+.polaroid-landing .landing__hero {
+  position: relative;
+  z-index: 10;
+  max-width: 960px;
+  padding: 2rem;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.215, 0.61, 0.355, 1),
+              transform 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.polaroid-landing .landing__hero.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ── Hero content ── */
 .landing__hero {
   position: relative;
@@ -358,6 +482,25 @@
 
   .flight-info__city {
     font-size: 16px;
+  }
+
+  /* Polaroid mobile styles */
+  .polaroid__frame img {
+    width: 100px;
+    height: 75px;
+  }
+
+  .polaroid__frame {
+    padding: 6px 6px 24px;
+  }
+
+  .polaroid__caption {
+    font-size: 12px;
+  }
+
+  .polaroid-hero__card {
+    padding: 32px 24px;
+    margin: 0 16px;
   }
 }
 

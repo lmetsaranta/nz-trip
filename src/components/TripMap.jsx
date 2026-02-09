@@ -87,30 +87,26 @@ function TripMap({
 
     let visibleCurrentDayStops = [];
 
-    if (isPlaying) {
-      // During playback: only show stops when 80% through the route to that stop
-      for (const stop of currentDayStops) {
-        // Find the route that leads TO this stop
-        const routeToStop = currentDayRoutes.findIndex((r) => r.to === stop.id);
+    // Show stops based on animation progress (same logic whether playing or paused)
+    // This prevents showing destination stops before animation reaches them
+    for (const stop of currentDayStops) {
+      // Find the route that leads TO this stop
+      const routeToStop = currentDayRoutes.findIndex((r) => r.to === stop.id);
 
-        if (routeToStop === -1) {
-          // This is a starting point (no route leads to it), show if it's the first stop
-          const isStartingPoint = currentDayRoutes.length > 0 && currentDayRoutes[0].from === stop.id;
-          if (isStartingPoint) {
-            visibleCurrentDayStops.push(stop);
-          }
-        } else if (routeToStop < routeIndex) {
-          // Route to this stop is already completed
-          visibleCurrentDayStops.push(stop);
-        } else if (routeToStop === routeIndex && routeProgress >= 0.8) {
-          // Currently on the route to this stop and 80%+ complete
+      if (routeToStop === -1) {
+        // This is a starting point (no route leads to it), show if it's the first stop
+        const isStartingPoint = currentDayRoutes.length > 0 && currentDayRoutes[0].from === stop.id;
+        if (isStartingPoint) {
           visibleCurrentDayStops.push(stop);
         }
-        // Otherwise, don't show this stop yet
+      } else if (routeToStop < routeIndex) {
+        // Route to this stop is already completed
+        visibleCurrentDayStops.push(stop);
+      } else if (routeToStop === routeIndex && routeProgress >= 0.8) {
+        // Currently on the route to this stop and 80%+ complete
+        visibleCurrentDayStops.push(stop);
       }
-    } else {
-      // Not playing: show all current day stops
-      visibleCurrentDayStops = currentDayStops;
+      // Otherwise, don't show this stop yet
     }
 
     const visible = [...pastStops, ...visibleCurrentDayStops];
@@ -142,12 +138,14 @@ function TripMap({
       };
     }
 
+    // When paused, show completed segments based on progress (not all routes)
+    // This prevents showing routes before animation has started
     return {
       pastRoutes: past,
-      completedSegments: currentDayRoutes,
-      activeRoute: null,
+      completedSegments: currentDayRoutes.slice(0, routeIndex),
+      activeRoute: routeProgress > 0 ? currentDayRoutes[routeIndex] : null,
     };
-  }, [currentDay, isPlaying, routeIndex]);
+  }, [currentDay, isPlaying, routeIndex, routeProgress]);
 
   return (
     <div className="map-wrapper">
@@ -216,8 +214,8 @@ function TripMap({
           <ArrivalMarker position={arrivalPosition} type={arrivalType} />
         )}
 
-        {/* Animated vehicle */}
-        {isPlaying && vehiclePosition && (
+        {/* Animated vehicle - only show after animation has made progress */}
+        {isPlaying && vehiclePosition && routeProgress > 0 && (
           <AnimatedVehicle position={vehiclePosition} mode={vehicleMode} bearing={vehicleBearing} />
         )}
 
