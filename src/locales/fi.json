@@ -121,6 +121,7 @@
   },
   "treasure": {
     "title": "Löysit aarteen!",
+    "description": "Sinäkin olet utelias! Arvasinkin että klikkaisit tänne. Jatka siis klikkailua ja tutustu tärkeään projektiin nimeltä Farmoi. Tuetaan yhdessä suomalaista lähiruokaa.",
     "discover": "Tutustu"
   },
   "modes": {

@@ -325,38 +325,57 @@
   }
 }
 
+/* ── Bottom timeline bar (mobile only) ── */
+.trip-nav__bottom {
+  display: none;
+}
+
 /* ── Mobile responsive ── */
 @media (max-width: 640px) {
   .trip-nav {
-    flex-wrap: wrap;
     padding: 6px 8px;
     height: auto;
-    gap: 6px;
+    gap: 4px;
   }
 
-  /* Top row: all buttons */
   .trip-nav__left {
-    order: 1;
     gap: 2px;
   }
 
   .trip-nav__right {
-    order: 2;
     gap: 2px;
-    margin-left: auto;
   }
 
-  /* Hide dividers on mobile */
-  .trip-nav__divider {
+  /* Hide dividers and desktop timeline on mobile */
+  .trip-nav__divider,
+  .trip-nav__center--desktop {
     display: none;
   }
 
-  /* Bottom row: timeline takes full width */
-  .trip-nav__center {
-    order: 3;
-    width: 100%;
-    padding: 4px 0 0;
-    gap: 8px;
+  /* Show bottom timeline bar on mobile */
+  .trip-nav__bottom {
+    position: fixed;
+    bottom: 16px;
+    left: 8px;
+    right: 8px;
+    z-index: 1000;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    gap: 12px;
+    background: rgba(254, 255, 254, 0.95);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border-top: 1px solid rgba(220, 229, 223, 0.6);
+    box-shadow: 0 -4px 24px rgba(45, 58, 53, 0.08);
+  }
+
+  .trip-nav__bottom.trip-nav--dark {
+    background: rgba(26, 36, 32, 0.95);
+    border-top-color: rgba(74, 156, 125, 0.2);
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.25);
   }
 
   .trip-nav__btn {
@@ -379,28 +398,29 @@
     font-size: 9px;
   }
 
-  .trip-nav__day-info {
-    min-width: 44px;
+  .trip-nav__bottom .trip-nav__day-info {
+    min-width: 50px;
   }
 
-  .trip-nav__day-label {
-    font-size: 11px;
+  .trip-nav__bottom .trip-nav__day-label {
+    font-size: 12px;
   }
 
-  .trip-nav__slider {
-    min-width: 80px;
+  .trip-nav__bottom .trip-nav__slider {
+    flex: 1;
+    min-width: 100px;
   }
 
-  .trip-nav__slider::-webkit-slider-thumb {
-    width: 20px;
-    height: 20px;
-    border-width: 2px;
+  .trip-nav__bottom .trip-nav__slider::-webkit-slider-thumb {
+    width: 24px;
+    height: 24px;
+    border-width: 3px;
   }
 
-  .trip-nav__slider::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    border-width: 2px;
+  .trip-nav__bottom .trip-nav__slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-width: 3px;
   }
 }
 

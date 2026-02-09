@@ -578,7 +578,6 @@ function Home() {
           onClose={() => setShowTreasure(false)}
           projectUrl="https://farmoi.com/?utm_source=lmetsaranta.github.io"
           projectName="Farmoi"
-          projectDescription="You're curious too! I thought you'd click here. So click ahead and check out an important project called Farmoi. Let's support Finnish local food production."
         />
       )}
     </div>

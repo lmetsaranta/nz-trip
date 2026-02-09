@@ -166,6 +166,29 @@
   }
 }
 
+/* Farmoi logo coin */
+.coin--farmoi {
+  width: 32px;
+  height: 32px;
+  margin-left: -16px;
+  background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.coin--farmoi::before {
+  display: none;
+}
+
+.coin__logo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
 /* ══════════════════════════════════════════════════════════
    Reveal Content
    ══════════════════════════════════════════════════════════ */

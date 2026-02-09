@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import "../styles/treasure.css";
 
-function TreasureModal({ isOpen, onClose, projectUrl, projectName, projectDescription }) {
+function TreasureModal({ isOpen, onClose, projectUrl, projectName }) {
   const [isVisible, setIsVisible] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
   const [showContent, setShowContent] = useState(false);
@@ -89,7 +89,7 @@ function TreasureModal({ isOpen, onClose, projectUrl, projectName, projectDescri
 
           {/* Gold Coins */}
           <div className="treasure-coins">
-            {[...Array(12)].map((_, i) => (
+            {[...Array(11)].map((_, i) => (
               <div
                 key={i}
                 className="coin"
@@ -100,13 +100,24 @@ function TreasureModal({ isOpen, onClose, projectUrl, projectName, projectDescri
                 }}
               />
             ))}
+            {/* Farmoi logo coin */}
+            <div
+              className="coin coin--farmoi"
+              style={{
+                "--delay": "1.2s",
+                "--x-offset": "0px",
+                "--rotation": "360deg",
+              }}
+            >
+              <img src="/nz-trip/images/farmoi.svg" alt="Farmoi" className="coin__logo" />
+            </div>
           </div>
         </div>
 
         {/* Project Info */}
         <div className={`treasure-reveal ${showContent ? "visible" : ""}`}>
           <h2 className="treasure-title">{t("treasure.title")}</h2>
-          <p className="treasure-description">{projectDescription}</p>
+          <p className="treasure-description">{t("treasure.description")}</p>
           <a
             href={projectUrl}
             target="_blank"
