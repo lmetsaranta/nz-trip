@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && cp dist/index.html dist/404.html",
+    "build:public": "VITE_ACCESS_MODE=public vite build && cp dist/index.html dist/404.html",
+    "build:full": "VITE_ACCESS_MODE=full vite build && cp dist/index.html dist/404.html",
     "preview": "vite preview",
     "lint": "eslint src",
     "deploy": "npm run build && gh-pages -d dist",

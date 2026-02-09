@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { probeLocalImages, getUnsplashFallbackUrl } from "../utils/images";
 import { isStoryWorthy } from "../utils/contentClassifier";
+import { useAccess } from "../context/AccessContext";
 import ProtectedImage from "./ProtectedImage";
 import { useImageProtection } from "../hooks/useImageProtection";
 import "../styles/modal.css";
@@ -10,6 +11,7 @@ import "../styles/modal.css";
 function StopModal({ stop, onClose }) {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { hasFullAccess } = useAccess();
   const [currentPage, setCurrentPage] = useState(0);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
@@ -187,8 +189,8 @@ function StopModal({ stop, onClose }) {
             )
           )}
 
-          {/* Image navigation arrows (only show if multiple images) */}
-          {totalImages > 1 && imagesProbed && (
+          {/* Image navigation arrows (only show if multiple images and full access) */}
+          {totalImages > 1 && imagesProbed && hasFullAccess && (
             <>
               <button
                 className="stop-modal__image-nav stop-modal__image-nav--prev"
@@ -221,11 +223,11 @@ function StopModal({ stop, onClose }) {
         {/* Content */}
         <div className="stop-modal__content">
           <h2
-            className={`stop-modal__title ${isStoryWorthyStop ? 'stop-modal__title--clickable' : ''}`}
-            onClick={isStoryWorthyStop ? handleTitleClick : undefined}
+            className={`stop-modal__title ${isStoryWorthyStop && hasFullAccess ? 'stop-modal__title--clickable' : ''}`}
+            onClick={isStoryWorthyStop && hasFullAccess ? handleTitleClick : undefined}
           >
             {page.title}
-            {isStoryWorthyStop && <span className="stop-modal__title-arrow">→</span>}
+            {isStoryWorthyStop && hasFullAccess && <span className="stop-modal__title-arrow">→</span>}
           </h2>
           <p className="stop-modal__text">{page.text}</p>
 
@@ -248,11 +250,18 @@ function StopModal({ stop, onClose }) {
             {stop.url ? t("destination.viewOnDOC") : t("destination.openInGoogleMaps")}
           </a>
 
-          {/* Read full story button - only for story-worthy stops */}
-          {isStoryWorthyStop && (
+          {/* Read full story button - only for story-worthy stops with full access */}
+          {isStoryWorthyStop && hasFullAccess && (
             <button className="stop-modal__story-btn" onClick={handleTitleClick}>
               {t("stopModal.readFullStory", { defaultValue: "Read Full Story" })} →
             </button>
+          )}
+
+          {/* Teaser for public users */}
+          {isStoryWorthyStop && !hasFullAccess && (
+            <div className="stop-modal__story-teaser">
+              {t("stopModal.storyTeaser", { defaultValue: "Full story available for friends & family" })}
+            </div>
           )}
         </div>
 

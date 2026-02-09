@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { stops } from "../data/trip";
 import { probeLocalImages } from "../utils/images";
 import { isStoryWorthy } from "../utils/contentClassifier";
+import { useAccess } from "../context/AccessContext";
 import StoryPage from "./StoryPage";
 
 /**
@@ -16,6 +17,7 @@ function DestinationRouter() {
   const { id } = useParams();
   const location = useLocation();
   const { t } = useTranslation();
+  const { hasFullAccess } = useAccess();
   const stop = stops.find((s) => s.id === id);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -77,8 +79,8 @@ function DestinationRouter() {
     return <Navigate to="/map" replace />;
   }
 
-  // Story-worthy stop - show scrollytelling page
-  if (shouldShowStory) {
+  // Story-worthy stop - show scrollytelling page (only for full access)
+  if (shouldShowStory && hasFullAccess) {
     return <StoryPage />;
   }
 

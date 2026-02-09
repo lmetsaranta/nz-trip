@@ -124,7 +124,7 @@ function TreasureModal({ isOpen, onClose, projectUrl, projectName }) {
             rel="noopener noreferrer"
             className="treasure-btn"
           >
-            {t("treasure.discover")} {projectName} →
+            {t("treasure.discover")} →
           </a>
         </div>
       </div>

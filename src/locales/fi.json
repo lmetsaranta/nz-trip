@@ -118,12 +118,13 @@
     "imageUnavailable": "Kuva ei saatavilla",
     "previousImage": "Edellinen kuva",
     "nextImage": "Seuraava kuva",
-    "readFullStory": "Lue koko tarina"
+    "readFullStory": "Lue koko tarina",
+    "storyTeaser": "Koko tarina saatavilla perheelle ja ystäville"
   },
   "treasure": {
     "title": "Löysit aarteen!",
     "description": "Arvasinkin että klikkaat tänne. Jatka siis klikkailua ja tutustu tärkeään projektiin nimeltä Farmoi. Tuetaan yhdessä suomalaista lähiruokaa.",
-    "discover": "Tutustu"
+    "discover": "Tutustu Farmoihin"
   },
   "modes": {
     "fly": "Lennot",

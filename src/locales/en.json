@@ -118,12 +118,13 @@
     "imageUnavailable": "Image unavailable",
     "previousImage": "Previous image",
     "nextImage": "Next image",
-    "readFullStory": "Read Full Story"
+    "readFullStory": "Read Full Story",
+    "storyTeaser": "Full story available for friends & family"
   },
   "treasure": {
     "title": "You found a treasure!",
     "description": "You're curious too! I thought you'd click here. So click ahead and check out an important project called Farmoi. Let's support Finnish local food production.",
-    "discover": "Discover"
+    "discover": "Discover Farmoi"
   },
   "modes": {
     "fly": "Flights",
