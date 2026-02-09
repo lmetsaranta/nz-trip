@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { probeLocalImages, getUnsplashFallbackUrl } from "../utils/images";
+import { isStoryWorthy } from "../utils/contentClassifier";
 import ProtectedImage from "./ProtectedImage";
 import { useImageProtection } from "../hooks/useImageProtection";
 import "../styles/modal.css";
@@ -16,6 +17,7 @@ function StopModal({ stop, onClose }) {
   const [imageError, setImageError] = useState(false);
   const [localImages, setLocalImages] = useState([]);
   const [imagesProbed, setImagesProbed] = useState(false);
+  const [isStoryWorthyStop, setIsStoryWorthyStop] = useState(false);
 
   // Image protection
   const modalRef = useRef(null);
@@ -37,23 +39,33 @@ function StopModal({ stop, onClose }) {
   const totalPages = pages.length;
   const page = pages[currentPage];
 
+  // Get story content for checking if story-worthy
+  const storyContent = t(`${stop.id}`, { ns: "stories", defaultValue: "" });
+
   // Probe for local images when modal opens
   useEffect(() => {
-    if (!stop.image) {
-      probeLocalImages(stop.id).then((images) => {
+    const probeImages = async () => {
+      let images;
+      if (!stop.image) {
+        images = await probeLocalImages(stop.id);
         setLocalImages(images);
         setImagesProbed(true);
         if (images.length === 0) {
-          // No local images, will use Unsplash fallback
           setImageLoading(true);
         }
-      });
-    } else {
-      // Stop has explicit image, use it
-      setLocalImages([stop.image]);
-      setImagesProbed(true);
-    }
-  }, [stop.id, stop.image]);
+      } else {
+        images = [stop.image];
+        setLocalImages(images);
+        setImagesProbed(true);
+      }
+
+      // Check if this stop is story-worthy
+      const worthy = isStoryWorthy(stop.id, storyContent, images.length);
+      setIsStoryWorthyStop(worthy);
+    };
+
+    probeImages();
+  }, [stop.id, stop.image, storyContent]);
 
   // Get current image URL
   const getCurrentImageUrl = () => {
@@ -208,11 +220,40 @@ function StopModal({ stop, onClose }) {
 
         {/* Content */}
         <div className="stop-modal__content">
-          <h2 className="stop-modal__title" onClick={handleTitleClick}>
+          <h2
+            className={`stop-modal__title ${isStoryWorthyStop ? 'stop-modal__title--clickable' : ''}`}
+            onClick={isStoryWorthyStop ? handleTitleClick : undefined}
+          >
             {page.title}
-            <span className="stop-modal__title-arrow">→</span>
+            {isStoryWorthyStop && <span className="stop-modal__title-arrow">→</span>}
           </h2>
           <p className="stop-modal__text">{page.text}</p>
+
+          {/* Coordinates */}
+          <div className="stop-modal__coords">
+            <span className="stop-modal__coords-icon">📍</span>
+            <span className="stop-modal__coords-value">
+              {stop.coords[0].toFixed(4)}, {stop.coords[1].toFixed(4)}
+            </span>
+          </div>
+
+          {/* External link */}
+          <a
+            href={stop.url || `https://www.google.com/maps?q=${stop.coords[0]},${stop.coords[1]}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="stop-modal__external-link"
+          >
+            <span className="stop-modal__external-icon">🔗</span>
+            {stop.url ? t("destination.viewOnDOC") : t("destination.openInGoogleMaps")}
+          </a>
+
+          {/* Read full story button - only for story-worthy stops */}
+          {isStoryWorthyStop && (
+            <button className="stop-modal__story-btn" onClick={handleTitleClick}>
+              {t("stopModal.readFullStory", { defaultValue: "Read Full Story" })} →
+            </button>
+          )}
         </div>
 
         {/* Pagination */}

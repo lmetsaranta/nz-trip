@@ -117,7 +117,8 @@
     "day": "Päivä",
     "imageUnavailable": "Kuva ei saatavilla",
     "previousImage": "Edellinen kuva",
-    "nextImage": "Seuraava kuva"
+    "nextImage": "Seuraava kuva",
+    "readFullStory": "Lue koko tarina"
   },
   "treasure": {
     "title": "Löysit aarteen!",

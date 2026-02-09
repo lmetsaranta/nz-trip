@@ -1,4 +1,5 @@
 import { useState, useCallback, useMemo, useRef, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { TIMELINE_CONFIG, routes, stops } from "../data/trip";
 import { useAnimationTick } from "../hooks/useAnimationTick";
 import { interpolatePosition, calculateBearing } from "../utils/interpolate";
@@ -79,6 +80,9 @@ function calculateDayDuration(dayRoutes, isFinalDay = false) {
 const SPEED_OPTIONS = [0.5, 1, 2];
 
 function Home() {
+  // Handle stop query parameter (for redirects from minimal stops)
+  const [searchParams, setSearchParams] = useSearchParams();
+
   // Get persisted state from context
   const { state: mapState, updateState, saveMapView } = useMapState();
 
@@ -101,6 +105,21 @@ function Home() {
 
   // Weather data hook
   const { weatherData, loading: weatherLoading } = useWeatherData();
+
+  // Handle stop query parameter for modal opening (from minimal stop redirects)
+  useEffect(() => {
+    const stopId = searchParams.get('stop');
+    if (stopId) {
+      const stop = stops.find((s) => s.id === stopId);
+      if (stop) {
+        setSelectedStop(stop);
+        // Navigate to the day of this stop
+        setCurrentDay(stop.day);
+        // Clear the query parameter
+        setSearchParams({}, { replace: true });
+      }
+    }
+  }, [searchParams, setSearchParams]);
 
   // Sync state changes back to context
   useEffect(() => {

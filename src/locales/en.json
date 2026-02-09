@@ -117,7 +117,8 @@
     "day": "Day",
     "imageUnavailable": "Image unavailable",
     "previousImage": "Previous image",
-    "nextImage": "Next image"
+    "nextImage": "Next image",
+    "readFullStory": "Read Full Story"
   },
   "treasure": {
     "title": "You found a treasure!",

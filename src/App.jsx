@@ -4,7 +4,7 @@ import Layout from "./components/Layout";
 import Landing from "./pages/Landing";
 import Home from "./pages/Home";
 import About from "./pages/About";
-import Destination from "./pages/Destination";
+import DestinationRouter from "./pages/DestinationRouter";
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/map" element={<Home />} />
-          <Route path="/destination/:id" element={<Destination />} />
+          <Route path="/destination/:id" element={<DestinationRouter />} />
           <Route element={<Layout />}>
             <Route path="/about" element={<About />} />
           </Route>
