@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import "../styles/navbar.css";
 import { TIMELINE_CONFIG } from "../data/trip";
+import { useAccess } from "../context/AccessContext";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 function TripNav({
@@ -24,6 +25,7 @@ function TripNav({
   onGalleryToggle,
 }) {
   const { t } = useTranslation();
+  const { hasFullAccess } = useAccess();
   const dayProgress = ((currentDay - 1) / (TIMELINE_CONFIG.totalDays - 1)) * 100;
 
   // Highlight mapping:
@@ -66,13 +68,15 @@ function TripNav({
           >
             🌤️
           </button>
-          <button
-            className={`trip-nav__btn${showGallery ? " trip-nav__btn--active" : ""}`}
-            onClick={onGalleryToggle}
-            title={t("nav.photoGallery")}
-          >
-            📷
-          </button>
+          {hasFullAccess && (
+            <button
+              className={`trip-nav__btn${showGallery ? " trip-nav__btn--active" : ""}`}
+              onClick={onGalleryToggle}
+              title={t("nav.photoGallery")}
+            >
+              📷
+            </button>
+          )}
         </div>
 
         <div className="trip-nav__divider" />
