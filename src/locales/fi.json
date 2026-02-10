@@ -35,7 +35,7 @@
     "step3": {
       "title": "Katso matka",
       "subtitle": "Suosittelemamme ensimmäinen kokemus",
-      "content": "Suosittelemme katsomaan koko animaation ensin nähdäksesi koko seikkailun. Reitti piirtyy reaaliajassa matkatessamme läpi Uuden-Seelannin."
+      "content": "Suosittelemme katsomaan koko animaation ensin nähdäksesi koko seikkailun. Reitti piirtyy kartalle reaaliajassa."
     },
     "step4": {
       "title": "Tutki omaan tahtiisi",
@@ -50,7 +50,7 @@
   },
   "tripEnd": {
     "subtitle": "Matka päättyi",
-    "title": "Kiitos katsomisesta!",
+    "title": "Kiitos kun katsoit!",
     "content": "Olet juuri kokenut 27 päivän seikkailumme halki Uuden-Seelannin. Nyt voit tutkia jokaista kohdetta tarkemmin — klikkaa mitä tahansa merkkiä kartalla löytääksesi valokuvia, tarinoita ja vinkkejä.",
     "days": "Päivää",
     "islands": "Saarta",
